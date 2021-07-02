@@ -8,5 +8,7 @@ Recording Studio Website: https://www.vibemusicproductions.com/
 
 (Loading VST tester in Native Instrument's Mashine 2 Software which is the target for the studio)
 ![Screenshot_Loading_Vibe_Sampler](https://user-images.githubusercontent.com/25870426/124214309-ffca7880-dabf-11eb-9eed-066e948a09a0.png)
+
 (VST success message)
+
 ![Screenshot_SuccessMessage_Vibe_Sampler](https://user-images.githubusercontent.com/25870426/124215843-d9f2a300-dac2-11eb-90a8-cd4d554ba7ac.png)
