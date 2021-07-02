@@ -1,3 +1,4 @@
+![V2-2020-Vibe-Logo-Transparent-450-1](https://user-images.githubusercontent.com/25870426/124214612-7ff0de00-dac0-11eb-8e4e-b2b2fd048e63.png)
 # Vibe Music Productions - Audio Sampler Plugin
 Summer Project by Brian Moon
 
