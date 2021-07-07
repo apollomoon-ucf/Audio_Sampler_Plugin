@@ -33,3 +33,6 @@ Update (7/7/21): Users would like to have a sound library located on the left si
 
 (Second sketch of plugin prototype with proposed sample/sound library sidebar)
 ![Screenshot_vibe_sampler_sketch_with_library](https://user-images.githubusercontent.com/25870426/124839763-64ba1e80-df57-11eb-98a8-1e24caae70ae.png)
+
+# Development
+to be cont.
