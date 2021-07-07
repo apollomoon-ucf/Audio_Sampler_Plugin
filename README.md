@@ -25,6 +25,7 @@ C++ and the JUCE audio framework will be used to develop the plugin.
 
 # Layout
 To visualize a rough layout of the plugin, I created a sketch using https://sketch.io/sketchpad/.
+
 Note: This visualization is not meant to represent the final design of the user interface. Once plugin functionality is established, I will work on making it aesthetically pleasing. 
 
 (First sketch of plugin prototype)
