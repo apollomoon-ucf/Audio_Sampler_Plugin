@@ -23,8 +23,9 @@ C++ and the JUCE audio framework will be used to develop the plugin.
 ![Screenshot_SuccessMessage_Vibe_Sampler](https://user-images.githubusercontent.com/25870426/124215843-d9f2a300-dac2-11eb-90a8-cd4d554ba7ac.png)
 
 
-# Design
+# Layout
 To visualize a rough layout of the plugin, I created a sketch using https://sketch.io/sketchpad/.
+Note: This visualization is not meant to represent the final design of the user interface. Once plugin functionality is established, I will work on making it aesthetically pleasing. 
 
-(Sketch of plugin prototype)
+(First sketch of plugin prototype)
 ![Screenshot_vibe_sampler_sketch](https://user-images.githubusercontent.com/25870426/124827433-0899cf00-df44-11eb-906f-ef3fe2c57b89.png)
