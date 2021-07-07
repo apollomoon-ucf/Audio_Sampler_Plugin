@@ -30,3 +30,6 @@ Note: This visualization is not meant to represent the final design of the user 
 ![Screenshot_vibe_sampler_sketch](https://user-images.githubusercontent.com/25870426/124827433-0899cf00-df44-11eb-906f-ef3fe2c57b89.png)
 
 Update (7/7/21): Users would like to have a sound library located on the left side of the plugin to streamline the process of dragging and dropping samples into the sample editor located in the center of the plugin. Also, the Gain knob may look better in the top right corner as a dedicated master volume knob.
+
+(Second sketch of plugin prototype with proposed sample/sound library sidebar)
+![Screenshot_vibe_sampler_sketch_with_library](https://user-images.githubusercontent.com/25870426/124839763-64ba1e80-df57-11eb-98a8-1e24caae70ae.png)
