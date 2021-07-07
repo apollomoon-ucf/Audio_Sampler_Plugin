@@ -4,7 +4,7 @@ Summer Project by Brian Moon
 
 
 # Introduction
-For one of my 2021 summer projects, I will be building an audio plugin prototype for Vibe Music Productions. 
+For one of my summer projects, I will be building an audio plugin prototype for Vibe Music Productions. 
 Vibe is a professional recording studio and music production facility located in Ponte Vedra Beach, Florida. 
 
 Recording Studio Website: https://www.vibemusicproductions.com/
