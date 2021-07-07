@@ -26,7 +26,7 @@ To visualize a rough layout of the plugin, I created a sketch using https://sket
 
 Note: This visualization is not meant to represent the final design of the user interface. Once plugin functionality is established, I will work on making it aesthetically pleasing.
 
-Update (7/7/21): Users would like to have a sound library located on the left of the plugin to streamline the process of dragging and dropping samples into the sample editor located in the center of the plugin.
+Update (7/7/21): Users would like to have a sound library located on the left side of the plugin to streamline the process of dragging and dropping samples into the sample editor located in the center of the plugin.
 
 (First sketch of plugin prototype)
 ![Screenshot_vibe_sampler_sketch](https://user-images.githubusercontent.com/25870426/124827433-0899cf00-df44-11eb-906f-ef3fe2c57b89.png)
