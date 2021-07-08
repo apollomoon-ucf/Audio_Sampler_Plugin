@@ -1,7 +1,7 @@
 ![V2-2020-Vibe-Logo-Transparent-450-1-2](https://user-images.githubusercontent.com/25870426/124214978-276e1080-dac1-11eb-8ba0-3751a11327ae.png)
 # Vibe Music Productions - Audio Sampler Plugin
 
-# Introduction
+## Introduction
 For one of my summer projects, I will be building an audio sampler plugin prototype for Vibe Music Productions. 
 Vibe is a professional recording studio and music production facility located in Ponte Vedra Beach, Florida. 
 
@@ -10,7 +10,7 @@ Recording Studio Website: https://www.vibemusicproductions.com/
 The development process of the plugin will be documented in this readme.
 
 
-# Technology and Setup
+## Technology and Setup
 The recording studio will need the plugin to be compatible with Native Instrument's Maschine 2 running on Windows 10. 
 C++ and the JUCE audio framework will be used to develop the plugin.
 
@@ -21,7 +21,7 @@ C++ and the JUCE audio framework will be used to develop the plugin.
 ![Screenshot_SuccessMessage_Vibe_Sampler](https://user-images.githubusercontent.com/25870426/124215843-d9f2a300-dac2-11eb-90a8-cd4d554ba7ac.png)
 
 
-# Layout
+## Layout
 To visualize a rough layout of the plugin, I created a sketch using https://sketch.io/sketchpad/, simply putting some images together to get a feel for the layout. 
 Knobs are a modified version of a template from KnobMan.
 
@@ -36,7 +36,7 @@ Maschine 2 has a sidebar for samples if we can't make this work properly, but it
 (Second sketch of plugin prototype with proposed sample/sound library sidebar)
 ![Screenshot_vibe_sampler_sketch_with_library](https://user-images.githubusercontent.com/25870426/124839763-64ba1e80-df57-11eb-98a8-1e24caae70ae.png)
 
-# Development
+## Development
 Now it's time to dive into the core functionality of the plugin. Drag and drop capabilities were added so users can simply drop their desired sound onto the plugin.
 I also added a file upload link for .wav, .mp3, and .aiff/.aif files to give the user an additional upload method. 
 
