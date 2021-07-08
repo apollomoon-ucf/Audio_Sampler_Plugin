@@ -191,12 +191,13 @@ void VibeSamplerAudioProcessor::setStateInformation(const void* data,
 
 // method for loading file and creating sampler sound with file
 void VibeSamplerAudioProcessor::loadFile() {
+  memberSampler.clearSounds();
   // setting up the JUCE file chooser to select
   // and load an audio file from the user's computer
   juce::FileChooser chooseFile(
       "Select Audio File (.wav, .mp3, or .aiff)",
       juce::File::getSpecialLocation(juce::File::userDocumentsDirectory),
-      "*.wav; *.mp3");
+      "*.wav; *.mp3; *.aiff");
 
   // getting result from user's selection
   if (chooseFile.browseForFileToOpen()) {
@@ -219,6 +220,29 @@ void VibeSamplerAudioProcessor::loadFile() {
         "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
         attackTimeSecs, releaseTimeSecs, maxSampleLengthSecs));
   }
+}
+
+// method for loading file and creating sampler sound with dropped file
+void VibeSamplerAudioProcessor::loadFile(const juce::String& path) {
+  memberSampler.clearSounds();
+  auto userFile = juce::File(path);
+  memberFormatReader = memberFormatManager.createReaderFor(userFile);
+
+  // range of playable midi notes - 128 midi notes
+  juce::BigInteger midiRange;
+  midiRange.setRange(0, 128, true);
+  // C3 = midi note 60
+  int midiNoteForNormalPitch = 60;
+  // attack and release time
+  int attackTimeSecs = 0.1;
+  int releaseTimeSecs = 0.1;
+  // max sample length
+  int maxSampleLengthSecs = 10.0;
+
+  // creating new sampler sound containing the audio file selected by user
+  memberSampler.addSound(new juce::SamplerSound(
+      "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
+      attackTimeSecs, releaseTimeSecs, maxSampleLengthSecs));
 }
 
 //==============================================================================

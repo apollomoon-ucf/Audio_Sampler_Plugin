@@ -54,6 +54,11 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor {
 
   // load file method
   void loadFile();
+  // load file for dropped file
+  void loadFile(const juce::String& path);
+
+  // getter for getting status of sampler
+  int getNumberOfSamplerSounds() { return memberSampler.getNumSounds(); };
 
  private:
   // creating member variables for the Synthesiser class and polyphony (#

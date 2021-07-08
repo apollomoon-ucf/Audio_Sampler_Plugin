@@ -15,7 +15,8 @@
 //==============================================================================
 /**
  */
-class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor {
+class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
+                                        public juce::FileDragAndDropTarget {
  public:
   VibeSamplerAudioProcessorEditor(VibeSamplerAudioProcessor&);
   ~VibeSamplerAudioProcessorEditor() override;
@@ -24,9 +25,12 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor {
   void paint(juce::Graphics&) override;
   void resized() override;
 
+  bool isInterestedInFileDrag(const juce::StringArray& files) override;
+  void filesDropped(const juce::StringArray& files, int x, int y) override;
+
  private:
   // Text button for loading sound/sample from computer
-  juce::TextButton memberLoadButton{"Click here to load sound"};
+  juce::TextButton memberLoadButton{"Click or drag and drop sounds here to load into sampler"};
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   VibeSamplerAudioProcessor& audioProcessor;
