@@ -2,7 +2,7 @@
 # Vibe Music Productions - Audio Sampler Plugin
 
 # Introduction
-For one of my summer projects, I will be building an audio plugin prototype for Vibe Music Productions. 
+For one of my summer projects, I will be building an audio sampler plugin prototype for Vibe Music Productions. 
 Vibe is a professional recording studio and music production facility located in Ponte Vedra Beach, Florida. 
 
 Recording Studio Website: https://www.vibemusicproductions.com/
@@ -30,7 +30,7 @@ Note: This visualization is not meant to represent the final design of the user 
 (First sketch of plugin prototype)
 ![Screenshot_vibe_sampler_sketch](https://user-images.githubusercontent.com/25870426/124827433-0899cf00-df44-11eb-906f-ef3fe2c57b89.png)
 
-Update (7/7/21): Users would like to have a sound library located on the left side of the plugin to streamline the process of dragging and dropping samples into the sample editor located in the center of the plugin. 
+Update (7/7/21): Users would like to have a sound library located on the left side of the plugin to streamline the process of dragging and dropping samples onto the sample editor located in the center of the plugin. 
 Maschine 2 has a sidebar for samples if we can't make this work properly, but it would be a nice addition. Also, the Gain knob may look better in the top right corner as a dedicated master volume knob.
 
 (Second sketch of plugin prototype with proposed sample/sound library sidebar)
