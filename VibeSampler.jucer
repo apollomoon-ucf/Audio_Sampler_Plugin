@@ -2,9 +2,9 @@
 
 <JUCERPROJECT id="YUDyFX" name="VibeSampler" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              pluginFormats="buildAU,buildStandalone,buildVST,buildVST3" pluginCharacteristicsValue="pluginIsMidiEffectPlugin"
-              pluginVST3Category="Instrument" pluginVSTCategory="kPlugCategEffect"
-              companyName="VibeByBMoon">
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              pluginVST3Category="Instrument" pluginVSTCategory="kPlugCategSynth"
+              companyName="VibeByBMoon" pluginFormats="buildVST,buildVST3">
   <MAINGROUP id="q2KsRI" name="VibeSampler">
     <GROUP id="{2312A0B3-90E5-E76B-7272-5000A0D5D4EB}" name="Source">
       <FILE id="NiyMy8" name="PluginProcessor.cpp" compile="1" resource="0"

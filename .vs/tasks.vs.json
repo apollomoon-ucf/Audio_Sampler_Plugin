@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-VibeSampler",
+      "appliesTo": "/",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-VibeSampler",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}

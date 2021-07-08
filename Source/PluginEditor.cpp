@@ -1,9 +1,9 @@
 /*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
+  Author:      Brian Moon
+  Project:     Vibe Audio Plugin (Sampler/Sample Player)
+  File Name:   PluginEditor.cpp
+  Description: This file contains the basic framework code for a JUCE plugin
+               editor.
 */
 
 #include "PluginEditor.h"
