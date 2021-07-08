@@ -37,7 +37,7 @@ Maschine 2 has a sidebar for samples if we can't make this work properly, but it
 ![Screenshot_vibe_sampler_sketch_with_library](https://user-images.githubusercontent.com/25870426/124839763-64ba1e80-df57-11eb-98a8-1e24caae70ae.png)
 
 # Development
-Now it's time to dive into the core functionality of the plugin. I began with adding drag and drop capabilities so users can simply drop their desired sound onto the plugin.
+Now it's time to dive into the core functionality of the plugin. Drag and drop capabilities were added so users can simply drop their desired sound onto the plugin.
 I also added a file upload link for .wav, .mp3, and .aiff/.aif files to give the user an additional upload method. 
 
 Upon successful upload of an acceptable audio file, a success message is displayed (as seen in the image below).
