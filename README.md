@@ -22,7 +22,7 @@ C++ and the JUCE audio framework will be used to develop the plugin.
 
 
 # Layout
-To visualize a rough layout of the plugin, I created a sketch using https://sketch.io/sketchpad/.
+To visualize a rough layout of the plugin, I created a sketch using https://sketch.io/sketchpad/, simply putting some images together to get a feel for the layout. Knobs are a modified version of a template from KnobMan.
 
 Note: This visualization is not meant to represent the final design of the user interface. Once plugin functionality is established, I will work on making it aesthetically pleasing.
 
