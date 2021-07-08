@@ -42,7 +42,7 @@ I also added a file upload link for .wav, .mp3, and .aiff/.aif files to give the
 
 Upon successful upload of an acceptable audio file, a success message is displayed (as seen in the image below).
 
-At this point, the plugin loads a file, and the sound can be triggered via midi in Maschine 2 (a test beat was successfully made using only VibeSampler in this raw form).
+At this point, the plugin loads a file, and the sound can be triggered via midi in Maschine 2 (a test beat was successfully created using the VibeSampler in this raw form as the only instrument).
 Note: plugin states are not reloadable at this stage; plugin is cleared when daw is restarted.
 
 (Plugin displaying success message "Sound file loaded!" after loading sound/sample)
