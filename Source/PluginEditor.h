@@ -25,6 +25,8 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor {
   void resized() override;
 
  private:
+  // Text button for loading sound/sample from computer
+  juce::TextButton memberLoadButton{"Click here to load sound"};
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   VibeSamplerAudioProcessor& audioProcessor;

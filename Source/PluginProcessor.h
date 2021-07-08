@@ -52,9 +52,19 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor {
   void getStateInformation(juce::MemoryBlock& destData) override;
   void setStateInformation(const void* data, int sizeInBytes) override;
 
+  // load file method
+  void loadFile();
+
  private:
+  // creating member variables for the Synthesiser class and polyphony (#
+  // voices)
   juce::Synthesiser memberSampler;
-  const int memberNumberOfVoices{3};
+  const int memberNumberOfVoices{12};
+
+  // audio format manager
+  juce::AudioFormatManager memberFormatManager;
+  juce::AudioFormatReader* memberFormatReader{nullptr};
+
   //==============================================================================
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VibeSamplerAudioProcessor)
 };

@@ -11,6 +11,8 @@
 #include "PluginEditor.h"
 
 //==============================================================================
+
+// constructor
 VibeSamplerAudioProcessor::VibeSamplerAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(
@@ -24,12 +26,19 @@ VibeSamplerAudioProcessor::VibeSamplerAudioProcessor()
       )
 #endif
 {
+  // setting up format manager for different audio formats
+  memberFormatManager.registerBasicFormats();
+
+  // adding the number of voices declared in PluginProcessor.h
   for (int i = 0; i < memberNumberOfVoices; i++) {
     memberSampler.addVoice(new juce::SamplerVoice());
   }
 }
 
-VibeSamplerAudioProcessor::~VibeSamplerAudioProcessor() {}
+// destructor
+VibeSamplerAudioProcessor::~VibeSamplerAudioProcessor() {
+  memberFormatReader = nullptr;
+}
 
 //==============================================================================
 const juce::String VibeSamplerAudioProcessor::getName() const {
@@ -85,6 +94,7 @@ void VibeSamplerAudioProcessor::prepareToPlay(double sampleRate,
                                               int samplesPerBlock) {
   // Use this method as the place to do any pre-playback
   // initialisation that you need..
+  memberSampler.setCurrentPlaybackSampleRate(sampleRate);
 }
 
 void VibeSamplerAudioProcessor::releaseResources() {
@@ -123,6 +133,10 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   juce::ScopedNoDenormals noDenormals;
   auto totalNumInputChannels = getTotalNumInputChannels();
   auto totalNumOutputChannels = getTotalNumOutputChannels();
+  int startSample = 0;
+  int numSamples = buffer.getNumSamples();
+  auto outputAudio = buffer;
+  auto inputMidi = midiMessages;
 
   // In case we have more outputs than inputs, this code clears any output
   // channels that didn't contain input data, (because these aren't
@@ -132,6 +146,11 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   // this code if your algorithm always overwrites all the output channels.
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear(i, 0, buffer.getNumSamples());
+
+  // renders the next audio block of audio output
+  // the midi notes are used to trigger voices
+  memberSampler.renderNextBlock(outputAudio, inputMidi, startSample,
+                                numSamples);
 
   // This is the place where you'd normally do the guts of your plugin's
   // audio processing...
@@ -168,6 +187,38 @@ void VibeSamplerAudioProcessor::setStateInformation(const void* data,
   // You should use this method to restore your parameters from this memory
   // block, whose contents will have been created by the getStateInformation()
   // call.
+}
+
+// method for loading file and creating sampler sound with file
+void VibeSamplerAudioProcessor::loadFile() {
+  // setting up the JUCE file chooser to select
+  // and load an audio file from the user's computer
+  juce::FileChooser chooseFile(
+      "Select Audio File (.wav, .mp3, or .aiff)",
+      juce::File::getSpecialLocation(juce::File::userDocumentsDirectory),
+      "*.wav; *.mp3");
+
+  // getting result from user's selection
+  if (chooseFile.browseForFileToOpen()) {
+    auto userFile = chooseFile.getResult();
+    memberFormatReader = memberFormatManager.createReaderFor(userFile);
+
+    // range of playable midi notes - 128 midi notes
+    juce::BigInteger midiRange;
+    midiRange.setRange(0, 128, true);
+    // C3 = midi note 60
+    int midiNoteForNormalPitch = 60;
+    // attack and release time
+    int attackTimeSecs = 0.1;
+    int releaseTimeSecs = 0.1;
+    // max sample length
+    int maxSampleLengthSecs = 10.0;
+
+    // creating new sampler sound containing the audio file selected by user
+    memberSampler.addSound(new juce::SamplerSound(
+        "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
+        attackTimeSecs, releaseTimeSecs, maxSampleLengthSecs));
+  }
 }
 
 //==============================================================================

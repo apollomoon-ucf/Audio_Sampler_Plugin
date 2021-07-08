@@ -14,6 +14,10 @@
 VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
     VibeSamplerAudioProcessor& p)
     : AudioProcessorEditor(&p), audioProcessor(p) {
+  // lambda function to run on button click
+  memberLoadButton.onClick = [&]() { audioProcessor.loadFile(); };
+  // make load button a child component of this current component
+  addAndMakeVisible(memberLoadButton);
   // Make sure that before the constructor has finished, you've set the
   // editor's size to whatever you need it to be.
   setSize(400, 300);
@@ -31,11 +35,16 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics& g) {
   g.setColour(juce::Colours::white);
   g.setFont(15.0f);
   g.drawFittedText(
-      "Vibe Music Productions\n Testing Maschine 2 - VST \n Brian Moon",
+      " \n\n\nVibe Music Productions\n Testing Maschine 2 - VST \n Brian Moon",
       getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void VibeSamplerAudioProcessorEditor::resized() {
   // This is generally where you'll want to lay out the positions of any
   // subcomponents in your editor..
+  int x = getWidth() / 2 - 100;
+  int y = getHeight() / 2 - 100;
+  int width = 200;
+  int height = 50;
+  memberLoadButton.setBounds(x, y, width, height);
 }
