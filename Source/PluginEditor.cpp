@@ -72,8 +72,8 @@ void VibeSamplerAudioProcessorEditor::filesDropped(
     if (isInterestedInFileDrag(file)) {
       // load the file
       audioProcessor.loadFile(file);
-      // repaint to display successful file load message
-      repaint();
     }
   }
+  // repaint to display successful file load message
+  repaint();
 }

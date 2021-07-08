@@ -37,4 +37,13 @@ Maschine 2 has a sidebar for samples if we can't make this work properly, but it
 ![Screenshot_vibe_sampler_sketch_with_library](https://user-images.githubusercontent.com/25870426/124839763-64ba1e80-df57-11eb-98a8-1e24caae70ae.png)
 
 # Development
-to be cont.
+Now it's time to dive into the core functionality of the plugin. I began with adding drag and drop capabilities so users can simply drop their desired sound onto the plugin.
+I also added a file upload link for .wav, .mp3, and .aiff/.aif files to give the user an additional upload method. 
+
+Upon successful upload of an acceptable audio file, a success message is displayed (as seen in the image below).
+
+At this point, the plugin loads a file, and the sound can be triggered via midi in Maschine 2 (a test beat was successfully made using only VibeSampler in this raw form).
+Note: plugin states are not reloadable at this stage; plugin is cleared when daw is restarted.
+
+(Plugin displaying success message "Sound file loaded!" after loading sound/sample)
+![Screenshot_plugin_loading_success_drag_drop](https://user-images.githubusercontent.com/25870426/124999586-76192e80-e01c-11eb-9e0c-0585727ece39.png)
