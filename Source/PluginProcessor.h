@@ -59,12 +59,16 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor {
 
   // getter for getting status of sampler
   int getNumberOfSamplerSounds() { return memberSampler.getNumSounds(); };
+  // giving access to memberWaveform
+  juce::AudioBuffer<float> getWaveform() { return memberWaveform; };
 
  private:
   // creating member variables for the Synthesiser class and polyphony (#
   // voices)
   juce::Synthesiser memberSampler;
   const int memberNumberOfVoices{12};
+  // AudioBuffer for storing waveform
+  juce::AudioBuffer<float> memberWaveform;
 
   // audio format manager
   juce::AudioFormatManager memberFormatManager;

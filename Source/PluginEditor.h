@@ -30,7 +30,12 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
 
  private:
   // Text button for loading sound/sample from computer
-  juce::TextButton memberLoadButton{"Click or drag and drop sounds here to load into sampler"};
+  juce::TextButton memberLoadButton{
+      "Click or drag and drop sounds here to load into sampler"};
+  // place to hold samples
+  std::vector<float> memberAudioSnapshotLocations;
+  // bool for drawing waveform
+  bool memberActivateWaveformVisual{false};
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   VibeSamplerAudioProcessor& audioProcessor;

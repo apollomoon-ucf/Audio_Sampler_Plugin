@@ -204,6 +204,11 @@ void VibeSamplerAudioProcessor::loadFile() {
     auto userFile = chooseFile.getResult();
     memberFormatReader = memberFormatManager.createReaderFor(userFile);
 
+    // reading waveform
+    auto sampleLength = memberFormatReader->lengthInSamples;
+    memberWaveform.setSize(1, sampleLength);
+    memberFormatReader->read(&memberWaveform, 0, sampleLength, 0, true, false);
+
     // range of playable midi notes - 128 midi notes
     juce::BigInteger midiRange;
     midiRange.setRange(0, 128, true);
@@ -227,6 +232,18 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   memberSampler.clearSounds();
   auto userFile = juce::File(path);
   memberFormatReader = memberFormatManager.createReaderFor(userFile);
+
+  // reading waveform
+  auto sampleLength = memberFormatReader->lengthInSamples;
+  memberWaveform.setSize(1, sampleLength);
+  memberFormatReader->read(&memberWaveform, 0, sampleLength, 0, true, false);
+
+  // testing that we are properly reading file into audio buffer
+  // read through audio file
+  // uto buffer = memberWaveform.getReadPointer(0);
+  // for (int sample = 0; sample < memberWaveform.getNumSamples(); sample++) {
+  //   std::cout << buffer[sample];
+  // }
 
   // range of playable midi notes - 128 midi notes
   juce::BigInteger midiRange;
