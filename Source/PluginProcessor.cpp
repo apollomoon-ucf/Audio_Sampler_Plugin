@@ -223,7 +223,7 @@ void VibeSamplerAudioProcessor::loadFile() {
 }
 
 // method for loading file and creating sampler sound with dropped file
-void VibeSamplerAudioProcessor::loadFile(const juce::String& path) {
+void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   memberSampler.clearSounds();
   auto userFile = juce::File(path);
   memberFormatReader = memberFormatManager.createReaderFor(userFile);
