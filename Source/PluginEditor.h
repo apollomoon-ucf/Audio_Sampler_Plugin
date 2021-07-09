@@ -16,7 +16,8 @@
 /**
  */
 class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
-                                        public juce::FileDragAndDropTarget {
+                                        public juce::FileDragAndDropTarget,
+                                        public juce::Slider::Listener{
  public:
   VibeSamplerAudioProcessorEditor(VibeSamplerAudioProcessor&);
   ~VibeSamplerAudioProcessorEditor() override;
@@ -27,6 +28,8 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
 
   bool isInterestedInFileDrag(const juce::StringArray& files) override;
   void filesDropped(const juce::StringArray& files, int x, int y) override;
+
+  void sliderValueChanged(juce::Slider* slider) override;
 
  private:
   // Text button for loading sound/sample from computer

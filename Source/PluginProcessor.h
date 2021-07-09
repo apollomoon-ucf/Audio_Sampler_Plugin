@@ -62,6 +62,16 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor {
   // giving access to memberWaveform
   juce::AudioBuffer<float> getWaveform() { return memberWaveform; };
 
+  void getADSRGainValue();
+
+  juce::ADSR::Parameters& getADSRParameters() { return memberADSRGainParameters; };
+  // adsr (getting from ADSR::Parameters) and gain
+  //float attack{0.0};
+  //float decay{0.0};
+  //float sustain{0.0};
+  //float release{0.0};
+  float gain{0.0};
+
  private:
   // creating member variables for the Synthesiser class and polyphony (#
   // voices)
@@ -69,6 +79,8 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor {
   const int memberNumberOfVoices{12};
   // AudioBuffer for storing waveform
   juce::AudioBuffer<float> memberWaveform;
+  // ADSR
+  juce::ADSR::Parameters memberADSRGainParameters;
 
   // audio format manager
   juce::AudioFormatManager memberFormatManager;

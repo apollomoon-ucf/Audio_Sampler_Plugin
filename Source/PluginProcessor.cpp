@@ -95,6 +95,8 @@ void VibeSamplerAudioProcessor::prepareToPlay(double sampleRate,
   // Use this method as the place to do any pre-playback
   // initialisation that you need..
   memberSampler.setCurrentPlaybackSampleRate(sampleRate);
+
+  getADSRGainValue();
 }
 
 void VibeSamplerAudioProcessor::releaseResources() {
@@ -137,6 +139,9 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   int numSamples = buffer.getNumSamples();
   auto outputAudio = buffer;
   auto inputMidi = midiMessages;
+
+  // calling to get adsr values and printing them to console
+  getADSRGainValue();
 
   // In case we have more outputs than inputs, this code clears any output
   // channels that didn't contain input data, (because these aren't
@@ -201,6 +206,7 @@ void VibeSamplerAudioProcessor::loadFile() {
 
   // getting result from user's selection
   if (chooseFile.browseForFileToOpen()) {
+    // setting up file reader
     auto userFile = chooseFile.getResult();
     memberFormatReader = memberFormatManager.createReaderFor(userFile);
 
@@ -260,6 +266,21 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   memberSampler.addSound(new juce::SamplerSound(
       "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
       attackTimeSecs, releaseTimeSecs, maxSampleLengthSecs));
+}
+
+// listening for adsr and gain
+void VibeSamplerAudioProcessor::getADSRGainValue() {
+  /* std::cout << "Attack: " << attack << std::endl;
+  std::cout << "Decay: " << decay << std::endl;
+  std::cout << "Sustain: " << sustain << std::endl;
+  std::cout << "Release: " << release << std::endl;
+  std::cout << "Gain: " << gain << std::endl; */
+  for (int i = 0; i < memberSampler.getNumSounds(); i++) {
+    if (auto sound = dynamic_cast<juce::SamplerSound*>(
+            memberSampler.getSound(i).get())) {
+      sound->setEnvelopeParameters(memberADSRGainParameters);
+    }
+  }
 }
 
 //==============================================================================
