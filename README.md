@@ -47,3 +47,8 @@ Note: plugin states are not reloadable at this stage; plugin is cleared when daw
 
 (Plugin displaying success message "Sound file loaded!" after loading sound/sample)
 ![Screenshot_plugin_loading_success_drag_drop](https://user-images.githubusercontent.com/25870426/124999586-76192e80-e01c-11eb-9e0c-0585727ece39.png)
+
+Continuing development, I added knobs and labels and displayed them on the plugin. I attempted to match the placement of the knobs to the plugin layout seen in the previous section.
+
+(Plugin displaying knobs, labels, and sample load options)
+![Screenshot_knobs_labels_coded](https://user-images.githubusercontent.com/25870426/125114151-90ecb100-e0b7-11eb-8f0d-fbd6cbc28ead.png)

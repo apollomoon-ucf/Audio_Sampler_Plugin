@@ -36,6 +36,11 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
   std::vector<float> memberAudioSnapshotLocations;
   // bool for drawing waveform
   bool memberActivateWaveformVisual{false};
+  // attack slider
+  juce::Slider memberAttackKnob, memberDecayKnob, memberSustainKnob,
+      memberReleaseKnob, memberGainKnob;
+  juce::Label memberAttackLabel, memberDecayLabel, memberSustainLabel,
+      memberReleaseLabel, memberGainLabel;
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   VibeSamplerAudioProcessor& audioProcessor;

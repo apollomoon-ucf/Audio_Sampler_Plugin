@@ -11,6 +11,7 @@
 #include "PluginProcessor.h"
 
 //==============================================================================
+// constructor
 VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
     VibeSamplerAudioProcessor &p)
     : AudioProcessorEditor(&p), audioProcessor(p) {
@@ -22,11 +23,98 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   };
   // make load button a child component of this current component
   addAndMakeVisible(memberLoadButton);
+
+  // setting up ADSR and gain knobs and labels
+  // Attack Knob
+  memberAttackKnob.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+  memberAttackKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+                             juce::Colours::black);
+  memberAttackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+  memberAttackKnob.setTextValueSuffix(" ms");
+  memberAttackKnob.setRange(0.0f, 5.0f, 0.01f);
+  addAndMakeVisible(memberAttackKnob);
+  memberAttackLabel.setFont(10.0f);
+  memberAttackLabel.setText("Attack",
+                            juce::NotificationType::dontSendNotification);
+  memberAttackLabel.setJustificationType(juce::Justification::centredTop);
+  memberAttackLabel.setColour(juce::Label::ColourIds::textColourId,
+                              juce::Colours::black);
+  memberAttackLabel.attachToComponent(&memberAttackKnob, false);
+  addAndMakeVisible(memberAttackLabel);
+
+  // Decay Knob
+  memberDecayKnob.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+  memberDecayKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+                            juce::Colours::black);
+  memberDecayKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+  memberDecayKnob.setTextValueSuffix(" ms");
+  memberDecayKnob.setRange(0.0f, 5.0f, 0.01f);
+  addAndMakeVisible(memberDecayKnob);
+  memberDecayLabel.setFont(10.0f);
+  memberDecayLabel.setText("Decay",
+                           juce::NotificationType::dontSendNotification);
+  memberDecayLabel.setJustificationType(juce::Justification::centredTop);
+  memberDecayLabel.setColour(juce::Label::ColourIds::textColourId,
+                             juce::Colours::black);
+  memberDecayLabel.attachToComponent(&memberDecayKnob, false);
+  addAndMakeVisible(memberDecayLabel);
+
+  // Sustain Knob
+  memberSustainKnob.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+  memberSustainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+                              juce::Colours::black);
+  memberSustainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+  memberSustainKnob.setTextValueSuffix(" ms");
+  memberSustainKnob.setRange(0.0f, 5.0f, 0.01f);
+  addAndMakeVisible(memberSustainKnob);
+  memberSustainLabel.setFont(10.0f);
+  memberSustainLabel.setText("Sustain",
+                             juce::NotificationType::dontSendNotification);
+  memberSustainLabel.setJustificationType(juce::Justification::centredTop);
+  memberSustainLabel.setColour(juce::Label::ColourIds::textColourId,
+                               juce::Colours::black);
+  memberSustainLabel.attachToComponent(&memberSustainKnob, false);
+  addAndMakeVisible(memberSustainLabel);
+
+  // Release Knob
+  memberReleaseKnob.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+  memberReleaseKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+                              juce::Colours::black);
+  memberReleaseKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+  memberReleaseKnob.setTextValueSuffix(" ms");
+  memberReleaseKnob.setRange(0.0f, 5.0f, 0.01f);
+  addAndMakeVisible(memberReleaseKnob);
+  memberReleaseLabel.setFont(10.0f);
+  memberReleaseLabel.setText("Release",
+                             juce::NotificationType::dontSendNotification);
+  memberReleaseLabel.setJustificationType(juce::Justification::centredTop);
+  memberReleaseLabel.setColour(juce::Label::ColourIds::textColourId,
+                               juce::Colours::black);
+  memberReleaseLabel.attachToComponent(&memberReleaseKnob, false);
+  addAndMakeVisible(memberReleaseLabel);
+
+  // Gain Knob
+  memberGainKnob.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+  memberGainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+                           juce::Colours::black);
+  memberGainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+  memberGainKnob.setTextValueSuffix(" db");
+  memberGainKnob.setRange(0.0f, 5.0f, 0.01f);
+  addAndMakeVisible(memberGainKnob);
+  memberGainLabel.setFont(10.0f);
+  memberGainLabel.setText("Gain", juce::NotificationType::dontSendNotification);
+  memberGainLabel.setJustificationType(juce::Justification::centredTop);
+  memberGainLabel.setColour(juce::Label::ColourIds::textColourId,
+                            juce::Colours::black);
+  memberGainLabel.attachToComponent(&memberGainKnob, false);
+  addAndMakeVisible(memberGainLabel);
+
   // Make sure that before the constructor has finished, you've set the
   // editor's size to whatever you need it to be.
-  setSize(400, 300);
+  setSize(600, 400);
 }
 
+// destructor
 VibeSamplerAudioProcessorEditor::~VibeSamplerAudioProcessorEditor() {}
 
 //==============================================================================
@@ -83,6 +171,26 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
 void VibeSamplerAudioProcessorEditor::resized() {
   // This is generally where you'll want to lay out the positions of any
   // subcomponents in your editor..
+  // resize and move adsr knobs
+  const auto proportionalX = 0.07f;
+  const auto spacing = 0.15f;
+  const auto proportionalY = 0.7f;
+  const auto proportionalWidth = 0.25f;
+  const auto proportionalHeight = 0.25f;
+  memberAttackKnob.setBoundsRelative(proportionalX, proportionalY,
+                                     proportionalWidth, proportionalHeight);
+  memberDecayKnob.setBoundsRelative(proportionalX + spacing, proportionalY,
+                                    proportionalWidth, proportionalHeight);
+  memberSustainKnob.setBoundsRelative(proportionalX + (spacing * 2),
+                                      proportionalY, proportionalWidth,
+                                      proportionalHeight);
+  memberReleaseKnob.setBoundsRelative(proportionalX + (spacing * 3),
+                                      proportionalY, proportionalWidth,
+                                      proportionalHeight);
+  memberGainKnob.setBoundsRelative(proportionalX + (spacing * 4), proportionalY,
+                                   proportionalWidth, proportionalHeight);
+
+  // get dimensions for button
   int x = getWidth() / 2 - 100;
   int y = getHeight() / 2 - 100;
   int width = 200;
