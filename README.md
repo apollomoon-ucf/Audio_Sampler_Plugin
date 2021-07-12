@@ -62,4 +62,4 @@ Displayed waveform in center of window with width equal to window length.
 I want to create a sample window to house the waveform, therefore, the next step will be to draw the waveform inside of a centered box.
 
 (Plugin displaying waveform)
-![Screenshot_waveform_drawn](https://user-images.githubusercontent.com/25870426/125360676-3a42d980-e33a-11eb-80dc-983f2a756735.png)
+![waveform_image_for_sketch](https://user-images.githubusercontent.com/25870426/125361438-4c714780-e33b-11eb-8cde-75046963175f.png)
