@@ -13,7 +13,8 @@
 //==============================================================================
 /**
  */
-class VibeSamplerAudioProcessor : public juce::AudioProcessor {
+class VibeSamplerAudioProcessor : public juce::AudioProcessor,
+                                  public juce::ValueTree::Listener {
  public:
   //==============================================================================
   VibeSamplerAudioProcessor();
@@ -62,21 +63,33 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor {
   // giving access to memberWaveform
   juce::AudioBuffer<float> getWaveform() { return memberWaveform; };
 
+  // method to set number of voices (change polyphony)
+  void VibeSamplerAudioProcessor::changePolyphony(int numberOfVoices);
+
   void getADSRGainValue();
 
-  juce::ADSR::Parameters& getADSRParameters() { return memberADSRGainParameters; };
+  juce::ADSR::Parameters& getADSRParameters() {
+    return memberADSRGainParameters;
+  };
   // adsr (getting from ADSR::Parameters) and gain
-  //float attack{0.0};
-  //float decay{0.0};
-  //float sustain{0.0};
-  //float release{0.0};
+  // float attack{0.0};
+  // float decay{0.0};
+  // float sustain{0.0};
+  // float release{0.0};
   float gain{0.0};
+
+  // giving access to AudioProcessorValueTreeState by creating a reference to
+  // the object
+  juce::AudioProcessorValueTreeState& getValueTreeState() {
+    return memberValueTreeState;
+  };
 
  private:
   // creating member variables for the Synthesiser class and polyphony (#
   // voices)
   juce::Synthesiser memberSampler;
-  const int memberNumberOfVoices{12};
+  const int memberVoiceInitNumber{1};
+  const int memberMaxNumberOfVoices{32};
   // AudioBuffer for storing waveform
   juce::AudioBuffer<float> memberWaveform;
   // ADSR
@@ -85,6 +98,15 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor {
   // audio format manager
   juce::AudioFormatManager memberFormatManager;
   juce::AudioFormatReader* memberFormatReader{nullptr};
+
+  // object for value tree state
+  juce::AudioProcessorValueTreeState memberValueTreeState;
+  // parameter layout
+  juce::AudioProcessorValueTreeState::ParameterLayout getParameterLayout();
+
+  void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
+                                const juce::Identifier& property) override;
+  std::atomic<bool> memberShouldUpdateParameters{false};
 
   //==============================================================================
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VibeSamplerAudioProcessor)

@@ -23,14 +23,19 @@ VibeSamplerAudioProcessor::VibeSamplerAudioProcessor()
 #endif
               .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
-      )
+              ),
+      memberValueTreeState(*this, nullptr, "PARAMS", getParameterLayout())
 #endif
 {
   // setting up format manager for different audio formats
   memberFormatManager.registerBasicFormats();
+  memberValueTreeState.state.addListener(this);
 
   // adding the number of voices declared in PluginProcessor.h
-  for (int i = 0; i < memberNumberOfVoices; i++) {
+  //for (int i = 0; i < memberNumberOfVoices; i++) {
+  //  memberSampler.addVoice(new juce::SamplerVoice());
+  //}
+  for (int i = 0; i < memberVoiceInitNumber; i++) {
     memberSampler.addVoice(new juce::SamplerVoice());
   }
 }
@@ -140,8 +145,11 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   auto outputAudio = buffer;
   auto inputMidi = midiMessages;
 
-  // calling to get adsr values and printing them to console
-  getADSRGainValue();
+  // calling to get adsr values (and printing them to console if needed)
+  // getADSRGainValue();
+  if (memberShouldUpdateParameters) {
+    getADSRGainValue();
+  }
 
   // In case we have more outputs than inputs, this code clears any output
   // channels that didn't contain input data, (because these aren't
@@ -275,12 +283,90 @@ void VibeSamplerAudioProcessor::getADSRGainValue() {
   std::cout << "Sustain: " << sustain << std::endl;
   std::cout << "Release: " << release << std::endl;
   std::cout << "Gain: " << gain << std::endl; */
+
+  // adding params for Value State Tree solution
+  memberADSRGainParameters.attack =
+      *memberValueTreeState.getRawParameterValue("attack");
+  memberADSRGainParameters.decay =
+      *memberValueTreeState.getRawParameterValue("decay");
+  memberADSRGainParameters.sustain =
+      *memberValueTreeState.getRawParameterValue("sustain");
+  memberADSRGainParameters.release =
+      *memberValueTreeState.getRawParameterValue("release");
+  gain = *memberValueTreeState.getRawParameterValue("gain");
+
+  // getting and updating sounds
   for (int i = 0; i < memberSampler.getNumSounds(); i++) {
     if (auto sound = dynamic_cast<juce::SamplerSound*>(
             memberSampler.getSound(i).get())) {
       sound->setEnvelopeParameters(memberADSRGainParameters);
     }
   }
+}
+
+// parameter layout method
+juce::AudioProcessorValueTreeState::ParameterLayout
+VibeSamplerAudioProcessor::getParameterLayout() {
+  // declare vectors and vars
+  std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameters;
+  // std::string paramID = "attack";
+  // std::string paramName = "Attack";
+  float minValue = 0.0;
+  float maxValue = 5.0;
+  float defaultValue = 0.0;
+
+  // Parameters for knobs -- default values may need to be tweaked
+
+  // Method 1 (using vector to return ParameterLayour):
+  parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
+      "attack", "Attack", minValue, 2.0, defaultValue));
+  parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
+      "decay", "Decay", minValue, maxValue, defaultValue));
+  parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
+      "sustain", "Sustain", minValue, maxValue, defaultValue));
+  parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
+      "release", "Release", minValue, maxValue, defaultValue));
+  parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
+      "gain", "Gain", minValue, maxValue, defaultValue));
+
+  return {parameters.begin(), parameters.end()};
+
+  // method crashing program..(review logs when possible)
+  // 
+  // Method 2 (New - adding to and returning ParameterLayout itself):
+  // juce::AudioProcessorValueTreeState::ParameterLayout layout;
+  // layout.add(std::make_unique<juce::AudioParameterFloat>(
+  //    "attack", "Attack", minValue, maxValue, defaultValue));
+  // layout.add(std::make_unique<juce::AudioParameterFloat>(
+  //    "decay", "Decay", minValue, maxValue, defaultValue));
+  // layout.add(std::make_unique<juce::AudioParameterFloat>(
+  //    "sustain", "Sustain", minValue, maxValue, defaultValue));
+  // layout.add(std::make_unique<juce::AudioParameterFloat>(
+  //    "release", "Release", minValue, maxValue, defaultValue));
+
+  // return layout;
+}
+
+void VibeSamplerAudioProcessor::valueTreePropertyChanged(
+    juce::ValueTree& treeWhosePropertyHasChanged,
+    const juce::Identifier& property) {
+  memberShouldUpdateParameters = true;
+}
+
+
+// method to change polyphony
+void VibeSamplerAudioProcessor::changePolyphony(int numberOfVoices) {
+  if (numberOfVoices > memberSampler.getNumVoices()) {
+    while (memberSampler.getNumVoices() != numberOfVoices) {
+      memberSampler.addVoice(new juce::SamplerVoice());
+    }
+  } else {
+    while (memberSampler.getNumVoices() != numberOfVoices &&
+           memberSampler.getNumVoices() != 1) {
+      memberSampler.removeVoice(0);
+    }
+  }
+
 }
 
 //==============================================================================

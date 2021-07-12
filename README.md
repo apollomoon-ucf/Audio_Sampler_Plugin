@@ -52,3 +52,8 @@ Continuing development, I added knobs and labels and displayed them on the plugi
 
 (Plugin displaying knobs, labels, and sample load options)
 ![Screenshot_knobs_labels_coded](https://user-images.githubusercontent.com/25870426/125114151-90ecb100-e0b7-11eb-8f0d-fbd6cbc28ead.png)
+
+Added button to change polyphony of sampler, and ADSR knobs are fully functional. Gain knob still needs to be connected to output.
+
+(Plugin displaying polyphonic control)
+![Screenshot_polyphony](https://user-images.githubusercontent.com/25870426/125218924-e977a600-e291-11eb-910a-62d93dca71fb.png)
