@@ -14,13 +14,16 @@
 // constructor
 VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
     VibeSamplerAudioProcessor &p)
-    : AudioProcessorEditor(&p), audioProcessor(p) {
+    : AudioProcessorEditor(&p), memberWaveformVisual(p), audioProcessor(p) {
   // lambda function to run on button click
   memberLoadButton.onClick = [&]() {
     audioProcessor.loadFile();
-    memberActivateWaveformVisual = true;
+    memberWaveformVisual.activateWaveForm(true);
     repaint();
   };
+
+  // make waveform visual
+  addAndMakeVisible(memberWaveformVisual);
   // make load button a child component of this current component
   addAndMakeVisible(memberLoadButton);
 
@@ -205,45 +208,46 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   g.fillAll(juce::Colours::white);
   g.setColour(juce::Colours::black);
   g.setFont(15.0f);
-  // if waveform should be drawn
-  if (memberActivateWaveformVisual) {
-    memberAudioSnapshotLocations.clear();
-    // get waveform from the processor
-    auto waveform = audioProcessor.getWaveform();
-    // scaling waveform to size of window
-    auto scaling = waveform.getNumSamples() / getWidth();
-    // buffer read pointer
-    auto buffer = waveform.getReadPointer(0);
+  //// if waveform should be drawn
+  // if (memberActivateWaveformVisual) {
+  //  memberAudioSnapshotLocations.clear();
+  //  // get waveform from the processor
+  //  auto waveform = audioProcessor.getWaveform();
+  //  // scaling waveform to size of window
+  //  auto scaling = waveform.getNumSamples() / getWidth();
+  //  // buffer read pointer
+  //  auto buffer = waveform.getReadPointer(0);
 
-    // setting up path for drawing waveform
-    juce::Path p;
-    p.startNewSubPath(0, getHeight() / static_cast<float>(2));
+  //  // setting up path for drawing waveform
+  //  juce::Path p;
+  //  p.startNewSubPath(0, getHeight() / static_cast<float>(2));
 
-    // scaling on x-axis
-    // selecting snapshot locations of waveform using the scaling factor
-    for (int sample = 0; sample < waveform.getNumSamples(); sample += scaling) {
-      memberAudioSnapshotLocations.push_back(buffer[sample]);
-    }
-    // scaling on y-axis
-    // selecting snapshot locations of waveform using the scaling factor
-    for (int sample = 0; sample < memberAudioSnapshotLocations.size();
-         sample++) {
-      auto snapshot = juce::jmap<float>(memberAudioSnapshotLocations[sample],
-                                        -1.0f, 1.0f, 300, 0);
-      p.lineTo(sample, snapshot);
-    }
+  //  // scaling on x-axis
+  //  // selecting snapshot locations of waveform using the scaling factor
+  //  for (int sample = 0; sample < waveform.getNumSamples(); sample += scaling)
+  //  {
+  //    memberAudioSnapshotLocations.push_back(buffer[sample]);
+  //  }
+  //  // scaling on y-axis
+  //  // selecting snapshot locations of waveform using the scaling factor
+  //  for (int sample = 0; sample < memberAudioSnapshotLocations.size();
+  //       sample++) {
+  //    auto snapshot = juce::jmap<float>(memberAudioSnapshotLocations[sample],
+  //                                      -1.0f, 1.0f, 300, 0);
+  //    p.lineTo(sample, snapshot);
+  //  }
 
-    // actually drawing waveform here; thickness 2
-    g.strokePath(p, juce::PathStrokeType(2));
+  //  // actually drawing waveform here; thickness 2
+  //  g.strokePath(p, juce::PathStrokeType(2));
 
-    // deactivate waveform visualization
-    memberActivateWaveformVisual = false;
-  }
+  //  // deactivate waveform visualization
+  //  memberActivateWaveformVisual = false;
+  //}
   g.drawFittedText(
-      " \n\n\nVibe Music Productions\n Testing Maschine 2 - VST \n Brian Moon",
-      getLocalBounds(), juce::Justification::centred, 1);
+      "Vibe Music Productions\n VST Testing - Brian Moon",
+      getLocalBounds(), juce::Justification::centredTop, 1);
   if (audioProcessor.getNumberOfSamplerSounds() > 0) {
-    g.drawFittedText("  -- \n\n\n\n \n\n\nSound file loaded!", getLocalBounds(),
+    g.drawFittedText("     \n \n\n\n\n\n\n\n\n \n\n\n   Sound file loaded!", getLocalBounds(),
                      juce::Justification::centred, 1);
   }
 }
@@ -251,6 +255,10 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
 void VibeSamplerAudioProcessorEditor::resized() {
   // This is generally where you'll want to lay out the positions of any
   // subcomponents in your editor..
+
+  // waveform visual
+  memberWaveformVisual.setBoundsRelative(0.0f, 0.25f, 1.0f, 0.5f);
+
   // resize and move adsr knobs
   const auto proportionalX = 0.07f;
   const auto spacing = 0.15f;
@@ -274,7 +282,7 @@ void VibeSamplerAudioProcessorEditor::resized() {
 
   // get dimensions for button
   int x = getWidth() / 2 - 100;
-  int y = getHeight() / 2 - 100;
+  int y = getHeight() / 2 - 160;
   int width = 200;
   int height = 50;
   memberLoadButton.setBounds(x, y, width, height);
@@ -301,7 +309,7 @@ void VibeSamplerAudioProcessorEditor::filesDropped(
       // load the file
       audioProcessor.loadDroppedFile(file);
       // draw waveform?
-      memberActivateWaveformVisual = true;
+      // memberActivateWaveformVisual = true;
     }
   }
   // repaint to display successful file load message

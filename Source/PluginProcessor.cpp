@@ -150,7 +150,6 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   if (memberShouldUpdateParameters) {
     getADSRGainValue();
   }
-
   // In case we have more outputs than inputs, this code clears any output
   // channels that didn't contain input data, (because these aren't
   // guaranteed to be empty - they may contain garbage).
@@ -162,6 +161,7 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 
   // renders the next audio block of audio output
   // the midi notes are used to trigger voices
+  // outputAudio.applyGainRamp(startSample, numSamples, 5.0, 0.0); -- need to fix pops
   memberSampler.renderNextBlock(outputAudio, inputMidi, startSample,
                                 numSamples);
 
@@ -229,15 +229,17 @@ void VibeSamplerAudioProcessor::loadFile() {
     // C3 = midi note 60
     int midiNoteForNormalPitch = 60;
     // attack and release time
-    int attackTimeSecs = 0.1;
-    int releaseTimeSecs = 0.1;
+    int attackTimeSecs = 0.4;
+    int releaseTimeSecs = 0.4;
     // max sample length
     int maxSampleLengthSecs = 10.0;
-
+    getADSRGainValue();
     // creating new sampler sound containing the audio file selected by user
     memberSampler.addSound(new juce::SamplerSound(
         "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
         attackTimeSecs, releaseTimeSecs, maxSampleLengthSecs));
+
+    
   }
 }
 
@@ -265,8 +267,8 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   // C3 = midi note 60
   int midiNoteForNormalPitch = 60;
   // attack and release time
-  int attackTimeSecs = 0.1;
-  int releaseTimeSecs = 0.1;
+  int attackTimeSecs = 0.4;
+  int releaseTimeSecs = 0.4;
   // max sample length
   int maxSampleLengthSecs = 10.0;
 
@@ -274,6 +276,8 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   memberSampler.addSound(new juce::SamplerSound(
       "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
       attackTimeSecs, releaseTimeSecs, maxSampleLengthSecs));
+
+  getADSRGainValue();
 }
 
 // listening for adsr and gain

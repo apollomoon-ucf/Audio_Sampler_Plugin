@@ -12,6 +12,8 @@
 
 #include "PluginProcessor.h"
 
+#include "WaveformVisual.h"
+
 //==============================================================================
 /**
  */
@@ -36,10 +38,12 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
   // Text button for loading sound/sample from computer
   juce::TextButton memberLoadButton{
       "Click or drag and drop sounds here to load into sampler"};
-  // place to hold samples
-  std::vector<float> memberAudioSnapshotLocations;
-  // bool for drawing waveform
-  bool memberActivateWaveformVisual{false};
+  //// place to hold samples
+  //std::vector<float> memberAudioSnapshotLocations;
+  //// bool for drawing waveform
+  //bool memberActivateWaveformVisual{false};
+  // WaveformVisual solution for above code
+  WaveformVisual memberWaveformVisual;
   // attack slider
   juce::Slider memberAttackKnob, memberDecayKnob, memberSustainKnob,
       memberReleaseKnob, memberGainKnob, memberPolyphonyKnob;
