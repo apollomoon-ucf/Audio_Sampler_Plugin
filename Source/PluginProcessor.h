@@ -77,6 +77,7 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   // float sustain{0.0};
   // float release{0.0};
   float gain{0.0};
+  float polyphony{1.0};
 
   // giving access to AudioProcessorValueTreeState by creating a reference to
   // the object

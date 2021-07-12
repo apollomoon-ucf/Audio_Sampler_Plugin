@@ -61,6 +61,8 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
       memberReleaseKnobAttachment;
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
       memberGainKnobAttachment;
+  std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
+      memberPolyphonyKnobAttachment;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VibeSamplerAudioProcessorEditor)
 };

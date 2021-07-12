@@ -174,12 +174,12 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
                                       20);
   memberPolyphonyKnob.setTextValueSuffix(" Voice(s)");
   // value tree state solution for listener knob
-  // memberPolyphonyKnobAttachment =
-  //    std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-  //        audioProcessor.getValueTreeState(), "attack", memberPolyphonyKnob);
+  memberPolyphonyKnobAttachment =
+      std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+          audioProcessor.getValueTreeState(), "polyphony", memberPolyphonyKnob);
   // no longer using listener or range with Value Tree State solution
   memberPolyphonyKnob.setRange(1.0, 32.0, 1.0);
-  memberPolyphonyKnob.addListener(this);
+  // memberPolyphonyKnob.addListener(this);
   addAndMakeVisible(memberPolyphonyKnob);
   memberPolyphonyLabel.setFont(20.0f);
   memberPolyphonyLabel.setText("Polyphony",
@@ -269,9 +269,8 @@ void VibeSamplerAudioProcessorEditor::resized() {
                                       proportionalHeight);
   memberGainKnob.setBoundsRelative(proportionalX + (spacing * 4), proportionalY,
                                    proportionalWidth, proportionalHeight);
-  memberPolyphonyKnob.setBoundsRelative(proportionalX,
-                                        0.1, proportionalWidth / 1.5,
-                                        proportionalHeight / 1.5);
+  memberPolyphonyKnob.setBoundsRelative(
+      proportionalX, 0.1, proportionalWidth / 1.5, proportionalHeight / 1.5);
 
   // get dimensions for button
   int x = getWidth() / 2 - 100;
@@ -323,7 +322,7 @@ void VibeSamplerAudioProcessorEditor::sliderValueChanged(juce::Slider *slider) {
     audioProcessor.gain = memberGainKnob.getValue();
   } else if (slider == &memberPolyphonyKnob) {
     audioProcessor.changePolyphony(memberPolyphonyKnob.getValue());
-  } 
+  }
 
   // update adsr
   audioProcessor.getADSRGainValue();

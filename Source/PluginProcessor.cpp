@@ -294,14 +294,16 @@ void VibeSamplerAudioProcessor::getADSRGainValue() {
   memberADSRGainParameters.release =
       *memberValueTreeState.getRawParameterValue("release");
   gain = *memberValueTreeState.getRawParameterValue("gain");
+  polyphony = *memberValueTreeState.getRawParameterValue("polyphony");
 
   // getting and updating sounds
   for (int i = 0; i < memberSampler.getNumSounds(); i++) {
-    if (auto sound = dynamic_cast<juce::SamplerSound*>(
-            memberSampler.getSound(i).get())) {
+    if (auto sound = dynamic_cast<juce::SamplerSound*>(memberSampler.getSound(i).get())) {
       sound->setEnvelopeParameters(memberADSRGainParameters);
     }
   }
+
+  changePolyphony(polyphony);
 }
 
 // parameter layout method
@@ -328,6 +330,8 @@ VibeSamplerAudioProcessor::getParameterLayout() {
       "release", "Release", minValue, maxValue, defaultValue));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
       "gain", "Gain", minValue, maxValue, defaultValue));
+  parameters.push_back(std::make_unique<juce::AudioParameterInt>(
+      "polyphony", "Polyphony", minValue, 32, defaultValue));
 
   return {parameters.begin(), parameters.end()};
 
