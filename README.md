@@ -63,3 +63,9 @@ I want to create a sample window to house the waveform, therefore, the next step
 
 (Plugin displaying waveform)
 ![waveform_image_for_sketch](https://user-images.githubusercontent.com/25870426/125361438-4c714780-e33b-11eb-8cde-75046963175f.png)
+
+Centered waveform on plugin, and preparing to outline/frame it to match layout.
+Displayed Sample Vibe logo, but need to replace it with a high resolution version, along with the text "Vibe Audio Sampler" during the design phase.
+
+(Plugin displaying waveform)
+![Screenshot_waveform_drawn_v2](https://user-images.githubusercontent.com/25870426/125387967-afc79d80-e36c-11eb-8714-768a8e039a12.png)

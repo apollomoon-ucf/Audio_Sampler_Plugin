@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "WaveformVisual.h"
+#include "WaveformVisual.h" 
 
 //==============================================================================
 WaveformVisual::WaveformVisual(VibeSamplerAudioProcessor& p)

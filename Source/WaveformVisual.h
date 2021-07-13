@@ -38,7 +38,7 @@ class WaveformVisual : public juce::Component,
   bool memberActivateWaveformVisual{false};
 
   // reference to the audio processor
-  VibeSamplerAudioProcessor& audioProcessor;
+  VibeSamplerAudioProcessor& audioProcessor; 
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WaveformVisual)
 };
