@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "WaveformVisual.h" 
+#include "WaveformVisual.h"
 
 //==============================================================================
 WaveformVisual::WaveformVisual(VibeSamplerAudioProcessor& p)
@@ -26,7 +26,7 @@ void WaveformVisual::paint(juce::Graphics& g) {
      You should replace everything in this method with your own
      drawing code..
   */
-  // g.fillAll(juce::Colours::black.brighter());
+  //g.fillAll(juce::Colours::black.brighter());
   // get waveform from the processor
   auto waveform = audioProcessor.getWaveform();
 
@@ -42,19 +42,18 @@ void WaveformVisual::paint(juce::Graphics& g) {
 
     // setting up path for drawing waveform
     juce::Path p;
-    p.startNewSubPath(0,
-                      getHeight() / static_cast<float>(2));
+    g.setColour(juce::Colours::whitesmoke);
+    p.startNewSubPath(0, getHeight() / static_cast<float>(2));
+ 
 
     // scaling on x-axis
     // selecting snapshot locations of waveform using the scaling factor
-    for (int sample = 0; sample < waveform.getNumSamples();
-         sample += scaling) {
+    for (int sample = 0; sample < waveform.getNumSamples(); sample += scaling) {
       memberAudioSnapshotLocations.push_back(buffer[sample]);
     }
     // scaling on y-axis
     // selecting snapshot locations of waveform using the scaling factor
-    for (int sample = 0;
-         sample < memberAudioSnapshotLocations.size();
+    for (int sample = 0; sample < memberAudioSnapshotLocations.size();
          sample++) {
       auto snapshot = juce::jmap<float>(memberAudioSnapshotLocations[sample],
                                         -1.0f, 1.0f, getHeight() / 1.5, 0);
@@ -63,6 +62,12 @@ void WaveformVisual::paint(juce::Graphics& g) {
 
     // actually drawing waveform here; thickness 2
     g.strokePath(p, juce::PathStrokeType(2));
+
+    // paint filename
+    g.setColour(juce::Colours::grey);
+    g.setFont(15.0f);
+    // auto boundsForSampleText = getLocalBounds().reduced(10, 10);
+    g.drawFittedText(memberFilename, getLocalBounds(), juce::Justification::centredTop, 1);
 
     // deactivate waveform visualization
     // memberActivateWaveformVisual = false;
@@ -79,7 +84,7 @@ void WaveformVisual::resized() {
 bool WaveformVisual::isInterestedInFileDrag(const juce::StringArray& files) {
   for (auto file : files) {
     if (file.contains(".wav") || file.contains(".mp3") ||
-        file.contains(".aiff")) {
+        file.contains(".aiff") || file.contains(".aif")) {
       return true;
     }
   }
@@ -91,10 +96,14 @@ void WaveformVisual::filesDropped(const juce::StringArray& files, int x,
                                   int y) {
   for (auto file : files) {
     if (isInterestedInFileDrag(file)) {
+      // create file and get filename to display upon loading of a sample
+      auto myFile = std::make_unique<juce::File>(file);
+      memberFilename = myFile->getFileNameWithoutExtension();
+
       // load the file
       audioProcessor.loadDroppedFile(file);
       // draw waveform?
-      memberActivateWaveformVisual = true;
+      // memberActivateWaveformVisual = true;
       // repaint();
     }
   }

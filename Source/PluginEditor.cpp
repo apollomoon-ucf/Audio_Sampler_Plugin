@@ -18,7 +18,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   // lambda function to run on button click
   memberLoadButton.onClick = [&]() {
     audioProcessor.loadFile();
-    memberWaveformVisual.activateWaveForm(true);
+    // memberWaveformVisual.activateWaveForm(true);
     repaint();
   };
 
@@ -32,9 +32,9 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberAttackKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryVerticalDrag);
   memberAttackKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                             juce::Colours::black);
+                             juce::Colours::white);
   memberAttackKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                             juce::Colours::rebeccapurple);
+                             juce::Colours::whitesmoke);
   memberAttackKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                              juce::Colours::rebeccapurple);
   memberAttackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
@@ -47,20 +47,20 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   // memberAttackKnob.setRange(0.0f, 5.0f, 0.01f);
   // memberAttackKnob.addListener(this);
   addAndMakeVisible(memberAttackKnob);
-  memberAttackLabel.setFont(10.0f);
+  memberAttackLabel.setFont(15.0f);
   memberAttackLabel.setText("Attack",
                             juce::NotificationType::dontSendNotification);
   memberAttackLabel.setJustificationType(juce::Justification::centredTop);
   memberAttackLabel.setColour(juce::Label::ColourIds::textColourId,
-                              juce::Colours::black);
+                              juce::Colours::white);
   memberAttackLabel.attachToComponent(&memberAttackKnob, false);
 
   // Decay Knob
   memberDecayKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
   memberDecayKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                            juce::Colours::black);
+                            juce::Colours::white);
   memberDecayKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                            juce::Colours::rebeccapurple);
+                            juce::Colours::whitesmoke);
   memberDecayKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                             juce::Colours::rebeccapurple);
   memberDecayKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
@@ -73,12 +73,12 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   // memberDecayKnob.setRange(0.0f, 5.0f, 0.01f);
   // memberDecayKnob.addListener(this);
   addAndMakeVisible(memberDecayKnob);
-  memberDecayLabel.setFont(10.0f);
+  memberDecayLabel.setFont(15.0f);
   memberDecayLabel.setText("Decay",
                            juce::NotificationType::dontSendNotification);
   memberDecayLabel.setJustificationType(juce::Justification::centredTop);
   memberDecayLabel.setColour(juce::Label::ColourIds::textColourId,
-                             juce::Colours::black);
+                             juce::Colours::white);
   memberDecayLabel.attachToComponent(&memberDecayKnob, false);
   // addAndMakeVisible(memberDecayLabel);
 
@@ -86,9 +86,9 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberSustainKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryVerticalDrag);
   memberSustainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                              juce::Colours::black);
+                              juce::Colours::white);
   memberSustainKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                              juce::Colours::rebeccapurple);
+                              juce::Colours::whitesmoke);
   memberSustainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                               juce::Colours::rebeccapurple);
   memberSustainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
@@ -101,12 +101,12 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   // memberSustainKnob.setRange(0.0f, 5.0f, 0.01f);
   // memberSustainKnob.addListener(this);
   addAndMakeVisible(memberSustainKnob);
-  memberSustainLabel.setFont(10.0f);
+  memberSustainLabel.setFont(15.0f);
   memberSustainLabel.setText("Sustain",
                              juce::NotificationType::dontSendNotification);
   memberSustainLabel.setJustificationType(juce::Justification::centredTop);
   memberSustainLabel.setColour(juce::Label::ColourIds::textColourId,
-                               juce::Colours::black);
+                               juce::Colours::white);
   memberSustainLabel.attachToComponent(&memberSustainKnob, false);
   // addAndMakeVisible(memberSustainLabel);
 
@@ -114,9 +114,9 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberReleaseKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryVerticalDrag);
   memberReleaseKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                              juce::Colours::black);
+                              juce::Colours::white);
   memberReleaseKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                              juce::Colours::rebeccapurple);
+                              juce::Colours::whitesmoke);
   memberReleaseKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                               juce::Colours::rebeccapurple);
   memberReleaseKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
@@ -129,21 +129,21 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   // memberReleaseKnob.setRange(0.0f, 5.0f, 0.01f);
   // memberReleaseKnob.addListener(this);
   addAndMakeVisible(memberReleaseKnob);
-  memberReleaseLabel.setFont(10.0f);
+  memberReleaseLabel.setFont(15.0f);
   memberReleaseLabel.setText("Release",
                              juce::NotificationType::dontSendNotification);
   memberReleaseLabel.setJustificationType(juce::Justification::centredTop);
   memberReleaseLabel.setColour(juce::Label::ColourIds::textColourId,
-                               juce::Colours::black);
+                               juce::Colours::white);
   memberReleaseLabel.attachToComponent(&memberReleaseKnob, false);
   // addAndMakeVisible(memberReleaseLabel);
 
   // Gain Knob
   memberGainKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
   memberGainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                           juce::Colours::black);
+                           juce::Colours::white);
   memberGainKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                           juce::Colours::rebeccapurple);
+                           juce::Colours::whitesmoke);
   memberGainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                            juce::Colours::rebeccapurple);
   memberGainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
@@ -156,18 +156,18 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   // memberGainKnob.setRange(0.0f, 5.0f, 0.01f);
   // memberGainKnob.addListener(this);
   addAndMakeVisible(memberGainKnob);
-  memberGainLabel.setFont(10.0f);
+  memberGainLabel.setFont(15.0f);
   memberGainLabel.setText("Gain", juce::NotificationType::dontSendNotification);
   memberGainLabel.setJustificationType(juce::Justification::centredTop);
   memberGainLabel.setColour(juce::Label::ColourIds::textColourId,
-                            juce::Colours::black);
+                            juce::Colours::white);
   memberGainLabel.attachToComponent(&memberGainKnob, false);
   // addAndMakeVisible(memberGainLabel);
 
   // Polyphony Knob
   memberPolyphonyKnob.setSliderStyle(juce::Slider::SliderStyle::IncDecButtons);
   memberPolyphonyKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                                juce::Colours::black);
+                                juce::Colours::white);
   memberPolyphonyKnob.setColour(juce::Slider::ColourIds::thumbColourId,
                                 juce::Colours::rebeccapurple);
   memberPolyphonyKnob.setColour(
@@ -175,7 +175,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
       juce::Colours::rebeccapurple);
   memberPolyphonyKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55,
                                       20);
-  memberPolyphonyKnob.setTextValueSuffix(" Voice(s)");
+  memberPolyphonyKnob.setTextValueSuffix(" voice(s)");
   // value tree state solution for listener knob
   memberPolyphonyKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -185,11 +185,11 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   // memberPolyphonyKnob.addListener(this);
   addAndMakeVisible(memberPolyphonyKnob);
   memberPolyphonyLabel.setFont(20.0f);
-  memberPolyphonyLabel.setText("Polyphony",
-                               juce::NotificationType::dontSendNotification);
+  // memberPolyphonyLabel.setText("Polyphony",
+  //                              juce::NotificationType::dontSendNotification);
   memberPolyphonyLabel.setJustificationType(juce::Justification::centredTop);
   memberPolyphonyLabel.setColour(juce::Label::ColourIds::textColourId,
-                                 juce::Colours::black);
+                                 juce::Colours::white);
   memberPolyphonyLabel.attachToComponent(&memberPolyphonyKnob, false);
 
   // Make sure that before the constructor has finished, you've set the
@@ -205,11 +205,11 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   // (Our component is opaque, so we must completely fill the background with a
   // solid colour)
   // g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
-  g.fillAll(juce::Colours::white);
-  g.setColour(juce::Colours::black);
+  g.fillAll(juce::Colours::black);
+  g.setColour(juce::Colours::white);
   g.setFont(15.0f);
 
-  g.drawImageAt(myimage.rescaled(200, 150), getWidth() / 3, 0.01f - 50);
+  g.drawImageAt(myimage.rescaled(125, 80), getWidth() / 2 - 62.5, 8);
   //// if waveform should be drawn
   // if (memberActivateWaveformVisual) {
   //  memberAudioSnapshotLocations.clear();
@@ -251,6 +251,8 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   //  g.drawFittedText("     \n \n\n\n\n\n\n\n\n \n\n\n   Sound file loaded!",
   //                   getLocalBounds(), juce::Justification::centred, 1);
   //}
+  g.drawFittedText("Vibe Audio Sampler", getLocalBounds().reduced(90, 90),
+                   juce::Justification::centredTop, 1);
 }
 
 void VibeSamplerAudioProcessorEditor::resized() {
@@ -263,9 +265,8 @@ void VibeSamplerAudioProcessorEditor::resized() {
   const auto proportionalY = 0.7f;
   const auto proportionalWidth = 0.25f;
   const auto proportionalHeight = 0.25f;
-
   // waveform visual
-  memberWaveformVisual.setBoundsRelative(0.25f, 0.25f, 0.5f, 0.5f);
+  memberWaveformVisual.setBoundsRelative(0.18f, 0.30f, 0.63f, 0.5f);
 
   // resize and move adsr knobs
   memberAttackKnob.setBoundsRelative(proportionalX, proportionalY,
@@ -281,13 +282,13 @@ void VibeSamplerAudioProcessorEditor::resized() {
   memberGainKnob.setBoundsRelative(proportionalX + (spacing * 4), proportionalY,
                                    proportionalWidth, proportionalHeight);
   memberPolyphonyKnob.setBoundsRelative(
-      proportionalX, 0.1, proportionalWidth / 1.5, proportionalHeight / 1.5);
+      proportionalX, 0.1, proportionalWidth / 2, proportionalHeight / 2);
 
   // get dimensions for button
   int x = getWidth() / 2 + 160;
   int y = getHeight() / 2 - 160;
-  int width = 100;
-  int height = 50;
+  int width = 80;
+  int height = 30;
   memberLoadButton.setBounds(x, y, width, height);
 }
 

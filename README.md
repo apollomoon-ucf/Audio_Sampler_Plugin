@@ -58,14 +58,19 @@ Added button to change polyphony of sampler, and ADSR knobs are fully functional
 (Plugin displaying polyphonic control)
 ![Screenshot_polyphony](https://user-images.githubusercontent.com/25870426/125218924-e977a600-e291-11eb-910a-62d93dca71fb.png)
 
-Displayed waveform in center of window with width equal to window length. 
+Displayed waveform in center of window with width equal to window width. 
 I want to create a sample window to house the waveform, therefore, the next step will be to draw the waveform inside of a centered box.
 
 (Plugin displaying waveform)
 ![waveform_image_for_sketch](https://user-images.githubusercontent.com/25870426/125361438-4c714780-e33b-11eb-8cde-75046963175f.png)
 
 Centered waveform on plugin, and preparing to outline/frame it to match layout.
-Displayed Sample Vibe logo, but need to replace it with a high resolution version, along with the text "Vibe Audio Sampler" during the design phase.
+Displayed sample/test Vibe logo, but need to replace it with a high resolution version, along with the text "Vibe Audio Sampler" during the design phase.
 
 (Plugin displaying waveform)
 ![Screenshot_waveform_drawn_v2](https://user-images.githubusercontent.com/25870426/125387967-afc79d80-e36c-11eb-8714-768a8e039a12.png)
+
+Corrected positioning of loaded waveform visualization, fixed logo dimensions, added plugin title ("Vibe Audio Sampler"), and tested a dark mode layout.
+
+(Plugin displaying dark mode test)
+![Screenshot_dark_mode](https://user-images.githubusercontent.com/25870426/125529595-d676f7e1-fe29-44eb-9be6-c88a516badb7.png)
