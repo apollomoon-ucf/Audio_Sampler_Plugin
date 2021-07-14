@@ -37,7 +37,7 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
  private:
   // Text button for loading sound/sample from computer
   juce::TextButton memberLoadButton{
-      "Load Sample"};
+      "Load sample"};
 
   juce::Image myimage = juce::ImageFileFormat::loadFrom(juce::File(
       "C:/Users/Brian/OneDrive - Knights - University of Central Florida/c++_dev_folder/VibeSampler/Documentation/V2-2020-Vibe-Logo-Transparent-450-1-2.png"));
@@ -51,7 +51,7 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
   juce::Slider memberAttackKnob, memberDecayKnob, memberSustainKnob,
       memberReleaseKnob, memberGainKnob, memberPolyphonyKnob;
   juce::Label memberAttackLabel, memberDecayLabel, memberSustainLabel,
-      memberReleaseLabel, memberGainLabel, memberPolyphonyLabel;
+      memberReleaseLabel, memberGainLabel, memberPolyphonyLabel, memberLoadLabel;
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   VibeSamplerAudioProcessor& audioProcessor;

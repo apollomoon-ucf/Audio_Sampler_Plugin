@@ -54,7 +54,7 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   void setStateInformation(const void* data, int sizeInBytes) override;
 
   // load file method
-  void loadFile();
+  juce::String loadFile();
   // load file for dropped file
   void loadDroppedFile(const juce::String& path);
 

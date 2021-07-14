@@ -64,10 +64,10 @@ void WaveformVisual::paint(juce::Graphics& g) {
     g.strokePath(p, juce::PathStrokeType(2));
 
     // paint filename
-    g.setColour(juce::Colours::grey);
-    g.setFont(15.0f);
+    // g.setColour(juce::Colours::grey);
+    // g.setFont(15.0f);
     // auto boundsForSampleText = getLocalBounds().reduced(10, 10);
-    g.drawFittedText(memberFilename, getLocalBounds(), juce::Justification::centredTop, 1);
+    // g.drawFittedText(memberFilename, getLocalBounds(), juce::Justification::topRight, 1);
 
     // deactivate waveform visualization
     // memberActivateWaveformVisual = false;
@@ -80,7 +80,7 @@ void WaveformVisual::resized() {
 }
 
 // method for seeing if the file type dropped on the sampler is an appropriate
-// for music
+// for audio
 bool WaveformVisual::isInterestedInFileDrag(const juce::StringArray& files) {
   for (auto file : files) {
     if (file.contains(".wav") || file.contains(".mp3") ||

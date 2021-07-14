@@ -31,6 +31,9 @@ class WaveformVisual : public juce::Component,
 
   void activateWaveForm(bool activate) { memberActivateWaveformVisual = true; };
 
+  juce::String getFilename() { return memberFilename; };
+  void setFilename(juce::String filename) { memberFilename = filename; };
+
  private:
   // place to hold samples
   std::vector<float> memberAudioSnapshotLocations;

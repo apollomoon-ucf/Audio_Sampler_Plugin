@@ -70,7 +70,7 @@ Displayed sample/test Vibe logo, but need to replace it with a high resolution v
 (Plugin displaying waveform)
 ![Screenshot_waveform_drawn_v2](https://user-images.githubusercontent.com/25870426/125387967-afc79d80-e36c-11eb-8714-768a8e039a12.png)
 
-Corrected positioning of loaded waveform visualization, fixed logo dimensions, added plugin title ("Vibe Audio Sampler"), and tested a dark mode layout.
+7|13|21 Corrected positioning of loaded waveform visualization, fixed logo dimensions, added plugin title ("Vibe Audio Sampler"), and tested a dark mode layout.
 
 (Plugin displaying dark mode test)
-![Screenshot_dark_mode](https://user-images.githubusercontent.com/25870426/125529595-d676f7e1-fe29-44eb-9be6-c88a516badb7.png)
+![Screenshot_dark_mode](https://user-images.githubusercontent.com/25870426/125541776-64892ae0-c7a9-4db3-b7a6-c0c83d261066.png)

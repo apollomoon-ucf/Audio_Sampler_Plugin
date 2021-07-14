@@ -203,7 +203,7 @@ void VibeSamplerAudioProcessor::setStateInformation(const void* data,
 }
 
 // method for loading file and creating sampler sound with file
-void VibeSamplerAudioProcessor::loadFile() {
+juce::String VibeSamplerAudioProcessor::loadFile() {
   memberSampler.clearSounds();
   // setting up the JUCE file chooser to select
   // and load an audio file from the user's computer
@@ -239,8 +239,9 @@ void VibeSamplerAudioProcessor::loadFile() {
         "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
         attackTimeSecs, releaseTimeSecs, maxSampleLengthSecs));
 
-    
+    return userFile.getFileNameWithoutExtension();
   }
+  return "";
 }
 
 // method for loading file and creating sampler sound with dropped file

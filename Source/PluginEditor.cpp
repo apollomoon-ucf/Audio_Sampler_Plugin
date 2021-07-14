@@ -17,16 +17,24 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
     : AudioProcessorEditor(&p), memberWaveformVisual(p), audioProcessor(p) {
   // lambda function to run on button click
   memberLoadButton.onClick = [&]() {
-    audioProcessor.loadFile();
+    juce::String filenameFromClickAndLoad = audioProcessor.loadFile();
+    memberWaveformVisual.setFilename(filenameFromClickAndLoad);
     // memberWaveformVisual.activateWaveForm(true);
     repaint();
   };
 
   // make waveform visual
   addAndMakeVisible(memberWaveformVisual);
+
   // make load button a child component of this current component
   addAndMakeVisible(memberLoadButton);
-
+  memberLoadLabel.setFont(15.0f);
+  memberLoadLabel.setText(memberWaveformVisual.getFilename(),
+                          juce::NotificationType::dontSendNotification);
+  memberLoadLabel.setJustificationType(juce::Justification::centredTop);
+  memberLoadLabel.setColour(juce::Label::ColourIds::textColourId,
+                            juce::Colours::white);
+  memberLoadLabel.attachToComponent(&memberLoadButton, false);
   // setting up ADSR and gain knobs and labels
   // Attack Knob
   memberAttackKnob.setSliderStyle(
@@ -247,12 +255,19 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   //}
   // g.drawFittedText("Vibe Music Productions\n VST Testing - Brian Moon",
   //                  getLocalBounds(), juce::Justification::centredTop, 1);
-  //if (audioProcessor.getNumberOfSamplerSounds() > 0) {
+  // if (audioProcessor.getNumberOfSamplerSounds() > 0) {
   //  g.drawFittedText("     \n \n\n\n\n\n\n\n\n \n\n\n   Sound file loaded!",
   //                   getLocalBounds(), juce::Justification::centred, 1);
   //}
   g.drawFittedText("Vibe Audio Sampler", getLocalBounds().reduced(90, 90),
                    juce::Justification::centredTop, 1);
+  // paint filename
+  g.setColour(juce::Colours::grey);
+  g.setFont(15.0f);
+  // g.drawFittedText(memberWaveformVisual.getFilename(), getLocalBounds(),
+  //                  juce::Justification::topRight, 1);
+  g.drawText(memberWaveformVisual.getFilename(), 337.5, 75, 200, 40,
+             juce::Justification::topRight, true);
 }
 
 void VibeSamplerAudioProcessorEditor::resized() {
