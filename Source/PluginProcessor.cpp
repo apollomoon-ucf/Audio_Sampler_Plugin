@@ -32,7 +32,7 @@ VibeSamplerAudioProcessor::VibeSamplerAudioProcessor()
   memberValueTreeState.state.addListener(this);
 
   // adding the number of voices declared in PluginProcessor.h
-  //for (int i = 0; i < memberNumberOfVoices; i++) {
+  // for (int i = 0; i < memberNumberOfVoices; i++) {
   //  memberSampler.addVoice(new juce::SamplerVoice());
   //}
   for (int i = 0; i < memberVoiceInitNumber; i++) {
@@ -106,7 +106,7 @@ void VibeSamplerAudioProcessor::prepareToPlay(double sampleRate,
 
 void VibeSamplerAudioProcessor::releaseResources() {
   // When playback stops, you can use this as an opportunity to free up any
-  // spare memory, etc. 
+  // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -161,7 +161,8 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 
   // renders the next audio block of audio output
   // the midi notes are used to trigger voices
-  // outputAudio.applyGainRamp(startSample, numSamples, 5.0, 0.0); -- need to fix pops
+  // outputAudio.applyGainRamp(startSample, numSamples, 5.0, 0.0); -- need to
+  // fix pops
   memberSampler.renderNextBlock(outputAudio, inputMidi, startSample,
                                 numSamples);
 
@@ -303,7 +304,8 @@ void VibeSamplerAudioProcessor::getADSRGainValue() {
 
   // getting and updating sounds
   for (int i = 0; i < memberSampler.getNumSounds(); i++) {
-    if (auto sound = dynamic_cast<juce::SamplerSound*>(memberSampler.getSound(i).get())) {
+    if (auto sound = dynamic_cast<juce::SamplerSound*>(
+            memberSampler.getSound(i).get())) {
       sound->setEnvelopeParameters(memberADSRGainParameters);
     }
   }
@@ -341,7 +343,7 @@ VibeSamplerAudioProcessor::getParameterLayout() {
   return {parameters.begin(), parameters.end()};
 
   // method crashing program..(review logs when possible)
-  // 
+  //
   // Method 2 (New - adding to and returning ParameterLayout itself):
   // juce::AudioProcessorValueTreeState::ParameterLayout layout;
   // layout.add(std::make_unique<juce::AudioParameterFloat>(
@@ -362,7 +364,6 @@ void VibeSamplerAudioProcessor::valueTreePropertyChanged(
   memberShouldUpdateParameters = true;
 }
 
-
 // method to change polyphony
 void VibeSamplerAudioProcessor::changePolyphony(int numberOfVoices) {
   if (numberOfVoices > memberSampler.getNumVoices()) {
@@ -375,7 +376,6 @@ void VibeSamplerAudioProcessor::changePolyphony(int numberOfVoices) {
       memberSampler.removeVoice(0);
     }
   }
-
 }
 
 //==============================================================================

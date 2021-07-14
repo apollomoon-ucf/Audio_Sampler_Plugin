@@ -259,6 +259,10 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   //  g.drawFittedText("     \n \n\n\n\n\n\n\n\n \n\n\n   Sound file loaded!",
   //                   getLocalBounds(), juce::Justification::centred, 1);
   //}
+  // if (audioProcessor.getNumberOfSamplerSounds() > 0) {
+  // g.drawText(memberWaveformVisual.getFilename(), 337.5, 75, 200, 40,
+  //            juce::Justification::topRight, true);
+  //}
   g.drawFittedText("Vibe Audio Sampler", getLocalBounds().reduced(90, 90),
                    juce::Justification::centredTop, 1);
   // paint filename
@@ -325,10 +329,13 @@ void VibeSamplerAudioProcessorEditor::filesDropped(
     const juce::StringArray &files, int x, int y) {
   for (auto file : files) {
     if (isInterestedInFileDrag(file)) {
+      auto myFile = std::make_unique<juce::File>(file);
+      memberWaveformVisual.setFilename(myFile->getFileNameWithoutExtension());
       // load the file
       audioProcessor.loadDroppedFile(file);
       // draw waveform?
       // memberActivateWaveformVisual = true;
+      repaint();
     }
   }
   // repaint to display successful file load message

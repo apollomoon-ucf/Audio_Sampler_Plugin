@@ -10,6 +10,8 @@
 
 #include "WaveformVisual.h"
 
+#include "PluginEditor.h"
+
 //==============================================================================
 WaveformVisual::WaveformVisual(VibeSamplerAudioProcessor& p)
     : audioProcessor(p) {
@@ -26,7 +28,7 @@ void WaveformVisual::paint(juce::Graphics& g) {
      You should replace everything in this method with your own
      drawing code..
   */
-  //g.fillAll(juce::Colours::black.brighter());
+  // g.fillAll(juce::Colours::black.brighter());
   // get waveform from the processor
   auto waveform = audioProcessor.getWaveform();
 
@@ -44,7 +46,6 @@ void WaveformVisual::paint(juce::Graphics& g) {
     juce::Path p;
     g.setColour(juce::Colours::whitesmoke);
     p.startNewSubPath(0, getHeight() / static_cast<float>(2));
- 
 
     // scaling on x-axis
     // selecting snapshot locations of waveform using the scaling factor
@@ -67,10 +68,19 @@ void WaveformVisual::paint(juce::Graphics& g) {
     // g.setColour(juce::Colours::grey);
     // g.setFont(15.0f);
     // auto boundsForSampleText = getLocalBounds().reduced(10, 10);
-    // g.drawFittedText(memberFilename, getLocalBounds(), juce::Justification::topRight, 1);
+    // g.drawFittedText(memberFilename, getLocalBounds(),
+    // juce::Justification::topRight, 1);
 
     // deactivate waveform visualization
     // memberActivateWaveformVisual = false;
+
+    // paint filename
+    // g.setColour(juce::Colours::grey);
+    // g.setFont(15.0f);
+    // g.drawFittedText(memberFilename, getLocalBounds().expanded(10),
+    // juce::Justification::topRight, 1);
+    // g.drawText(memberFilename, 25, 0, 200, 40,
+    //            juce::Justification::centred, true);
   }
 }
 
@@ -109,4 +119,5 @@ void WaveformVisual::filesDropped(const juce::StringArray& files, int x,
   }
   // repaint to display successful file load message
   repaint();
+  audioProcessor.getActiveEditor()->repaint();
 }
