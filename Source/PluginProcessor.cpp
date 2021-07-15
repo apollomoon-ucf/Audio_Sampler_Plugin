@@ -101,6 +101,9 @@ void VibeSamplerAudioProcessor::prepareToPlay(double sampleRate,
   // initialisation that you need..
   memberSampler.setCurrentPlaybackSampleRate(sampleRate);
 
+  // previous gain - (for gain smoothing)
+  memberPreviousGain = *memberValueTreeState.getRawParameterValue("gain");
+
   getADSRGainValue();
 }
 
@@ -164,8 +167,19 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   // outputAudio.applyGainRamp(startSample, numSamples, 5.0, 0.0); -- need to
   // fix pops
   memberSampler.renderNextBlock(buffer, inputMidi, startSample, numSamples);
-  buffer.applyGain(0, buffer.getNumSamples(),
-                   juce::Decibels::decibelsToGain(gain));
+
+  // apply gain smoothing
+  // buffer.applyGainRamp(0, buffer.getNumSamples(), memberPreviousGain,
+  //                        gain);
+  if (gain ==
+      memberPreviousGain) {
+     buffer.applyGain(gain);  
+  } else {
+    buffer.applyGainRamp(0, buffer.getNumSamples(), memberPreviousGain,
+                         gain);
+    memberPreviousGain = gain;
+  }
+
 
   // This is the place where you'd normally do the guts of your plugin's
   // audio processing...
@@ -239,8 +253,8 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
     // C3 = midi note 60
     int midiNoteForNormalPitch = 60;
     // attack and release time
-    int attackTimeSecs = 0.4;
-    int releaseTimeSecs = 0.4;
+    int attackTimeSecs = 0.0;
+    int releaseTimeSecs = 0.0;
     // max sample length
     int maxSampleLengthSecs = 10.0;
     getADSRGainValue();
@@ -278,8 +292,8 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   // C3 = midi note 60
   int midiNoteForNormalPitch = 60;
   // attack and release time
-  int attackTimeSecs = 0.4;
-  int releaseTimeSecs = 0.4;
+  int attackTimeSecs = 0.0;
+  int releaseTimeSecs = 0.0;
   // max sample length
   int maxSampleLengthSecs = 10.0;
 
@@ -339,13 +353,14 @@ VibeSamplerAudioProcessor::getParameterLayout() {
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
       "attack", "Attack", minValue, 2.0, defaultValue));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "decay", "Decay", minValue, maxValue, defaultValue));
+      "decay", "Decay", minValue, maxValue, 0.5));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "sustain", "Sustain", minValue, maxValue, defaultValue));
+      "sustain", "Sustain", minValue, maxValue, 1.0));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "release", "Release", minValue, maxValue, defaultValue));
+      "release", "Release", minValue, maxValue, 0.5));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "gain", "Gain", -75.0f, 12.0f, defaultValue));
+      "gain", "Gain", juce::NormalisableRange<float>(0.0f, 1.0f),
+      0.2f));
   parameters.push_back(std::make_unique<juce::AudioParameterInt>(
       "polyphony", "Polyphony", minValue, 32, defaultValue));
 
