@@ -163,8 +163,9 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   // the midi notes are used to trigger voices
   // outputAudio.applyGainRamp(startSample, numSamples, 5.0, 0.0); -- need to
   // fix pops
-  memberSampler.renderNextBlock(outputAudio, inputMidi, startSample,
-                                numSamples);
+  memberSampler.renderNextBlock(buffer, inputMidi, startSample, numSamples);
+  buffer.applyGain(0, buffer.getNumSamples(),
+                   juce::Decibels::decibelsToGain(gain));
 
   // This is the place where you'd normally do the guts of your plugin's
   // audio processing...
@@ -172,11 +173,19 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   // the samples and the outer loop is handling the channels.
   // Alternatively, you can process the samples with the channels
   // interleaved by keeping the same state.
-  for (int channel = 0; channel < totalNumInputChannels; ++channel) {
-    auto* channelData = buffer.getWritePointer(channel);
-
-    // ..do something to the data...
-  }
+  // for (int channel = 0; channel < totalNumInputChannels; ++channel) {
+  //  auto* channelData = buffer.getWritePointer(channel);
+  //  buffer.applyGain(channel, 0, buffer.getNumSamples(),
+  //                   juce::Decibels::decibelsToGain(gain));
+  //  // ..do something to the data...
+  //  for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+  //    // buffer.setSample(0, channel, juce::Decibels::decibelsToGain(gain));
+  //    // buffer.setSample(1, sample, juce::Decibels::decibelsToGain(gain));
+  //
+  //    channelData[sample] =
+  //        channelData[sample] * juce::Decibels::decibelsToGain(gain);
+  //  }
+  //}
 }
 
 //==============================================================================
@@ -336,7 +345,7 @@ VibeSamplerAudioProcessor::getParameterLayout() {
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
       "release", "Release", minValue, maxValue, defaultValue));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "gain", "Gain", minValue, maxValue, defaultValue));
+      "gain", "Gain", -75.0f, 12.0f, defaultValue));
   parameters.push_back(std::make_unique<juce::AudioParameterInt>(
       "polyphony", "Polyphony", minValue, 32, defaultValue));
 

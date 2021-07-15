@@ -41,6 +41,7 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
       juce::File("C:/Users/Brian/OneDrive - Knights - University of Central "
                  "Florida/c++_dev_folder/VibeSampler/Documentation/"
                  "V2-2020-Vibe-Logo-Transparent-450-1-2.png"));
+
   //// place to hold samples
   // std::vector<float> memberAudioSnapshotLocations;
   //// bool for drawing waveform

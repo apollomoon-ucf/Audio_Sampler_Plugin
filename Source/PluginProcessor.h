@@ -96,7 +96,7 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   // ADSR
   juce::ADSR::Parameters memberADSRGainParameters;
 
-  // audio format manager 
+  // audio format manager
   juce::AudioFormatManager memberFormatManager;
   juce::AudioFormatReader* memberFormatReader{nullptr};
 

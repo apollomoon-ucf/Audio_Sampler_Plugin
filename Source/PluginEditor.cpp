@@ -161,7 +161,8 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
           audioProcessor.getValueTreeState(), "gain", memberGainKnob);
   // no longer using listener or range with Value Tree State solution
-  // memberGainKnob.setRange(0.0f, 5.0f, 0.01f);
+  // memberGainKnob.setRange(-75.0f, 12.0f, 0.01f);
+  // memberGainKnob.setValue(0.0f);
   // memberGainKnob.addListener(this);
   addAndMakeVisible(memberGainKnob);
   memberGainLabel.setFont(15.0f);
