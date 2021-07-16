@@ -67,10 +67,10 @@ I want to create a sample window to house the waveform, therefore, the next step
 Centered waveform on plugin, and preparing to outline/frame it to match layout.
 Displayed sample/test Vibe logo, but need to replace it with a high resolution version, along with the text "Vibe Audio Sampler" during the design phase.
 
-(Plugin displaying waveform)
+(Plugin displaying waveform - need to change labels to seconds, but I might remove labels or only show them on mouse hover for a clean look)
 ![Screenshot_waveform_drawn_v2](https://user-images.githubusercontent.com/25870426/125387967-afc79d80-e36c-11eb-8714-768a8e039a12.png)
 
 7|13|21 Corrected positioning of loaded waveform visualization, fixed logo dimensions, added plugin title ("Vibe Audio Sampler"), and tested a dark mode layout.
 
-(Plugin displaying dark mode test - need to change labels to seconds, but I might remove labels or only show them on mouse hover for a clean look)
-![Screenshot_dark_mode](https://user-images.githubusercontent.com/25870426/125541776-64892ae0-c7a9-4db3-b7a6-c0c83d261066.png)
+(Plugin displaying dark mode test)
+![Screenshot_dark_mode_mono](https://user-images.githubusercontent.com/25870426/125873022-9e2775b6-612b-4783-abba-d9edfea70ed8.png)

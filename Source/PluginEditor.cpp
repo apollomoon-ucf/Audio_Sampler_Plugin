@@ -46,7 +46,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberAttackKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                              juce::Colours::rebeccapurple);
   memberAttackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  // memberAttackKnob.setTextValueSuffix(" s");
+   memberAttackKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   memberAttackKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -72,7 +72,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberDecayKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                             juce::Colours::rebeccapurple);
   memberDecayKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  // memberDecayKnob.setTextValueSuffix(" s");
+   memberDecayKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   memberDecayKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -100,7 +100,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberSustainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                               juce::Colours::rebeccapurple);
   memberSustainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  // memberSustainKnob.setTextValueSuffix(" s");
+   memberSustainKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   memberSustainKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -128,7 +128,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberReleaseKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                               juce::Colours::rebeccapurple);
   memberReleaseKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  // memberReleaseKnob.setTextValueSuffix(" s");
+   memberReleaseKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   memberReleaseKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
