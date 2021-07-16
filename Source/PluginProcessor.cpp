@@ -215,6 +215,9 @@ void VibeSamplerAudioProcessor::getStateInformation(
   // You should use this method to store your parameters in the memory block.
   // You could do that either as raw data, or use the XML or ValueTree classes
   // as intermediaries to make it easy to save and load complex data.
+  auto state = memberValueTreeState.copyState();
+  std::unique_ptr<juce::XmlElement> xml(state.createXml());
+  copyXmlToBinary(*xml, destData);
 }
 
 void VibeSamplerAudioProcessor::setStateInformation(const void* data,
@@ -222,8 +225,15 @@ void VibeSamplerAudioProcessor::setStateInformation(const void* data,
   // You should use this method to restore your parameters from this memory
   // block, whose contents will have been created by the getStateInformation()
   // call.
-}
+  std::unique_ptr<juce::XmlElement> xmlState(
+      getXmlFromBinary(data, sizeInBytes));
 
+  if (xmlState.get() != nullptr) {
+    if (xmlState->hasTagName(memberValueTreeState.state.getType())) {
+      memberValueTreeState.replaceState(juce::ValueTree::fromXml(*xmlState));
+    }
+  }
+}
 // method for loading file and creating sampler sound with file
 juce::String VibeSamplerAudioProcessor::loadFile() {
   memberSampler.clearSounds();
@@ -324,7 +334,7 @@ void VibeSamplerAudioProcessor::getADSRGainValue() {
       *memberValueTreeState.getRawParameterValue("release");
   gain = *memberValueTreeState.getRawParameterValue("gain");
   polyphony = *memberValueTreeState.getRawParameterValue("polyphony");
-
+  // memberValueTreeState.state
   // getting and updating sounds
   for (int i = 0; i < memberSampler.getNumSounds(); i++) {
     if (auto sound = dynamic_cast<juce::SamplerSound*>(
