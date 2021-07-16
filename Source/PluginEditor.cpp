@@ -46,7 +46,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberAttackKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                              juce::Colours::rebeccapurple);
   memberAttackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  memberAttackKnob.setTextValueSuffix(" ms");
+  // memberAttackKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   memberAttackKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -72,7 +72,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberDecayKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                             juce::Colours::rebeccapurple);
   memberDecayKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  memberDecayKnob.setTextValueSuffix(" ms");
+  // memberDecayKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   memberDecayKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -100,7 +100,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberSustainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                               juce::Colours::rebeccapurple);
   memberSustainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  memberSustainKnob.setTextValueSuffix(" ms");
+  // memberSustainKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   memberSustainKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -128,7 +128,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberReleaseKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                               juce::Colours::rebeccapurple);
   memberReleaseKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  memberReleaseKnob.setTextValueSuffix(" ms");
+  // memberReleaseKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   memberReleaseKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -155,7 +155,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   memberGainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                            juce::Colours::rebeccapurple);
   memberGainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  memberGainKnob.setTextValueSuffix(" db");
+  // memberGainKnob.setTextValueSuffix(" ");
   // value tree state solution for listener knob
   memberGainKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -184,7 +184,12 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
       juce::Colours::rebeccapurple);
   memberPolyphonyKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55,
                                       20);
-  memberPolyphonyKnob.setTextValueSuffix(" voice(s)");
+  // if (audioProcessor.polyphony > 1) {
+  //  memberPolyphonyKnob.setTextValueSuffix(" voices");
+  //} else {
+  //  memberPolyphonyKnob.setTextValueSuffix(" voice");
+  //}
+
   // value tree state solution for listener knob
   memberPolyphonyKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -211,6 +216,11 @@ VibeSamplerAudioProcessorEditor::~VibeSamplerAudioProcessorEditor() {}
 
 //==============================================================================
 void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
+  if (audioProcessor.polyphony > 1) {
+    memberPolyphonyKnob.setTextValueSuffix(" poly");
+  } else {
+    memberPolyphonyKnob.setTextValueSuffix(" mono");
+  }
   // (Our component is opaque, so we must completely fill the background with a
   // solid colour)
   // g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
@@ -219,6 +229,7 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   g.setFont(15.0f);
 
   g.drawImageAt(myimage.rescaled(125, 80), getWidth() / 2 - 62.5, 8);
+
   //// if waveform should be drawn
   // if (memberActivateWaveformVisual) {
   //  memberAudioSnapshotLocations.clear();

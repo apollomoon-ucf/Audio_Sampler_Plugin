@@ -351,16 +351,16 @@ VibeSamplerAudioProcessor::getParameterLayout() {
 
   // Method 1 (using vector to return ParameterLayour):
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "attack", "Attack", minValue, 2.0, defaultValue));
+      "attack", "Attack", 0.0f, 6.0f, 0.0f));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "decay", "Decay", minValue, maxValue, 0.5));
+      "decay", "Decay", 0.0f, 6.0f, 1.0));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "sustain", "Sustain", minValue, maxValue, 1.0));
+      "sustain", "Sustain", 0.0f, 12.0f, 5.0f));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "release", "Release", minValue, maxValue, 0.5));
+      "release", "Release", 0.0f, 6.0f, 1.0f));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "gain", "Gain", juce::NormalisableRange<float>(0.0f, 1.0f),
-      0.2f));
+      "gain", "Gain", 0.0f, 0.5f,
+      0.15f));
   parameters.push_back(std::make_unique<juce::AudioParameterInt>(
       "polyphony", "Polyphony", minValue, 32, defaultValue));
 
