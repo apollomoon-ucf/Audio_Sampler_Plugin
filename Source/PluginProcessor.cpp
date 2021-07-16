@@ -29,6 +29,7 @@ VibeSamplerAudioProcessor::VibeSamplerAudioProcessor()
 {
   // setting up format manager for different audio formats
   memberFormatManager.registerBasicFormats();
+  
   memberValueTreeState.state.addListener(this);
 
   // adding the number of voices declared in PluginProcessor.h
@@ -258,7 +259,8 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
     // creating new sampler sound containing the audio file selected by user
     memberSampler.addSound(new juce::SamplerSound(
         "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
-        attackTimeSecs, releaseTimeSecs, maxSampleLengthSecs));
+        0.0f,
+        10.0f, maxSampleLengthSecs));
 
     return userFile.getFileNameWithoutExtension();
   }
@@ -297,7 +299,8 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   // creating new sampler sound containing the audio file selected by user
   memberSampler.addSound(new juce::SamplerSound(
       "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
-      attackTimeSecs, releaseTimeSecs, maxSampleLengthSecs));
+      0.0f, 10.0f,
+      maxSampleLengthSecs));
 
   getADSRGainValue();
 }
@@ -350,13 +353,13 @@ VibeSamplerAudioProcessor::getParameterLayout() {
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
       "attack", "Attack", 0.0f, 6.0f, 0.0f));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "decay", "Decay", 0.0f, 6.0f, 1.0));
+      "decay", "Decay", 0.0f, 6.0f, 2.18f));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "sustain", "Sustain", 0.0f, 12.0f, 5.0f));
+      "sustain", "Sustain", 0.0f, 6.0f, 3.95f));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "release", "Release", 0.0f, 6.0f, 1.0f));
+      "release", "Release", 0.0f, 6.0f, 0.86f));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "gain", "Gain", 0.0f, 0.5f, 0.15f));
+      "gain", "Gain", 0.0f, 0.5f, 0.22f));
   parameters.push_back(std::make_unique<juce::AudioParameterInt>(
       "polyphony", "Polyphony", minValue, 32, defaultValue));
 

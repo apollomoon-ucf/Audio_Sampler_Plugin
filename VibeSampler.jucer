@@ -7,6 +7,10 @@
               companyName="VibeByBMoon" pluginFormats="buildVST,buildVST3">
   <MAINGROUP id="q2KsRI" name="VibeSampler">
     <GROUP id="{2312A0B3-90E5-E76B-7272-5000A0D5D4EB}" name="Source">
+      <FILE id="JKJGOM" name="ADSRGainPolyButtons.cpp" compile="1" resource="0"
+            file="Source/ADSRGainPolyButtons.cpp"/>
+      <FILE id="epbgZt" name="ADSRGainPolyButtons.h" compile="0" resource="0"
+            file="Source/ADSRGainPolyButtons.h"/>
       <FILE id="NiyMy8" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="LYkQ1A" name="PluginProcessor.h" compile="0" resource="0"

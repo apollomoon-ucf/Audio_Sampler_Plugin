@@ -28,7 +28,6 @@ void WaveformVisual::paint(juce::Graphics& g) {
      You should replace everything in this method with your own
      drawing code..
   */
-  // g.fillAll(juce::Colours::black.brighter());
   // get waveform from the processor
   auto waveform = audioProcessor.getWaveform();
 
@@ -63,24 +62,6 @@ void WaveformVisual::paint(juce::Graphics& g) {
 
     // actually drawing waveform here; thickness 2
     g.strokePath(p, juce::PathStrokeType(2));
-
-    // paint filename
-    // g.setColour(juce::Colours::grey);
-    // g.setFont(15.0f);
-    // auto boundsForSampleText = getLocalBounds().reduced(10, 10);
-    // g.drawFittedText(memberFilename, getLocalBounds(),
-    // juce::Justification::topRight, 1);
-
-    // deactivate waveform visualization
-    // memberActivateWaveformVisual = false;
-
-    // paint filename
-    // g.setColour(juce::Colours::grey);
-    // g.setFont(15.0f);
-    // g.drawFittedText(memberFilename, getLocalBounds().expanded(10),
-    // juce::Justification::topRight, 1);
-    // g.drawText(memberFilename, 25, 0, 200, 40,
-    //            juce::Justification::centred, true);
   }
 }
 
