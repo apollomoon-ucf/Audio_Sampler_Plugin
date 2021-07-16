@@ -171,15 +171,12 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   // apply gain smoothing
   // buffer.applyGainRamp(0, buffer.getNumSamples(), memberPreviousGain,
   //                        gain);
-  if (gain ==
-      memberPreviousGain) {
-     buffer.applyGain(gain);  
+  if (gain == memberPreviousGain) {
+    buffer.applyGain(gain);
   } else {
-    buffer.applyGainRamp(0, buffer.getNumSamples(), memberPreviousGain,
-                         gain);
+    buffer.applyGainRamp(0, buffer.getNumSamples(), memberPreviousGain, gain);
     memberPreviousGain = gain;
   }
-
 
   // This is the place where you'd normally do the guts of your plugin's
   // audio processing...
@@ -190,7 +187,7 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   // for (int channel = 0; channel < totalNumInputChannels; ++channel) {
   //  auto* channelData = buffer.getWritePointer(channel);
   //  buffer.applyGain(channel, 0, buffer.getNumSamples(),
-  //                   juce::Decibels::decibelsToGain(gain));
+  //                   juce::Decibels::gainToDecibels(gain));
   //  // ..do something to the data...
   //  for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
   //    // buffer.setSample(0, channel, juce::Decibels::decibelsToGain(gain));
@@ -359,8 +356,7 @@ VibeSamplerAudioProcessor::getParameterLayout() {
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
       "release", "Release", 0.0f, 6.0f, 1.0f));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "gain", "Gain", 0.0f, 0.5f,
-      0.15f));
+      "gain", "Gain", 0.0f, 0.5f, 0.15f));
   parameters.push_back(std::make_unique<juce::AudioParameterInt>(
       "polyphony", "Polyphony", minValue, 32, defaultValue));
 

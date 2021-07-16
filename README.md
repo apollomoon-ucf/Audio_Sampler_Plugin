@@ -50,7 +50,7 @@ Note: plugin states are not reloadable at this stage; plugin is cleared when daw
 
 Continuing development, I added knobs and labels and displayed them on the plugin. I attempted to match the placement of the knobs to the plugin layout seen in the previous section.
 
-(Plugin displaying knobs, labels, and sample load options)
+(Plugin displaying knobs, labels (showing ms but needs to be changed to seconds, and sample load options)
 ![Screenshot_knobs_labels_coded](https://user-images.githubusercontent.com/25870426/125114151-90ecb100-e0b7-11eb-8f0d-fbd6cbc28ead.png)
 
 Added button to change polyphony of sampler, and ADSR knobs are fully functional. Gain knob still needs to be connected to output.
@@ -72,5 +72,5 @@ Displayed sample/test Vibe logo, but need to replace it with a high resolution v
 
 7|13|21 Corrected positioning of loaded waveform visualization, fixed logo dimensions, added plugin title ("Vibe Audio Sampler"), and tested a dark mode layout.
 
-(Plugin displaying dark mode test)
+(Plugin displaying dark mode test - need to change labels to seconds, but I might remove labels or only show them on mouse hover for a clean look)
 ![Screenshot_dark_mode](https://user-images.githubusercontent.com/25870426/125541776-64892ae0-c7a9-4db3-b7a6-c0c83d261066.png)
