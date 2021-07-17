@@ -32,16 +32,12 @@ VibeSamplerAudioProcessor::VibeSamplerAudioProcessor()
 
   memberValueTreeState.state.setProperty(
       "sample", juce::var(memberAudioFilePath), nullptr);
-
-  memberStoredAudioFile.referTo(
-      memberValueTreeState.state.getPropertyAsValue("sample", nullptr));
+  memberValueTreeState.state.setProperty(
+      "sample_name", juce::var(memberAudioFilename), nullptr);
 
   memberValueTreeState.state.addListener(this);
 
   // adding the number of voices declared in PluginProcessor.h
-  // for (int i = 0; i < memberNumberOfVoices; i++) {
-  //  memberSampler.addVoice(new juce::SamplerVoice());
-  //}
   for (int i = 0; i < memberVoiceInitNumber; i++) {
     memberSampler.addVoice(new juce::SamplerVoice());
   }
@@ -163,7 +159,6 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   auto inputMidi = midiMessages;
 
   // calling to get adsr values (and printing them to console if needed)
-  // getADSRGainValue();
   if (memberShouldUpdateParameters) {
     getADSRGainValue();
   }
@@ -183,8 +178,6 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   memberSampler.renderNextBlock(buffer, inputMidi, startSample, numSamples);
 
   // apply gain smoothing
-  // buffer.applyGainRamp(0, buffer.getNumSamples(), memberPreviousGain,
-  //                        gain);
   if (gain == memberPreviousGain) {
     buffer.applyGain(gain);
   } else {
@@ -245,6 +238,9 @@ void VibeSamplerAudioProcessor::setStateInformation(const void* data,
       memberValueTreeState.replaceState(juce::ValueTree::fromXml(*xmlState));
       memberStoredAudioFile.referTo(
           memberValueTreeState.state.getPropertyAsValue("sample", nullptr));
+      memberStoredAudioFilename.referTo(
+          memberValueTreeState.state.getPropertyAsValue("sample_name",
+                                                        nullptr));
     }
   }
 }
@@ -263,7 +259,7 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
     // setting up file reader
     auto userFile = chooseFile.getResult();
     memberAudioFilePath = userFile.getFullPathName();
-    memberStoredAudioFile.setValue(memberAudioFilePath);
+    memberAudioFilename = userFile.getFileNameWithoutExtension();
 
     memberFormatReader = memberFormatManager.createReaderFor(userFile);
 
@@ -300,19 +296,12 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   auto userFile = juce::File(path);
   memberFormatReader = memberFormatManager.createReaderFor(userFile);
   memberAudioFilePath = path;
-  memberStoredAudioFile.setValue(memberAudioFilePath);
+  memberAudioFilename = userFile.getFileNameWithoutExtension();
 
   // reading waveform
   auto sampleLength = memberFormatReader->lengthInSamples;
   memberWaveform.setSize(1, sampleLength);
   memberFormatReader->read(&memberWaveform, 0, sampleLength, 0, true, false);
-
-  // testing that we are properly reading file into audio buffer
-  // read through audio file
-  // uto buffer = memberWaveform.getReadPointer(0);
-  // for (int sample = 0; sample < memberWaveform.getNumSamples(); sample++) {
-  //   std::cout << buffer[sample];
-  // }
 
   // range of playable midi notes - 128 midi notes
   juce::BigInteger midiRange;
@@ -336,12 +325,6 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
 
 // listening for adsr and gain
 void VibeSamplerAudioProcessor::getADSRGainValue() {
-  /* std::cout << "Attack: " << attack << std::endl;
-  std::cout << "Decay: " << decay << std::endl;
-  std::cout << "Sustain: " << sustain << std::endl;
-  std::cout << "Release: " << release << std::endl;
-  std::cout << "Gain: " << gain << std::endl; */
-
   // adding params for Value State Tree solution
   memberADSRGainParameters.attack =
       *memberValueTreeState.getRawParameterValue("attack");
@@ -353,8 +336,8 @@ void VibeSamplerAudioProcessor::getADSRGainValue() {
       *memberValueTreeState.getRawParameterValue("release");
   gain = *memberValueTreeState.getRawParameterValue("gain");
   polyphony = *memberValueTreeState.getRawParameterValue("polyphony");
-  memberAudioFilePath = *memberValueTreeState.state.getPropertyPointer("sample");
   memberStoredAudioFile.setValue(memberAudioFilePath);
+  memberStoredAudioFilename.setValue(memberAudioFilename);
 
   // getting and updating sounds
   for (int i = 0; i < memberSampler.getNumSounds(); i++) {
@@ -393,9 +376,6 @@ VibeSamplerAudioProcessor::getParameterLayout() {
       "gain", "Gain", 0.0f, 0.5f, 0.22f));
   parameters.push_back(std::make_unique<juce::AudioParameterInt>(
       "polyphony", "Polyphony", minValue, 32, defaultValue));
-//  memberStoredAudioFile.referTo(
-//      memberValueTreeState.state.getPropertyAsValue("sample", nullptr));
-  
 
   return {parameters.begin(), parameters.end()};
 

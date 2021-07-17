@@ -85,6 +85,8 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
     return memberValueTreeState;
   };
 
+  juce::String getAudioFilename() { return memberAudioFilename; };
+
  private:
   // creating member variables for the Synthesiser class and polyphony (#
   // voices)
@@ -99,10 +101,11 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   // previous gain (for gain smoothing)
   float memberPreviousGain;
 
-  // storing sample
-  //juce::AudioFormat memberStoredAudioFile;
+  // storing sample and sample name
   juce::Value memberStoredAudioFile;
   juce::String memberAudioFilePath;
+  juce::Value memberStoredAudioFilename;
+  juce::String memberAudioFilename;
 
   // audio format manager
   juce::AudioFormatManager memberFormatManager;

@@ -32,10 +32,9 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   // make adsr, gain, and polyphonic knobs visible
   addAndMakeVisible(memberADSRGainPoly);
 
-  // attempting to call sample from memory
-  memberLoadButtonAttachment =
-      std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
-          audioProcessor.getValueTreeState(), "sample", memberLoadButton);
+  //memberLoadButtonAttachment =
+  //    std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
+  //        audioProcessor.getValueTreeState(), "sample", memberLoadButton);
 
   // make load button a child component of this current component
   addAndMakeVisible(memberLoadButton);
@@ -66,7 +65,7 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   // paint filename
   g.setColour(juce::Colours::grey);
   g.setFont(15.0f);
-  g.drawText(memberWaveformVisual.getFilename(), 337.5, 75, 200, 40,
+  g.drawText(audioProcessor.getAudioFilename(), 337.5, 75, 200, 40,
              juce::Justification::topRight, true);
 }
 
