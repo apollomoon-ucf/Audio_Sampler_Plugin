@@ -91,7 +91,9 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   // creating member variables for the Synthesiser class and polyphony (#
   // voices)
   juce::Synthesiser memberSampler;
-  const int memberVoiceInitNumber{1};
+  juce::SamplerVoice* myVoice;
+
+  const int memberVoiceInitNumber{2};
   const int memberMaxNumberOfVoices{32};
   // AudioBuffer for storing waveform
   juce::AudioBuffer<float> memberWaveform;

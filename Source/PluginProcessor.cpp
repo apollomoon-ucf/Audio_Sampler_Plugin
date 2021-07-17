@@ -41,6 +41,7 @@ VibeSamplerAudioProcessor::VibeSamplerAudioProcessor()
   for (int i = 0; i < memberVoiceInitNumber; i++) {
     memberSampler.addVoice(new juce::SamplerVoice());
   }
+  // memberSampler.setNoteStealingEnabled(true);
 }
 
 // destructor
@@ -103,6 +104,12 @@ void VibeSamplerAudioProcessor::prepareToPlay(double sampleRate,
   // Use this method as the place to do any pre-playback
   // initialisation that you need..
   memberSampler.setCurrentPlaybackSampleRate(sampleRate);
+  //for (int i = 0; i < memberSampler.getNumVoices(); i++) {
+  //  if (myVoice =
+  //          dynamic_cast<juce::SamplerVoice*>(memberSampler.getVoice(i))) {
+  //    myVoice->setCurrentPlaybackSampleRate(sampleRate);
+  //  }
+  //}
 
   // previous gain - (for gain smoothing)
   memberPreviousGain = *memberValueTreeState.getRawParameterValue("gain");
@@ -153,15 +160,16 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   juce::ScopedNoDenormals noDenormals;
   auto totalNumInputChannels = getTotalNumInputChannels();
   auto totalNumOutputChannels = getTotalNumOutputChannels();
-  int startSample = 0;
-  int numSamples = buffer.getNumSamples();
-  auto outputAudio = buffer;
-  auto inputMidi = midiMessages;
-
+  //int startSample = 0;
+  //int numSamples = buffer.getNumSamples();
+  //auto outputAudio = buffer;
+  //auto inputMidi = midiMessages;
   // calling to get adsr values (and printing them to console if needed)
-  if (memberShouldUpdateParameters) {
-    getADSRGainValue();
-  }
+  //if (memberShouldUpdateParameters) {
+
+  //  getADSRGainValue();
+  //}
+  getADSRGainValue();
   // In case we have more outputs than inputs, this code clears any output
   // channels that didn't contain input data, (because these aren't
   // guaranteed to be empty - they may contain garbage).
@@ -173,9 +181,10 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 
   // renders the next audio block of audio output
   // the midi notes are used to trigger voices
-  // outputAudio.applyGainRamp(startSample, numSamples, 5.0, 0.0); -- need to
+  // outputAudio.applyGainRamp(startSample, numSamples, 5.0, 0.0); // -- need to
   // fix pops
-  memberSampler.renderNextBlock(buffer, inputMidi, startSample, numSamples);
+  memberSampler.renderNextBlock(buffer, midiMessages, 0,
+                                buffer.getNumSamples());
 
   // apply gain smoothing
   if (gain == memberPreviousGain) {
@@ -253,7 +262,7 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
       "Select Audio File (.wav, .mp3, or .aiff)",
       juce::File::getSpecialLocation(juce::File::userDocumentsDirectory),
       "*.wav; *.mp3; *.aiff");
-
+  getADSRGainValue();
   // getting result from user's selection
   if (chooseFile.browseForFileToOpen()) {
     // setting up file reader
@@ -278,13 +287,13 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
     int releaseTimeSecs = 0.0;
     // max sample length
     int maxSampleLengthSecs = 10.0;
-    getADSRGainValue();
+    
     // creating new sampler sound containing the audio file selected by user
     memberSampler.addSound(new juce::SamplerSound(
         "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
-        0.0f,
-        10.0f, maxSampleLengthSecs));
-    memberSampler.setNoteStealingEnabled(true);
+        0.1f,
+        0.1f, maxSampleLengthSecs));
+    // memberSampler.setNoteStealingEnabled(true);
     return userFile.getFileNameWithoutExtension();
   } 
   return "";
@@ -293,6 +302,7 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
 // method for loading file and creating sampler sound with dropped file
 void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   memberSampler.clearSounds();
+  getADSRGainValue();
   auto userFile = juce::File(path);
   memberFormatReader = memberFormatManager.createReaderFor(userFile);
   memberAudioFilePath = path;
@@ -317,10 +327,10 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   // creating new sampler sound containing the audio file selected by user
   memberSampler.addSound(new juce::SamplerSound(
       "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
-      0.0f, 10.0f,
+      0.1f, 0.1f,
       maxSampleLengthSecs));
-  memberSampler.setNoteStealingEnabled(true);
-  getADSRGainValue();
+  //memberSampler.setNoteStealingEnabled(true);
+  
 }
 
 // listening for adsr and gain
@@ -375,7 +385,7 @@ VibeSamplerAudioProcessor::getParameterLayout() {
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
       "gain", "Gain", 0.0f, 0.5f, 0.22f));
   parameters.push_back(std::make_unique<juce::AudioParameterInt>(
-      "polyphony", "Polyphony", minValue, 32, defaultValue));
+      "polyphony", "Polyphony", minValue, 32, 2.0));
 
   return {parameters.begin(), parameters.end()};
 
