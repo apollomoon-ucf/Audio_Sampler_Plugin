@@ -29,7 +29,13 @@ VibeSamplerAudioProcessor::VibeSamplerAudioProcessor()
 {
   // setting up format manager for different audio formats
   memberFormatManager.registerBasicFormats();
-  
+
+  memberValueTreeState.state.setProperty(
+      "sample", juce::var(memberAudioFilePath), nullptr);
+
+  memberStoredAudioFile.referTo(
+      memberValueTreeState.state.getPropertyAsValue("sample", nullptr));
+
   memberValueTreeState.state.addListener(this);
 
   // adding the number of voices declared in PluginProcessor.h
@@ -104,6 +110,13 @@ void VibeSamplerAudioProcessor::prepareToPlay(double sampleRate,
 
   // previous gain - (for gain smoothing)
   memberPreviousGain = *memberValueTreeState.getRawParameterValue("gain");
+
+  if (memberValueTreeState.state.getPropertyAsValue("sample", nullptr)
+          .toString().isNotEmpty()) {
+    loadDroppedFile(
+        memberValueTreeState.state.getPropertyAsValue("sample", nullptr)
+            .toString());
+  }
 
   getADSRGainValue();
 }
@@ -225,12 +238,13 @@ void VibeSamplerAudioProcessor::setStateInformation(const void* data,
   // You should use this method to restore your parameters from this memory
   // block, whose contents will have been created by the getStateInformation()
   // call.
-  std::unique_ptr<juce::XmlElement> xmlState(
-      getXmlFromBinary(data, sizeInBytes));
+  std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
 
   if (xmlState.get() != nullptr) {
     if (xmlState->hasTagName(memberValueTreeState.state.getType())) {
       memberValueTreeState.replaceState(juce::ValueTree::fromXml(*xmlState));
+      memberStoredAudioFile.referTo(
+          memberValueTreeState.state.getPropertyAsValue("sample", nullptr));
     }
   }
 }
@@ -248,6 +262,9 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
   if (chooseFile.browseForFileToOpen()) {
     // setting up file reader
     auto userFile = chooseFile.getResult();
+    memberAudioFilePath = userFile.getFullPathName();
+    memberStoredAudioFile.setValue(memberAudioFilePath);
+
     memberFormatReader = memberFormatManager.createReaderFor(userFile);
 
     // reading waveform
@@ -271,9 +288,9 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
         "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
         0.0f,
         10.0f, maxSampleLengthSecs));
-
+    memberSampler.setNoteStealingEnabled(true);
     return userFile.getFileNameWithoutExtension();
-  }
+  } 
   return "";
 }
 
@@ -282,6 +299,8 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   memberSampler.clearSounds();
   auto userFile = juce::File(path);
   memberFormatReader = memberFormatManager.createReaderFor(userFile);
+  memberAudioFilePath = path;
+  memberStoredAudioFile.setValue(memberAudioFilePath);
 
   // reading waveform
   auto sampleLength = memberFormatReader->lengthInSamples;
@@ -311,7 +330,7 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
       "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
       0.0f, 10.0f,
       maxSampleLengthSecs));
-
+  memberSampler.setNoteStealingEnabled(true);
   getADSRGainValue();
 }
 
@@ -334,7 +353,9 @@ void VibeSamplerAudioProcessor::getADSRGainValue() {
       *memberValueTreeState.getRawParameterValue("release");
   gain = *memberValueTreeState.getRawParameterValue("gain");
   polyphony = *memberValueTreeState.getRawParameterValue("polyphony");
-  // memberValueTreeState.state
+  memberAudioFilePath = *memberValueTreeState.state.getPropertyPointer("sample");
+  memberStoredAudioFile.setValue(memberAudioFilePath);
+
   // getting and updating sounds
   for (int i = 0; i < memberSampler.getNumSounds(); i++) {
     if (auto sound = dynamic_cast<juce::SamplerSound*>(
@@ -372,6 +393,9 @@ VibeSamplerAudioProcessor::getParameterLayout() {
       "gain", "Gain", 0.0f, 0.5f, 0.22f));
   parameters.push_back(std::make_unique<juce::AudioParameterInt>(
       "polyphony", "Polyphony", minValue, 32, defaultValue));
+//  memberStoredAudioFile.referTo(
+//      memberValueTreeState.state.getPropertyAsValue("sample", nullptr));
+  
 
   return {parameters.begin(), parameters.end()};
 

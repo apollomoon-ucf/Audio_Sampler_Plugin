@@ -45,6 +45,9 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
   WaveformVisual memberWaveformVisual;
   ADSRGainPolyButtons memberADSRGainPoly;
 
+  std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>
+      memberLoadButtonAttachment;
+
   juce::Label memberLoadLabel;
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.

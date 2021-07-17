@@ -99,6 +99,11 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   // previous gain (for gain smoothing)
   float memberPreviousGain;
 
+  // storing sample
+  //juce::AudioFormat memberStoredAudioFile;
+  juce::Value memberStoredAudioFile;
+  juce::String memberAudioFilePath;
+
   // audio format manager
   juce::AudioFormatManager memberFormatManager;
   juce::AudioFormatReader* memberFormatReader{nullptr};
