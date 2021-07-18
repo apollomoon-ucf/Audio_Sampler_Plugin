@@ -82,3 +82,11 @@ may include changing how abrupt the first sample releases, and how fast the new 
 
 (Plugin displaying updated UI)
 ![Screenshot_waveform_box](https://user-images.githubusercontent.com/25870426/126054452-96d9f4db-8fcc-421a-a180-73c0d7f87475.png)
+
+
+7|18|21 -- Adjusted position of ADSR knobs, added playhead and waveform tracing when sample is triggered. The playhead and waveform tracing (shown in purple) display for a duration
+equal to the amount of time the midi note is active. Another implementation could be displaying the playhead and waveform tracing for the duration of the release time parameter.
+Note: I think I want to add a meter, or meters, to monitor input and output levels; displaying the levels using a purple hue as seen in Vibe's logo.
+
+(Plugin displaying playhead and waveform tracing)
+![Screenshot_showing_playhead_waveform_tracing](https://user-images.githubusercontent.com/25870426/126084761-c984dc90-adc5-4ed8-a4b3-a2808c363743.png)
