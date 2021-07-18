@@ -381,11 +381,11 @@ VibeSamplerAudioProcessor::getParameterLayout() {
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
       "sustain", "Sustain", 0.0f, 6.0f, 3.95f));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
-      "release", "Release", 0.0f, 6.0f, 0.86f));
+      "release", "Release", 0.0f, 6.0f, 0.36f));
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
       "gain", "Gain", 0.0f, 0.5f, 0.22f));
   parameters.push_back(std::make_unique<juce::AudioParameterInt>(
-      "polyphony", "Polyphony", minValue, 32, 2.0));
+      "polyphony", "Polyphony", minValue, 32, 32.0));
 
   return {parameters.begin(), parameters.end()};
 

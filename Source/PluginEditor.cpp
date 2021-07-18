@@ -67,6 +67,19 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   g.setFont(15.0f);
   g.drawText(audioProcessor.getAudioFilename(), 337.5, 75, 200, 40,
              juce::Justification::topRight, true);
+  
+  //g.drawRect(getLocalBounds().reduced(150,125));
+  juce::Rectangle<int> thumbnailBounds(10, 100, getWidth() - 20,
+                                       getHeight() - 120);
+  //g.drawRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5,
+  //                       getWidth() / 1.5, getHeight() / 3, 10.0f, 1.0f);
+  // g.drawRect(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5, getWidth() / 1.5, getHeight() / 3);
+  //g.setColour(juce::Colours::rebeccapurple.fromHSV(
+  //    juce::Colours::rebeccapurple.getHue(),
+  //                                          0.5f, 0.075f, 1.0f));
+  //g.fillRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5,
+  //                       getWidth() / 1.5, getHeight() / 3, 10.0f);
+
 }
 
 void VibeSamplerAudioProcessorEditor::resized() {
@@ -74,7 +87,7 @@ void VibeSamplerAudioProcessorEditor::resized() {
   // subcomponents in your editor..
 
   // waveform visual
-  memberWaveformVisual.setBoundsRelative(0.18f, 0.30f, 0.63f, 0.5f);
+  memberWaveformVisual.setBoundsRelative(0.18f, 0.31f, 0.63f, 0.42f);
   memberADSRGainPoly.setBoundsRelative(0.0f, 0.0f, 1.0f, 1.0f);
 
   // get dimensions for button
