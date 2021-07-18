@@ -74,11 +74,11 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   g.drawRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5,
                          getWidth() / 1.5, getHeight() / 3, 10.0f, 1.0f);
    //g.drawRect(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5, getWidth() / 1.5, getHeight() / 3);
-  //g.setColour(juce::Colours::rebeccapurple.fromHSV(
-  //    juce::Colours::rebeccapurple.getHue(),
-  //                                          0.5f, 0.075f, 1.0f));
-  //g.fillRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5,
-  //                       getWidth() / 1.5, getHeight() / 3, 10.0f);
+  g.setColour(juce::Colours::rebeccapurple.fromHSV(
+      juce::Colours::rebeccapurple.getHue(),
+                                            0.5f, 0.075f, 1.0f));
+  g.fillRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5,
+                         getWidth() / 1.5, getHeight() / 3, 10.0f);
 
 }
 
