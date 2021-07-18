@@ -46,11 +46,16 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
                             juce::Colours::white);
   memberLoadLabel.attachToComponent(&memberLoadButton, false);
 
+  // start timer for playhead
+  startTimerHz(30);
+
   setSize(600, 400);
 }
 
 // destructor
-VibeSamplerAudioProcessorEditor::~VibeSamplerAudioProcessorEditor() {}
+VibeSamplerAudioProcessorEditor::~VibeSamplerAudioProcessorEditor() {
+  stopTimer();
+}
 
 //==============================================================================
 void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
@@ -147,3 +152,5 @@ void VibeSamplerAudioProcessorEditor::filesDropped(
   // update adsr
 //  audioProcessor.getADSRGainValue();
 //}
+
+void VibeSamplerAudioProcessorEditor::timerCallback() { repaint(); }

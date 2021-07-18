@@ -18,7 +18,8 @@
 /**
  */
 class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
-                                        public juce::FileDragAndDropTarget {
+                                        public juce::FileDragAndDropTarget,
+                                        public juce::Timer {
  public:
   VibeSamplerAudioProcessorEditor(VibeSamplerAudioProcessor&);
   ~VibeSamplerAudioProcessorEditor() override;
@@ -29,6 +30,8 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
 
   bool isInterestedInFileDrag(const juce::StringArray& files) override;
   void filesDropped(const juce::StringArray& files, int x, int y) override;
+
+  void timerCallback() override;
 
   // no longer using this with Value Tree State solution
   // void sliderValueChanged(juce::Slider* slider) override;

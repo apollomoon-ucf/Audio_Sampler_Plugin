@@ -87,11 +87,19 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
 
   juce::String getAudioFilename() { return memberAudioFilename; };
 
+  std::atomic<bool>& isNoteBeingPlayed() { return memberIsNoteBeingPlayed; }
+  std::atomic<int>& getSampleCount() { return memberSampleCount; }
+
  private:
   // creating member variables for the Synthesiser class and polyphony (#
   // voices)
   juce::Synthesiser memberSampler;
   juce::SamplerVoice* myVoice;
+
+  // writing from one thread, reading from another -- using atomic
+  std::atomic<bool> memberShouldUpdatePlayhead{false};
+  std::atomic<bool> memberIsNoteBeingPlayed{false};
+  std::atomic<int> memberSampleCount{0};
 
   const int memberVoiceInitNumber{2};
   const int memberMaxNumberOfVoices{32};

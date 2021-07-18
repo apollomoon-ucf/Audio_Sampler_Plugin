@@ -211,7 +211,8 @@ void ADSRGainPolyButtons::resized() {
   // This method is where you should set the bounds of any child
   // components that your component contains..
   // coordinates
-  const auto proportionalX = 0.07f;
+  /*const auto proportionalX = 0.07f;*/
+  const auto proportionalX = 0.08f;
   const auto spacing = 0.15f;
   const auto proportionalY = 0.7f;
   const auto proportionalWidth = 0.25f;

@@ -104,7 +104,7 @@ void VibeSamplerAudioProcessor::prepareToPlay(double sampleRate,
   // Use this method as the place to do any pre-playback
   // initialisation that you need..
   memberSampler.setCurrentPlaybackSampleRate(sampleRate);
-  //for (int i = 0; i < memberSampler.getNumVoices(); i++) {
+  // for (int i = 0; i < memberSampler.getNumVoices(); i++) {
   //  if (myVoice =
   //          dynamic_cast<juce::SamplerVoice*>(memberSampler.getVoice(i))) {
   //    myVoice->setCurrentPlaybackSampleRate(sampleRate);
@@ -115,7 +115,8 @@ void VibeSamplerAudioProcessor::prepareToPlay(double sampleRate,
   memberPreviousGain = *memberValueTreeState.getRawParameterValue("gain");
 
   if (memberValueTreeState.state.getPropertyAsValue("sample", nullptr)
-          .toString().isNotEmpty()) {
+          .toString()
+          .isNotEmpty()) {
     loadDroppedFile(
         memberValueTreeState.state.getPropertyAsValue("sample", nullptr)
             .toString());
@@ -160,16 +161,50 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   juce::ScopedNoDenormals noDenormals;
   auto totalNumInputChannels = getTotalNumInputChannels();
   auto totalNumOutputChannels = getTotalNumOutputChannels();
-  //int startSample = 0;
-  //int numSamples = buffer.getNumSamples();
-  //auto outputAudio = buffer;
-  //auto inputMidi = midiMessages;
+  // int startSample = 0;
+  // int numSamples = buffer.getNumSamples();
+  // auto outputAudio = buffer;
+  // auto inputMidi = midiMessages;
   // calling to get adsr values (and printing them to console if needed)
-  //if (memberShouldUpdateParameters) {
+  // if (memberShouldUpdateParameters) {
 
   //  getADSRGainValue();
   //}
   getADSRGainValue();
+
+  juce::MidiMessage midiMessage;
+  juce::MidiBuffer::Iterator midiBufferIterator{midiMessages};
+  int sample;
+  double noteFrequency;
+  double middleC = 261.625565;
+  double samples;
+
+  // if the note is being played
+  while (midiBufferIterator.getNextEvent(midiMessage, sample)) {
+    if (midiMessage.isNoteOn()) {
+      // start playhead
+      noteFrequency =
+          midiMessage.getMidiNoteInHertz(midiMessage.getNoteNumber());
+      memberIsNoteBeingPlayed = true;
+    } else if (midiMessage.isNoteOff()) {
+      // stop playhead
+      memberSampleCount = 0;
+      memberIsNoteBeingPlayed = false;
+    }
+  }
+
+  //else if (midiMessage.isNoteOff() && !buffer.hasBeenCleared()) {
+  //  // start playhead
+  //  memberSampleCount = 0;
+  //  noteFrequency = midiMessage.getMidiNoteInHertz(midiMessage.getNoteNumber());
+  //  memberIsNoteBeingPlayed = true;
+  //}
+
+  samples = buffer.getNumSamples();
+  // how long the note has been played for
+  memberSampleCount =
+      memberIsNoteBeingPlayed ? memberSampleCount += samples : 0;
+
   // In case we have more outputs than inputs, this code clears any output
   // channels that didn't contain input data, (because these aren't
   // guaranteed to be empty - they may contain garbage).
@@ -240,7 +275,8 @@ void VibeSamplerAudioProcessor::setStateInformation(const void* data,
   // You should use this method to restore your parameters from this memory
   // block, whose contents will have been created by the getStateInformation()
   // call.
-  std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+  std::unique_ptr<juce::XmlElement> xmlState(
+      getXmlFromBinary(data, sizeInBytes));
 
   if (xmlState.get() != nullptr) {
     if (xmlState->hasTagName(memberValueTreeState.state.getType())) {
@@ -287,15 +323,14 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
     int releaseTimeSecs = 0.0;
     // max sample length
     int maxSampleLengthSecs = 10.0;
-    
+
     // creating new sampler sound containing the audio file selected by user
     memberSampler.addSound(new juce::SamplerSound(
-        "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
-        0.1f,
+        "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch, 0.1f,
         0.1f, maxSampleLengthSecs));
     // memberSampler.setNoteStealingEnabled(true);
     return userFile.getFileNameWithoutExtension();
-  } 
+  }
   return "";
 }
 
@@ -326,11 +361,9 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
 
   // creating new sampler sound containing the audio file selected by user
   memberSampler.addSound(new juce::SamplerSound(
-      "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch,
-      0.1f, 0.1f,
-      maxSampleLengthSecs));
-  //memberSampler.setNoteStealingEnabled(true);
-  
+      "Sample", *memberFormatReader, midiRange, midiNoteForNormalPitch, 0.1f,
+      0.1f, maxSampleLengthSecs));
+  // memberSampler.setNoteStealingEnabled(true);
 }
 
 // listening for adsr and gain
