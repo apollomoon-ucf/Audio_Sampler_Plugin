@@ -64,12 +64,12 @@ void WaveformVisual::paint(juce::Graphics& g) {
     g.strokePath(p, juce::PathStrokeType(2));
 
     // drawing playhead
-    //auto playheadPosition = juce::jmap<int>(audioProcessor.getSampleCount(),
-    //                                  0, audioProcessor.getWaveform().getNumSamples(), 0.5, getWidth());
-    //g.setColour(juce::Colours::white);
-    //g.drawLine(playheadPosition, 0, playheadPosition, getHeight() / 1.5, 2.0f);
-    //g.setColour(juce::Colours::rebeccapurple.withAlpha(0.3f));
-    //g.fillRoundedRectangle(0, 0, playheadPosition, getHeight() / 1.5, 2.0f);
+    auto playheadPosition = juce::jmap<int>(audioProcessor.getSampleCount(),
+                                      0, audioProcessor.getWaveform().getNumSamples(), 0.5, getWidth());
+    g.setColour(juce::Colours::white);
+    g.drawLine(playheadPosition, 0, playheadPosition, getHeight() / 1.5, 2.0f);
+    g.setColour(juce::Colours::rebeccapurple.withAlpha(0.3f));
+    g.fillRoundedRectangle(0, 0, playheadPosition, getHeight() / 1.5, 2.0f);
 
 
   }
