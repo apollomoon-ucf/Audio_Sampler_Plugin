@@ -74,3 +74,11 @@ Displayed sample/test Vibe logo, but need to replace it with a high resolution v
 
 (Plugin displaying dark mode test)
 ![Screenshot_dark_mode_mono](https://user-images.githubusercontent.com/25870426/125873022-9e2775b6-612b-4783-abba-d9edfea70ed8.png)
+
+
+7|17|21 -- Connected Gain knob, saved parameters and audio sample file path in Value Tree to allow settings and sounds to be reloaded when daw is restarted, added a visual component 
+to house the waveform, and made note to fix audio clicking/popping when a note is played fast in monophonic mode. When a voice is stolen, there is an audible click. The solution
+may include changing how abrupt the first sample releases, and how fast the new sample attacks when ending the first sample/voice and starting the new/second sample/voice.
+
+(Plugin displaying updated UI)
+![Screenshot_waveform_box](https://user-images.githubusercontent.com/25870426/126054452-96d9f4db-8fcc-421a-a180-73c0d7f87475.png)
