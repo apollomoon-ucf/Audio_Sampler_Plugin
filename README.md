@@ -95,3 +95,9 @@ Note: I think I want to add a meter, or meters, to monitor input and output leve
 
 (Plugin displaying updated UI)
 ![Screenshot_newLogo_newColorButtons_FIXED](https://user-images.githubusercontent.com/25870426/126195036-13c1f3dd-b55f-423c-8a2e-176e6940eed6.png)
+
+Added keyboard component and rescaled layout to fit other elements.
+Changed polyphony textbox to label.
+
+(Plugin displaying new keyboard component, poly/mono label, and newly scaled UI)
+![Screenshot_vibe_sampler_withKeyboard](https://user-images.githubusercontent.com/25870426/126224630-cc9fd8db-7043-4a23-aed8-a8ac47e96a67.png)
