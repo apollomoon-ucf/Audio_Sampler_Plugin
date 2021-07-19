@@ -53,11 +53,19 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
 
   std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>
       memberLoadButtonAttachment;
+  std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
+      memberPolyphonyKnobAttachment;
 
-  juce::Label memberLoadLabel;
+  juce::Slider memberPolyphonyKnob;
+
+  juce::Label memberLoadLabel, memberPolyphonyLabel;
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   VibeSamplerAudioProcessor& audioProcessor;
+
+  juce::MidiKeyboardState keyboardState;
+  //SynthA
+  juce::MidiKeyboardComponent keyboardComponent;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VibeSamplerAudioProcessorEditor)
 };

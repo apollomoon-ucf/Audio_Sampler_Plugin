@@ -27,12 +27,13 @@ class ADSRGainPolyButtons : public juce::Component {
 
  private:
   juce::Slider memberAttackKnob, memberDecayKnob, memberSustainKnob,
-      memberReleaseKnob, memberGainKnob, memberPolyphonyKnob;
+      memberReleaseKnob, memberGainKnob;
   juce::Label memberAttackLabel, memberDecayLabel, memberSustainLabel,
-      memberReleaseLabel, memberGainLabel, memberPolyphonyLabel,
+      memberReleaseLabel, memberGainLabel,
       memberLoadLabel;
 
   VibeSamplerAudioProcessor &audioProcessor;
+
 
   // unqiue pointers for attaching knobs/sliders
   // hover SliderAttachment for more info
@@ -46,8 +47,8 @@ class ADSRGainPolyButtons : public juce::Component {
       memberReleaseKnobAttachment;
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
       memberGainKnobAttachment;
-  std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
-      memberPolyphonyKnobAttachment;
+  //std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
+  //    memberPolyphonyKnobAttachment;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ADSRGainPolyButtons)
 };

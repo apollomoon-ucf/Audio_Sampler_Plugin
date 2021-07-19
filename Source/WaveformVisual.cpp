@@ -44,7 +44,7 @@ void WaveformVisual::paint(juce::Graphics& g) {
     // setting up path for drawing waveform
     juce::Path p;
     g.setColour(juce::Colours::whitesmoke);
-    p.startNewSubPath(0, getHeight() - 110);
+    p.startNewSubPath(0, getHeight() - 130);
 
     // scaling on x-axis
     // selecting snapshot locations of waveform using the scaling factor

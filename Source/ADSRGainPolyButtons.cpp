@@ -155,44 +155,7 @@ ADSRGainPolyButtons::ADSRGainPolyButtons(VibeSamplerAudioProcessor& p)
   memberGainLabel.attachToComponent(&memberGainKnob, false);
   // addAndMakeVisible(memberGainLabel);
 
-  // Polyphony Knob
-  memberPolyphonyKnob.setSliderStyle(juce::Slider::SliderStyle::IncDecButtons);
-  memberPolyphonyKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                                juce::Colours::white);
-  memberPolyphonyKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                                juce::Colours::rebeccapurple);
-  //memberPolyphonyKnob.setColour(juce::Slider::ColourIds::textBoxBackgroundColourId,
-  //                           juce::Colours::black);
-  //memberPolyphonyKnob.setIncDecButtonsMode(
-  //    juce::Slider::IncDecButtonMode::incDecButtonsDraggable_Horizontal);
-  getLookAndFeel().setColour(juce::TextButton::ColourIds::buttonColourId,
-                             juce::Colours::black);
-  memberPolyphonyKnob.setColour(
-      juce::ComboBox::ColourIds::textColourId,
-      juce::Colours::yellow);
-  memberPolyphonyKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55,
-                                      20);
-  // if (audioProcessor.polyphony > 1) {
-  //  memberPolyphonyKnob.setTextValueSuffix(" voices");
-  //} else {
-  //  memberPolyphonyKnob.setTextValueSuffix(" voice");
-  //}
 
-  // value tree state solution for listener knob
-  memberPolyphonyKnobAttachment =
-      std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-          audioProcessor.getValueTreeState(), "polyphony", memberPolyphonyKnob);
-  // no longer using listener or range with Value Tree State solution
-  memberPolyphonyKnob.setRange(1.0, 32.0, 1.0);
-  // memberPolyphonyKnob.addListener(this);
-  addAndMakeVisible(memberPolyphonyKnob);
-  memberPolyphonyLabel.setFont(20.0f);
-  // memberPolyphonyLabel.setText("Polyphony",
-  //                              juce::NotificationType::dontSendNotification);
-  memberPolyphonyLabel.setJustificationType(juce::Justification::centredTop);
-  memberPolyphonyLabel.setColour(juce::Label::ColourIds::textColourId,
-                                 juce::Colours::white);
-  memberPolyphonyLabel.attachToComponent(&memberPolyphonyKnob, false);
 }
 
 ADSRGainPolyButtons::~ADSRGainPolyButtons() {}
@@ -204,11 +167,11 @@ void ADSRGainPolyButtons::paint(juce::Graphics& g) {
      You should replace everything in this method with your own
      drawing code..
   */
-  if (audioProcessor.polyphony > 1) {
-    memberPolyphonyKnob.setTextValueSuffix(" poly");
-  } else {
-    memberPolyphonyKnob.setTextValueSuffix(" mono");
-  }
+  //if (audioProcessor.polyphony > 1) {
+  //  memberPolyphonyKnob.setTextValueSuffix(" poly");
+  //} else {
+  //  memberPolyphonyKnob.setTextValueSuffix(" mono");
+  //}
 
   // g.fillAll(juce::Colours::black);
 }
@@ -237,6 +200,6 @@ void ADSRGainPolyButtons::resized() {
                                       proportionalHeight);
   memberGainKnob.setBoundsRelative(proportionalX + (spacing * 4), proportionalY,
                                    proportionalWidth, proportionalHeight);
-  memberPolyphonyKnob.setBoundsRelative(
-      proportionalX, 0.1, proportionalWidth / 2, proportionalHeight / 2);
+  //memberPolyphonyKnob.setBoundsRelative(
+  //    proportionalX, 0.1, proportionalWidth / 2, proportionalHeight / 2);
 }

@@ -280,12 +280,13 @@ void VibeSamplerAudioProcessor::setStateInformation(const void* data,
 
   if (xmlState.get() != nullptr) {
     if (xmlState->hasTagName(memberValueTreeState.state.getType())) {
-      memberValueTreeState.replaceState(juce::ValueTree::fromXml(*xmlState));
       memberStoredAudioFile.referTo(
           memberValueTreeState.state.getPropertyAsValue("sample", nullptr));
       memberStoredAudioFilename.referTo(
           memberValueTreeState.state.getPropertyAsValue("sample_name",
                                                         nullptr));
+      memberValueTreeState.replaceState(juce::ValueTree::fromXml(*xmlState));
+
     }
   }
 }
@@ -305,6 +306,8 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
     auto userFile = chooseFile.getResult();
     memberAudioFilePath = userFile.getFullPathName();
     memberAudioFilename = userFile.getFileNameWithoutExtension();
+
+    //valueTreePropertyChanged(memberValueTreeState.state, "gain");
 
     memberFormatReader = memberFormatManager.createReaderFor(userFile);
 
@@ -338,10 +341,13 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
 void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   memberSampler.clearSounds();
   getADSRGainValue();
+  //getValueTreeState().state.sendPropertyChangeMessage("sample");
   auto userFile = juce::File(path);
   memberFormatReader = memberFormatManager.createReaderFor(userFile);
   memberAudioFilePath = path;
   memberAudioFilename = userFile.getFileNameWithoutExtension();
+  // valueTreePropertyChanged(getValueTreeState().state, "gain");
+  
 
   // reading waveform
   auto sampleLength = memberFormatReader->lengthInSamples;
@@ -379,6 +385,7 @@ void VibeSamplerAudioProcessor::getADSRGainValue() {
       *memberValueTreeState.getRawParameterValue("release");
   gain = *memberValueTreeState.getRawParameterValue("gain");
   polyphony = *memberValueTreeState.getRawParameterValue("polyphony");
+  valueTreePropertyChanged(getValueTreeState().state, "gain");
   memberStoredAudioFile.setValue(memberAudioFilePath);
   memberStoredAudioFilename.setValue(memberAudioFilename);
 
