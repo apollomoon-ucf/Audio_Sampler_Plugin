@@ -40,10 +40,12 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
   // Text button for loading sound/sample from computer
   juce::TextButton memberLoadButton{"Load sample"};
 
-  juce::Image myimage = juce::ImageFileFormat::loadFrom(
-      juce::File("C:/Users/Brian/OneDrive - Knights - University of Central "
-                 "Florida/c++_dev_folder/VibeSampler/Documentation/"
-                 "V2-2020-Vibe-Logo-Transparent-450-1-2.png"));
+  //juce::Image myimage = juce::ImageFileFormat::loadFrom(
+  //    juce::File("C:/Users/Brian/OneDrive - Knights - University of Central "
+  //               "Florida/c++_dev_folder/VibeSampler/Documentation/"
+  //               "V2-2020-Vibe-Logo-Transparent-450-1-2.png"));
+
+  juce::ImageComponent vibeLogo;
 
   WaveformVisual memberWaveformVisual;
   ADSRGainPolyButtons memberADSRGainPoly;

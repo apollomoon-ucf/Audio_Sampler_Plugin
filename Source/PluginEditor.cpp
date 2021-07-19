@@ -26,13 +26,26 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
     repaint();
   };
 
-  // make waveform visual
+  // loading logo from memory
+  auto vibeLogoFromMemory = juce::ImageCache::getFromMemory(BinaryData::V22020VibeLogoTransparent45012_png, BinaryData::V22020VibeLogoTransparent45012_pngSize);
+  //if (!vibeLogoFromMemory.isNull()) {
+  //  vibeLogo.setImage(vibeLogoFromMemory,
+  //                    juce::RectanglePlacement::stretchToFit);
+  //} else {
+  //  jassert(!vibeLogoFromMemory.isNull());
+  //}
+  vibeLogo.setImage(vibeLogoFromMemory, juce::RectanglePlacement::stretchToFit);
+    
+  // make logo visible
+  addAndMakeVisible(vibeLogo);
+
+  // make waveform visible
   addAndMakeVisible(memberWaveformVisual);
 
   // make adsr, gain, and polyphonic knobs visible
   addAndMakeVisible(memberADSRGainPoly);
 
-  //memberLoadButtonAttachment =
+  // memberLoadButtonAttachment =
   //    std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
   //        audioProcessor.getValueTreeState(), "sample", memberLoadButton);
 
@@ -63,28 +76,27 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   g.setColour(juce::Colours::white);
   g.setFont(15.0f);
 
-  g.drawImageAt(myimage.rescaled(125, 80), getWidth() / 2 - 62.5, 8);
+  g.drawImageAt(vibeLogo.getImage().rescaled(125, 80), getWidth() / 2 - 62.5, 8);
 
   g.drawFittedText("Vibe Audio Sampler", getLocalBounds().reduced(90, 90),
                    juce::Justification::centredTop, 1);
-  // paint filename
+  // paint filename 
   g.setColour(juce::Colours::grey);
   g.setFont(15.0f);
   g.drawText(audioProcessor.getAudioFilename(), 337.5, 75, 200, 40,
              juce::Justification::topRight, true);
-  
-  //g.drawRect(getLocalBounds().reduced(150,125));
-  //juce::Rectangle<int> thumbnailBounds(10, 100, getWidth() - 20,
+
+  // g.drawRect(getLocalBounds().reduced(150,125));
+  // juce::Rectangle<int> thumbnailBounds(10, 100, getWidth() - 20,
   //                                     getHeight() - 120);
   g.drawRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5,
                          getWidth() / 1.5, getHeight() / 3, 10.0f, 1.0f);
-   //g.drawRect(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5, getWidth() / 1.5, getHeight() / 3);
+  // g.drawRect(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5, getWidth()
+  // / 1.5, getHeight() / 3);
   g.setColour(juce::Colours::rebeccapurple.fromHSV(
-      juce::Colours::rebeccapurple.getHue(),
-                                            0.5f, 0.075f, 1.0f));
+      juce::Colours::rebeccapurple.getHue(), 0.5f, 0.075f, 1.0f));
   g.fillRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5,
                          getWidth() / 1.5, getHeight() / 3, 10.0f);
-
 }
 
 void VibeSamplerAudioProcessorEditor::resized() {
@@ -94,6 +106,15 @@ void VibeSamplerAudioProcessorEditor::resized() {
   // waveform visual
   memberWaveformVisual.setBoundsRelative(0.18f, 0.31f, 0.63f, 0.42f);
   memberADSRGainPoly.setBoundsRelative(0.0f, 0.0f, 1.0f, 1.0f);
+  //float middle = ((getWidth() / 2.0f) -
+  //                ((vibeLogo.getImage().getWidth() * 0.39f) / 2.0f)) /
+  //               getWidth();
+   //vibeLogo.setBoundsRelative(middle, 0.015f, 0.19f, 0.21f);
+  //vibeLogo.getImage().rescaled(vibeLogo.getImage().getWidth() / 20,
+  //                             vibeLogo.getImage().getHeight() / 20);
+  //vibeLogo.setBounds((getWidth() / 2) - (vibeLogo.getImage().getWidth() / 4), 0,
+  //                   vibeLogo.getImage().getWidth() / 4,
+  //                   vibeLogo.getImage().getHeight() / 4);
 
   // get dimensions for button
   int x = getWidth() / 2 + 160;
@@ -135,21 +156,21 @@ void VibeSamplerAudioProcessorEditor::filesDropped(
 }
 
 // listener for knobs
-// void VibeSamplerAudioProcessorEditor::sliderValueChanged(juce::Slider *slider) {
-  // if (slider == &memberAttackKnob) {
-  //  audioProcessor.getADSRParameters().attack = memberAttackKnob.getValue();
-  //} else if (slider == &memberDecayKnob) {
-  //  audioProcessor.getADSRParameters().decay = memberDecayKnob.getValue();
-  //} else if (slider == &memberSustainKnob) {
-  //  audioProcessor.getADSRParameters().sustain = memberSustainKnob.getValue();
-  //} else if (slider == &memberReleaseKnob) {
-  //  audioProcessor.getADSRParameters().release = memberReleaseKnob.getValue();
-  //} else if (slider == &memberGainKnob) {
-  //  audioProcessor.gain = memberGainKnob.getValue();
-  //} else if (slider == &memberPolyphonyKnob) {
-  //  audioProcessor.changePolyphony(memberPolyphonyKnob.getValue());
-  //}
-  // update adsr
+// void VibeSamplerAudioProcessorEditor::sliderValueChanged(juce::Slider
+// *slider) { if (slider == &memberAttackKnob) {
+//  audioProcessor.getADSRParameters().attack = memberAttackKnob.getValue();
+//} else if (slider == &memberDecayKnob) {
+//  audioProcessor.getADSRParameters().decay = memberDecayKnob.getValue();
+//} else if (slider == &memberSustainKnob) {
+//  audioProcessor.getADSRParameters().sustain = memberSustainKnob.getValue();
+//} else if (slider == &memberReleaseKnob) {
+//  audioProcessor.getADSRParameters().release = memberReleaseKnob.getValue();
+//} else if (slider == &memberGainKnob) {
+//  audioProcessor.gain = memberGainKnob.getValue();
+//} else if (slider == &memberPolyphonyKnob) {
+//  audioProcessor.changePolyphony(memberPolyphonyKnob.getValue());
+//}
+// update adsr
 //  audioProcessor.getADSRGainValue();
 //}
 
