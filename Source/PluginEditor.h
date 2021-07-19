@@ -45,7 +45,8 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
   //               "Florida/c++_dev_folder/VibeSampler/Documentation/"
   //               "V2-2020-Vibe-Logo-Transparent-450-1-2.png"));
 
-  juce::ImageComponent vibeLogo;
+  juce::ImageComponent vibeLogoBars;
+  juce::ImageComponent vibeLogoText;
 
   WaveformVisual memberWaveformVisual;
   ADSRGainPolyButtons memberADSRGainPoly;

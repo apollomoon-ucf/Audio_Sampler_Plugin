@@ -24,6 +24,18 @@
     <FILE id="yewOdO" name="WaveformVisual.h" compile="0" resource="0"
           file="Source/WaveformVisual.h"/>
     <GROUP id="{A61A64FA-F31C-414A-64B5-0BA157F925DB}" name="Resources">
+      <FILE id="imX28e" name="new_vibe_logo.png" compile="0" resource="1"
+            file="Resources/new_vibe_logo.png"/>
+      <FILE id="TIJUtO" name="vibe_logo_retro_withVIBE.png" compile="0" resource="1"
+            file="Resources/vibe_logo_retro_withVIBE.png"/>
+      <FILE id="dFSgKx" name="vibe_logo_retro_withNoVIBE_alt2.png" compile="0"
+            resource="1" file="Resources/vibe_logo_retro_withNoVIBE_alt2.png"/>
+      <FILE id="pgYZjc" name="Audio_sampler.png" compile="0" resource="1"
+            file="Resources/Audio_sampler.png"/>
+      <FILE id="X5Im3r" name="vibeLogo_1920_1080.png" compile="0" resource="1"
+            file="Resources/vibeLogo_1920_1080.png"/>
+      <FILE id="o2pRJu" name="VIBE_forSampler.png" compile="0" resource="1"
+            file="Resources/VIBE_forSampler.png"/>
       <FILE id="qfO9Yk" name="V2-2020-Vibe-Logo-Transparent-450-1-2.png"
             compile="0" resource="1" file="Resources/V2-2020-Vibe-Logo-Transparent-450-1-2.png"
             xcodeResource="0"/>

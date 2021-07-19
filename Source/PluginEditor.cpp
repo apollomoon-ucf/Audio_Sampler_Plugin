@@ -27,17 +27,25 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   };
 
   // loading logo from memory
-  auto vibeLogoFromMemory = juce::ImageCache::getFromMemory(BinaryData::V22020VibeLogoTransparent45012_png, BinaryData::V22020VibeLogoTransparent45012_pngSize);
-  //if (!vibeLogoFromMemory.isNull()) {
+  auto vibeLogoBarsFromMemory = juce::ImageCache::getFromMemory(
+      BinaryData::V22020VibeLogoTransparent45012_png,
+      BinaryData::V22020VibeLogoTransparent45012_pngSize);
+  auto vibeLogoTextFromMemory = juce::ImageCache::getFromMemory(
+      BinaryData::new_vibe_logo_png, BinaryData::new_vibe_logo_pngSize);
+  // if (!vibeLogoFromMemory.isNull()) {
   //  vibeLogo.setImage(vibeLogoFromMemory,
   //                    juce::RectanglePlacement::stretchToFit);
   //} else {
   //  jassert(!vibeLogoFromMemory.isNull());
   //}
-  vibeLogo.setImage(vibeLogoFromMemory, juce::RectanglePlacement::stretchToFit);
-    
+  vibeLogoBars.setImage(vibeLogoBarsFromMemory,
+                        juce::RectanglePlacement::stretchToFit);
+  vibeLogoText.setImage(vibeLogoTextFromMemory,
+                        juce::RectanglePlacement::stretchToFit);
+
   // make logo visible
-  addAndMakeVisible(vibeLogo);
+  //addAndMakeVisible(vibeLogoBars);
+  addAndMakeVisible(vibeLogoText);
 
   // make waveform visible
   addAndMakeVisible(memberWaveformVisual);
@@ -48,7 +56,8 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   // memberLoadButtonAttachment =
   //    std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
   //        audioProcessor.getValueTreeState(), "sample", memberLoadButton);
-
+  memberLoadButton.setColour(juce::TextButton::buttonColourId,
+                             juce::Colours::black);
   // make load button a child component of this current component
   addAndMakeVisible(memberLoadButton);
   memberLoadLabel.setFont(15.0f);
@@ -76,11 +85,13 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   g.setColour(juce::Colours::white);
   g.setFont(15.0f);
 
-  g.drawImageAt(vibeLogo.getImage().rescaled(125, 80), getWidth() / 2 - 62.5, 8);
+  // original logo and sample title
+  // g.drawImageAt(vibeLogo.getImage().rescaled(125, 80), getWidth() / 2 - 62.5,
+  // 8); g.drawFittedText("Vibe Audio Sampler", getLocalBounds().reduced(90,
+  // 90),
+  //                  juce::Justification::centredTop, 1);
 
-  g.drawFittedText("Vibe Audio Sampler", getLocalBounds().reduced(90, 90),
-                   juce::Justification::centredTop, 1);
-  // paint filename 
+  // paint filename
   g.setColour(juce::Colours::grey);
   g.setFont(15.0f);
   g.drawText(audioProcessor.getAudioFilename(), 337.5, 75, 200, 40,
@@ -106,15 +117,22 @@ void VibeSamplerAudioProcessorEditor::resized() {
   // waveform visual
   memberWaveformVisual.setBoundsRelative(0.18f, 0.31f, 0.63f, 0.42f);
   memberADSRGainPoly.setBoundsRelative(0.0f, 0.0f, 1.0f, 1.0f);
-  //float middle = ((getWidth() / 2.0f) -
-  //                ((vibeLogo.getImage().getWidth() * 0.39f) / 2.0f)) /
-  //               getWidth();
-   //vibeLogo.setBoundsRelative(middle, 0.015f, 0.19f, 0.21f);
-  //vibeLogo.getImage().rescaled(vibeLogo.getImage().getWidth() / 20,
-  //                             vibeLogo.getImage().getHeight() / 20);
-  //vibeLogo.setBounds((getWidth() / 2) - (vibeLogo.getImage().getWidth() / 4), 0,
-  //                   vibeLogo.getImage().getWidth() / 4,
-  //                   vibeLogo.getImage().getHeight() / 4);
+
+  // placing and scaling logo (image)
+  double scaleFactor = 2.5;  // image size / scaleFactor = new image size
+  int center = (getWidth() / 2) -
+               (vibeLogoBars.getImage().getWidth() / (2 * scaleFactor));
+  // vibe logo audio meter
+  vibeLogoBars.setBounds(center, 10,
+                         vibeLogoBars.getImage().getWidth() / scaleFactor,
+                         (vibeLogoBars.getImage().getHeight() / scaleFactor));
+  scaleFactor = 1.25;
+  // vibe logo text
+  center = (getWidth() / 2) -
+               (vibeLogoText.getImage().getWidth() / (2 * scaleFactor));
+  vibeLogoText.setBounds(center, 15,
+                         vibeLogoText.getImage().getWidth() / scaleFactor,
+                         (vibeLogoText.getImage().getHeight() / scaleFactor));
 
   // get dimensions for button
   int x = getWidth() / 2 + 160;

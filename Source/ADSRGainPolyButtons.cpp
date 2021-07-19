@@ -161,9 +161,15 @@ ADSRGainPolyButtons::ADSRGainPolyButtons(VibeSamplerAudioProcessor& p)
                                 juce::Colours::white);
   memberPolyphonyKnob.setColour(juce::Slider::ColourIds::thumbColourId,
                                 juce::Colours::rebeccapurple);
+  //memberPolyphonyKnob.setColour(juce::Slider::ColourIds::textBoxBackgroundColourId,
+  //                           juce::Colours::black);
+  //memberPolyphonyKnob.setIncDecButtonsMode(
+  //    juce::Slider::IncDecButtonMode::incDecButtonsDraggable_Horizontal);
+  getLookAndFeel().setColour(juce::TextButton::ColourIds::buttonColourId,
+                             juce::Colours::black);
   memberPolyphonyKnob.setColour(
-      juce::Slider::ColourIds::rotarySliderFillColourId,
-      juce::Colours::rebeccapurple);
+      juce::ComboBox::ColourIds::textColourId,
+      juce::Colours::yellow);
   memberPolyphonyKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55,
                                       20);
   // if (audioProcessor.polyphony > 1) {
