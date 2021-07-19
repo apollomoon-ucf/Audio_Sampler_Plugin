@@ -94,4 +94,4 @@ Note: I think I want to add a meter, or meters, to monitor input and output leve
 7|19|21 -- Updated logo and filled buttons with black.
 
 (Plugin displaying updated UI)
-![Screenshot_newLogo_newColorButtons](https://user-images.githubusercontent.com/25870426/126191495-cb1d069a-3025-4397-8c25-5272d5dac6b8.png)
+![Screenshot_newLogo_newColorButtons_FIXED](https://user-images.githubusercontent.com/25870426/126195036-13c1f3dd-b55f-423c-8a2e-176e6940eed6.png)

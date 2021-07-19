@@ -31,7 +31,8 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
       BinaryData::V22020VibeLogoTransparent45012_png,
       BinaryData::V22020VibeLogoTransparent45012_pngSize);
   auto vibeLogoTextFromMemory = juce::ImageCache::getFromMemory(
-      BinaryData::new_vibe_logo_png, BinaryData::new_vibe_logo_pngSize);
+      BinaryData::fixed_sampler_vibe_logo_png,
+      BinaryData::fixed_sampler_vibe_logo_pngSize); 
   // if (!vibeLogoFromMemory.isNull()) {
   //  vibeLogo.setImage(vibeLogoFromMemory,
   //                    juce::RectanglePlacement::stretchToFit);
