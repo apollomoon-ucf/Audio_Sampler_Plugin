@@ -90,3 +90,8 @@ Note: I think I want to add a meter, or meters, to monitor input and output leve
 
 (Plugin displaying playhead and waveform tracing)
 ![Screenshot_showing_playhead_waveform_tracing](https://user-images.githubusercontent.com/25870426/126084761-c984dc90-adc5-4ed8-a4b3-a2808c363743.png)
+
+7|19|21 -- Updated logo and filled buttons with black.
+
+(Plugin displaying updated UI)
+![Screenshot_newLogo_newColorButtons](https://user-images.githubusercontent.com/25870426/126191495-cb1d069a-3025-4397-8c25-5272d5dac6b8.png)
