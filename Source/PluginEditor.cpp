@@ -89,11 +89,6 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
                                 juce::Colours::yellow);
   memberPolyphonyKnob.setTextBoxStyle(juce::Slider::NoTextBox, false, 55,
                                       20);
-  // if (audioProcessor.polyphony > 1) {
-  //  memberPolyphonyKnob.setTextValueSuffix(" voices");
-  //} else {
-  //  memberPolyphonyKnob.setTextValueSuffix(" voice");
-  //}
 
   // value tree state solution for listener knob
   memberPolyphonyKnobAttachment =
