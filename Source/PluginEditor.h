@@ -64,8 +64,8 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
   VibeSamplerAudioProcessor& audioProcessor;
 
   juce::MidiKeyboardState keyboardState;
-  //SynthA
   juce::MidiKeyboardComponent keyboardComponent;
+  // SynthAudioSource synthAudioSource;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VibeSamplerAudioProcessorEditor)
 };

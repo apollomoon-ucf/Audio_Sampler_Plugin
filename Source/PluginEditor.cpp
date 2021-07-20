@@ -25,8 +25,8 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
       BinaryData::V22020VibeLogoTransparent45012_png,
       BinaryData::V22020VibeLogoTransparent45012_pngSize);
   auto vibeLogoTextFromMemory = juce::ImageCache::getFromMemory(
-      BinaryData::fixed_sampler_vibe_logo_png,
-      BinaryData::fixed_sampler_vibe_logo_pngSize);
+      BinaryData::fixed_sampler_vibe_logo_withoutVibe_png,
+      BinaryData::fixed_sampler_vibe_logo_withoutVibe_pngSize);
   // if (!vibeLogoFromMemory.isNull()) {
   //  vibeLogo.setImage(vibeLogoFromMemory,
   //                    juce::RectanglePlacement::stretchToFit);
@@ -198,7 +198,7 @@ void VibeSamplerAudioProcessorEditor::resized() {
   // vibe logo text
   center = (getWidth() / 2) -
            (vibeLogoText.getImage().getWidth() / (2 * scaleFactor));
-  vibeLogoText.setBounds(center, 15,
+  vibeLogoText.setBounds(center, 35,
                          vibeLogoText.getImage().getWidth() / scaleFactor,
                          (vibeLogoText.getImage().getHeight() / scaleFactor));
 
@@ -207,7 +207,7 @@ void VibeSamplerAudioProcessorEditor::resized() {
   int width = 80;
   int height = 30;
   memberLoadButton.setBounds(getWidth() - (getWidth() / 6) - width / 2, y, width, height);
-  memberPolyphonyKnob.setBounds( (getWidth() / 6) - width / 2, y, width, height);
+  memberPolyphonyKnob.setBounds( (getWidth() / 6) - width / 2, y - 2, width, height + 3);
 }
 
 // method for seeing if the file type dropped on the sampler is an appropriate

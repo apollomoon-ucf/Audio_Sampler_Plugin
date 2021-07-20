@@ -92,12 +92,13 @@ Note: I think I want to add a meter, or meters, to monitor input and output leve
 ![Screenshot_showing_playhead_waveform_tracing](https://user-images.githubusercontent.com/25870426/126084761-c984dc90-adc5-4ed8-a4b3-a2808c363743.png)
 
 7|19|21 -- Updated logo and filled buttons with black.
-
-(Plugin displaying updated UI)
-![Screenshot_newLogo_newColorButtons_FIXED](https://user-images.githubusercontent.com/25870426/126195036-13c1f3dd-b55f-423c-8a2e-176e6940eed6.png)
-
 Added keyboard component and rescaled layout to fit other elements.
 Changed polyphony textbox to label.
 
 (Plugin displaying new keyboard component, poly/mono label, and newly scaled UI)
 ![Screenshot_vibe_sampler_withKeyboard](https://user-images.githubusercontent.com/25870426/126224630-cc9fd8db-7043-4a23-aed8-a8ac47e96a67.png)
+
+ALT Logo Test
+
+(Plugin displaying alt logo without Vibe text)
+![Screenshot_vibe_sampler_withKeyboard_withoutvibetext](https://user-images.githubusercontent.com/25870426/126255242-7e5c7a23-e2ba-4d06-b3e8-5f1b72f79fa6.png)

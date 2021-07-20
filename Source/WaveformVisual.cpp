@@ -68,7 +68,7 @@ void WaveformVisual::paint(juce::Graphics& g) {
                                       0, audioProcessor.getWaveform().getNumSamples(), 0.5, getWidth());
     g.setColour(juce::Colours::white);
     g.drawLine(playheadPosition, 0, playheadPosition, getHeight() / 1.5, 2.0f);
-    g.setColour(juce::Colours::rebeccapurple.withAlpha(0.3f));
+    g.setColour(juce::Colours::rebeccapurple.withAlpha(0.35f));
     g.fillRoundedRectangle(0, 0, playheadPosition, getHeight() / 1.5, 2.0f);
 
 

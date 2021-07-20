@@ -30,6 +30,11 @@ VibeSamplerAudioProcessor::VibeSamplerAudioProcessor()
   // setting up format manager for different audio formats
   memberFormatManager.registerBasicFormats();
 
+  memberStoredAudioFile.referTo(
+      memberValueTreeState.state.getPropertyAsValue("sample", nullptr));
+  memberStoredAudioFilename.referTo(
+      memberValueTreeState.state.getPropertyAsValue("sample_name", nullptr));
+
   memberValueTreeState.state.setProperty(
       "sample", juce::var(memberAudioFilePath), nullptr);
   memberValueTreeState.state.setProperty(
@@ -193,10 +198,11 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
     }
   }
 
-  //else if (midiMessage.isNoteOff() && !buffer.hasBeenCleared()) {
+  // else if (midiMessage.isNoteOff() && !buffer.hasBeenCleared()) {
   //  // start playhead
   //  memberSampleCount = 0;
-  //  noteFrequency = midiMessage.getMidiNoteInHertz(midiMessage.getNoteNumber());
+  //  noteFrequency =
+  //  midiMessage.getMidiNoteInHertz(midiMessage.getNoteNumber());
   //  memberIsNoteBeingPlayed = true;
   //}
 
@@ -214,6 +220,8 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear(i, 0, buffer.getNumSamples());
 
+  // getActiveEditor().keyboard .processNextMidiBuffer(midiMessages, 0, buffer.getNumSamples(),
+  //                                    true);
   // renders the next audio block of audio output
   // the midi notes are used to trigger voices
   // outputAudio.applyGainRamp(startSample, numSamples, 5.0, 0.0); // -- need to
@@ -280,13 +288,7 @@ void VibeSamplerAudioProcessor::setStateInformation(const void* data,
 
   if (xmlState.get() != nullptr) {
     if (xmlState->hasTagName(memberValueTreeState.state.getType())) {
-      memberStoredAudioFile.referTo(
-          memberValueTreeState.state.getPropertyAsValue("sample", nullptr));
-      memberStoredAudioFilename.referTo(
-          memberValueTreeState.state.getPropertyAsValue("sample_name",
-                                                        nullptr));
       memberValueTreeState.replaceState(juce::ValueTree::fromXml(*xmlState));
-
     }
   }
 }
@@ -299,15 +301,15 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
       "Select Audio File (.wav, .mp3, or .aiff)",
       juce::File::getSpecialLocation(juce::File::userDocumentsDirectory),
       "*.wav; *.mp3; *.aiff");
-  getADSRGainValue();
+
   // getting result from user's selection
   if (chooseFile.browseForFileToOpen()) {
     // setting up file reader
     auto userFile = chooseFile.getResult();
     memberAudioFilePath = userFile.getFullPathName();
     memberAudioFilename = userFile.getFileNameWithoutExtension();
-
-    //valueTreePropertyChanged(memberValueTreeState.state, "gain");
+    getADSRGainValue();
+    // valueTreePropertyChanged(memberValueTreeState.state, "gain");
 
     memberFormatReader = memberFormatManager.createReaderFor(userFile);
 
@@ -340,14 +342,14 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
 // method for loading file and creating sampler sound with dropped file
 void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   memberSampler.clearSounds();
-  getADSRGainValue();
-  //getValueTreeState().state.sendPropertyChangeMessage("sample");
+
+  // getValueTreeState().state.sendPropertyChangeMessage("sample");
   auto userFile = juce::File(path);
   memberFormatReader = memberFormatManager.createReaderFor(userFile);
   memberAudioFilePath = path;
   memberAudioFilename = userFile.getFileNameWithoutExtension();
   // valueTreePropertyChanged(getValueTreeState().state, "gain");
-  
+  getADSRGainValue();
 
   // reading waveform
   auto sampleLength = memberFormatReader->lengthInSamples;
@@ -385,9 +387,11 @@ void VibeSamplerAudioProcessor::getADSRGainValue() {
       *memberValueTreeState.getRawParameterValue("release");
   gain = *memberValueTreeState.getRawParameterValue("gain");
   polyphony = *memberValueTreeState.getRawParameterValue("polyphony");
-  valueTreePropertyChanged(getValueTreeState().state, "gain");
-  memberStoredAudioFile.setValue(memberAudioFilePath);
-  memberStoredAudioFilename.setValue(memberAudioFilename);
+  // valueTreePropertyChanged(getValueTreeState().state, "samplo");
+  memberValueTreeState.state.setProperty(
+      "sample", juce::var(memberAudioFilePath), nullptr);
+  memberValueTreeState.state.setProperty(
+      "sample_name", juce::var(memberAudioFilename), nullptr);
 
   // getting and updating sounds
   for (int i = 0; i < memberSampler.getNumSounds(); i++) {

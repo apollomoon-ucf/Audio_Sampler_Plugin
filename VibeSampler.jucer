@@ -24,6 +24,10 @@
     <FILE id="yewOdO" name="WaveformVisual.h" compile="0" resource="0"
           file="Source/WaveformVisual.h"/>
     <GROUP id="{A61A64FA-F31C-414A-64B5-0BA157F925DB}" name="Resources">
+      <FILE id="xZIMfo" name="vibe_logo_retro_withNoVIBE_alt3.png" compile="0"
+            resource="1" file="Documentation/vibe_logo_retro_withNoVIBE_alt3.png"/>
+      <FILE id="kYIdSh" name="fixed_sampler_vibe_logo_withoutVibe.png" compile="0"
+            resource="1" file="Documentation/fixed_sampler_vibe_logo_withoutVibe.png"/>
       <FILE id="YtU3Fw" name="fixed_sampler_vibe_logo.png" compile="0" resource="1"
             file="Resources/fixed_sampler_vibe_logo.png"/>
       <FILE id="imX28e" name="new_vibe_logo.png" compile="0" resource="1"
