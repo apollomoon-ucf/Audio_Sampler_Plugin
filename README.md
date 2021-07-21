@@ -10,7 +10,7 @@ The goal is to build a plugin that can load audio samples, trigger/play the samp
 
 The entire development process of the plugin is documented in this readme.
 
-More changes and features coming soon, please see end of README for latest updates.
+More changes and features coming soon, please see end of README for the latest updates.
 
 -Brian Moon
 
