@@ -109,3 +109,7 @@ ALT Logo Test
 
 (Plugin displaying on screen keyboard connected with highlighted keys)
 ![Screenshot_with_keys_Lit1](https://user-images.githubusercontent.com/25870426/126414559-c44a323b-8e18-4706-8373-c6188761b375.png)
+
+
+
+![Plugin_Demo_Vibe_Audio_Sampler](Documentation/Plugin_Demo_Vibe_Audio_Sampler.gif)
