@@ -19,7 +19,7 @@
  */
 class ADSRGainPolyButtons : public juce::Component {
  public:
-  ADSRGainPolyButtons(VibeSamplerAudioProcessor &);
+  ADSRGainPolyButtons(VibeSamplerAudioProcessor &p);
   ~ADSRGainPolyButtons() override;
 
   void paint(juce::Graphics &) override;

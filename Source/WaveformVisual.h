@@ -20,7 +20,7 @@
 class WaveformVisual : public juce::Component,
                        public juce::FileDragAndDropTarget {
  public:
-  WaveformVisual(VibeSamplerAudioProcessor&);
+  WaveformVisual(VibeSamplerAudioProcessor& p);
   ~WaveformVisual() override;
 
   void paint(juce::Graphics&) override;

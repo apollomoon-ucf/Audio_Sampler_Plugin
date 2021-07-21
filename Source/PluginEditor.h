@@ -21,7 +21,7 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
                                         public juce::FileDragAndDropTarget,
                                         public juce::Timer {
  public:
-  VibeSamplerAudioProcessorEditor(VibeSamplerAudioProcessor&);
+  VibeSamplerAudioProcessorEditor(VibeSamplerAudioProcessor& p);
   ~VibeSamplerAudioProcessorEditor() override;
 
   //==============================================================================
@@ -63,7 +63,7 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
   // access the processor object that created it.
   VibeSamplerAudioProcessor& audioProcessor;
 
-  juce::MidiKeyboardState keyboardState;
+  // juce::MidiKeyboardState keyboardState;
   juce::MidiKeyboardComponent keyboardComponent;
   // SynthAudioSource synthAudioSource;
 

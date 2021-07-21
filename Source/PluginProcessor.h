@@ -89,6 +89,7 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
 
   std::atomic<bool>& isNoteBeingPlayed() { return memberIsNoteBeingPlayed; }
   std::atomic<int>& getSampleCount() { return memberSampleCount; }
+  juce::MidiKeyboardState& getKeyboardState() { return keyboardState; }
 
  private:
   // creating member variables for the Synthesiser class and polyphony (#
@@ -111,7 +112,7 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   // previous gain (for gain smoothing)
   float memberPreviousGain;
 
-  //juce::MidiKeyboardState& keyboardState;
+  juce::MidiKeyboardState keyboardState;
 
   // storing sample and sample name
   juce::Value memberStoredAudioFile;

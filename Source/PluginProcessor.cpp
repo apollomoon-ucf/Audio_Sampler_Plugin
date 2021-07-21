@@ -220,14 +220,15 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear(i, 0, buffer.getNumSamples());
 
-  // getActiveEditor().keyboard .processNextMidiBuffer(midiMessages, 0, buffer.getNumSamples(),
-  //                                    true);
+  keyboardState.processNextMidiBuffer(midiMessages, 0, buffer.getNumSamples(),
+                                      true);
+  memberSampler.renderNextBlock(buffer, midiMessages, 0,
+                                buffer.getNumSamples());
+
   // renders the next audio block of audio output
   // the midi notes are used to trigger voices
   // outputAudio.applyGainRamp(startSample, numSamples, 5.0, 0.0); // -- need to
   // fix pops
-  memberSampler.renderNextBlock(buffer, midiMessages, 0,
-                                buffer.getNumSamples());
 
   // apply gain smoothing
   if (gain == memberPreviousGain) {

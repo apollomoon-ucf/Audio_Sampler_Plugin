@@ -18,15 +18,15 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
       memberWaveformVisual(p),
       memberADSRGainPoly(p),
       audioProcessor(p),
-      keyboardComponent(keyboardState,
+      keyboardComponent(p.getKeyboardState(),
                         juce::MidiKeyboardComponent::horizontalKeyboard) {
   // loading logo from memory
   auto vibeLogoBarsFromMemory = juce::ImageCache::getFromMemory(
       BinaryData::V22020VibeLogoTransparent45012_png,
       BinaryData::V22020VibeLogoTransparent45012_pngSize);
   auto vibeLogoTextFromMemory = juce::ImageCache::getFromMemory(
-      BinaryData::fixed_sampler_vibe_logo_withoutVibe_png,
-      BinaryData::fixed_sampler_vibe_logo_withoutVibe_pngSize);
+      BinaryData::fixed_sampler_vibe_logo_png,
+      BinaryData::fixed_sampler_vibe_logo_pngSize);
   // if (!vibeLogoFromMemory.isNull()) {
   //  vibeLogo.setImage(vibeLogoFromMemory,
   //                    juce::RectanglePlacement::stretchToFit);
@@ -37,6 +37,13 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
                         juce::RectanglePlacement::stretchToFit);
   vibeLogoText.setImage(vibeLogoTextFromMemory,
                         juce::RectanglePlacement::stretchToFit);
+
+  keyboardComponent.setColour(
+      juce::MidiKeyboardComponent::ColourIds::mouseOverKeyOverlayColourId,
+      juce::Colours::rebeccapurple);
+  keyboardComponent.setColour(
+      juce::MidiKeyboardComponent::ColourIds::keyDownOverlayColourId,
+      juce::Colours::rebeccapurple);
 
   // make logo visible
   // addAndMakeVisible(vibeLogoBars);
@@ -73,7 +80,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
                             juce::Colours::white);
   memberLoadLabel.attachToComponent(&memberLoadButton, false);
 
-    // Polyphony Knob
+  // Polyphony Knob
   memberPolyphonyKnob.setSliderStyle(juce::Slider::SliderStyle::IncDecButtons);
   memberPolyphonyKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
                                 juce::Colours::white);
@@ -87,8 +94,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
                              juce::Colours::black);
   memberPolyphonyKnob.setColour(juce::ComboBox::ColourIds::textColourId,
                                 juce::Colours::yellow);
-  memberPolyphonyKnob.setTextBoxStyle(juce::Slider::NoTextBox, false, 55,
-                                      20);
+  memberPolyphonyKnob.setTextBoxStyle(juce::Slider::NoTextBox, false, 55, 20);
 
   // value tree state solution for listener knob
   memberPolyphonyKnobAttachment =
@@ -123,7 +129,7 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   g.setColour(juce::Colours::white);
   g.setFont(15.0f);
 
-    if (audioProcessor.polyphony > 1) {
+  if (audioProcessor.polyphony > 1) {
     memberPolyphonyKnob.setTextValueSuffix(" poly");
   } else {
     memberPolyphonyKnob.setTextValueSuffix(" mono");
@@ -151,14 +157,12 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
     string.append(std::to_string(audioProcessor.polyphony), 2);
     g.drawText(string, (getWidth() / 6) - 80 / 2, 75, 200, 40,
                juce::Justification::topLeft, true);
-  }
-  else {
+  } else {
     juce::String string = "Monophonic:";
     string.append(std::to_string(audioProcessor.polyphony), 1);
     g.drawText(string, (getWidth() / 6) - 80 / 2, 75, 200, 40,
                juce::Justification::topLeft, true);
   }
-
 
   // g.drawRect(getLocalBounds().reduced(150,125));
   // juce::Rectangle<int> thumbnailBounds(10, 100, getWidth() - 20,
@@ -198,7 +202,7 @@ void VibeSamplerAudioProcessorEditor::resized() {
   // vibe logo text
   center = (getWidth() / 2) -
            (vibeLogoText.getImage().getWidth() / (2 * scaleFactor));
-  vibeLogoText.setBounds(center, 35,
+  vibeLogoText.setBounds(center, 10,
                          vibeLogoText.getImage().getWidth() / scaleFactor,
                          (vibeLogoText.getImage().getHeight() / scaleFactor));
 
@@ -206,8 +210,10 @@ void VibeSamplerAudioProcessorEditor::resized() {
   int y = getHeight() / 2 - 210;
   int width = 80;
   int height = 30;
-  memberLoadButton.setBounds(getWidth() - (getWidth() / 6) - width / 2, y, width, height);
-  memberPolyphonyKnob.setBounds( (getWidth() / 6) - width / 2, y - 2, width, height + 3);
+  memberLoadButton.setBounds(getWidth() - (getWidth() / 6) - width / 2, y,
+                             width, height);
+  memberPolyphonyKnob.setBounds((getWidth() / 6) - width / 2, y - 2, width,
+                                height + 2);
 }
 
 // method for seeing if the file type dropped on the sampler is an appropriate
