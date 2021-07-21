@@ -4,7 +4,7 @@
 
 For one of my summer projects, I will be building an audio sampler plugin prototype for Vibe Music Productions, a professional recording studio and music production facility located in Ponte Vedra Beach, Florida. https://www.vibemusicproductions.com/.
 
-## Goal
+## Objective
 
 The goal is to build a plugin that can load audio samples, trigger/play the samples via an external and on-screen midi keyboard, control output level, and manipulate the loaded sound using an adsr envelope.
 
