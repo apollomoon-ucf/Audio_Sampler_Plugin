@@ -1,10 +1,10 @@
+![fixed_sampler_vibe_logo](https://user-images.githubusercontent.com/25870426/126568647-c88720cb-d11e-48af-91b8-8c257a4cd3a4.png)
+
 # Audio Sampler Plugin
 
 ## Introduction
 
 For one of my summer projects, I will be building an audio sampler plugin prototype for Vibe Music Productions, a professional recording studio and music production facility located in Ponte Vedra Beach, Florida. https://www.vibemusicproductions.com/
-
-![fixed_sampler_vibe_logo](https://user-images.githubusercontent.com/25870426/126568647-c88720cb-d11e-48af-91b8-8c257a4cd3a4.png)
 
 ## Objective
 
