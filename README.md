@@ -102,3 +102,10 @@ ALT Logo Test
 
 (Plugin displaying alt logo without Vibe text)
 ![Screenshot_vibe_sampler_withKeyboard_withoutvibetext](https://user-images.githubusercontent.com/25870426/126255242-7e5c7a23-e2ba-4d06-b3e8-5f1b72f79fa6.png)
+
+
+7|20|21 -- Connected on-screen keyboard and changed mouse hover color and note-on color to rebeccapurple to match color scheme.
+
+
+(Plugin displaying on screen keyboard connected with highlighted keys)
+![Screenshot_with_keys_Lit1](https://user-images.githubusercontent.com/25870426/126414559-c44a323b-8e18-4706-8373-c6188761b375.png)
