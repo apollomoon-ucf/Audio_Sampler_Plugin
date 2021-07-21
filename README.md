@@ -31,7 +31,7 @@ C++ and the JUCE audio framework will be used to develop the plugin.
 (VST success message)
 ![Screenshot_SuccessMessage_Vibe_Sampler](https://user-images.githubusercontent.com/25870426/124215843-d9f2a300-dac2-11eb-90a8-cd4d554ba7ac.png)
 
-## Layout
+## Layout Vision (art sketch)
 
 To visualize a rough layout of the plugin, I created a sketch using https://sketch.io/sketchpad/, simply putting some images together to get a feel for the layout.
 Knobs are a modified version of a template from KnobMan.
