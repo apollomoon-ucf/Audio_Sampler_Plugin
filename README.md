@@ -1,31 +1,28 @@
-![V2-2020-Vibe-Logo-Transparent-450-1-2](https://user-images.githubusercontent.com/25870426/124214978-276e1080-dac1-11eb-8ba0-3751a11327ae.png)
-# Vibe Music Productions - Audio Sampler Plugin
+# Audio Sampler Plugin
 
 ## Introduction
-For one of my summer projects, I will be building an audio sampler plugin prototype for Vibe Music Productions. 
-Vibe is a professional recording studio and music production facility located in Ponte Vedra Beach, Florida. 
 
-Recording Studio Website: https://www.vibemusicproductions.com/
+For one of my summer projects, I will be building an audio sampler plugin prototype for Vibe Music Productions, a professional recording studio and music production facility located in Ponte Vedra Beach, Florida. https://www.vibemusicproductions.com/.
 
-The entire development process of the plugin is documented in this readme. 
+## Goal
 
-More changes and features coming soon, please see end of ReadMe for latest updates.
+The goal is to build a plugin that can load audio samples, trigger/play the samples via an external and on-screen midi keyboard, control output level, and manipulate the loaded sound using an adsr envelope.
+
+The entire development process of the plugin is documented in this readme.
+
+More changes and features coming soon, please see end of README for latest updates.
 
 -Brian Moon
-
 
 (Plugin prototype demo as of 7|20|21 - updates coming soon)
 ![Plugin_Demo_Vibe_Audio_Sampler](Documentation/Plugin_Demo_Vibe_Audio_Sampler.gif)
 
-
 (Plugin UI as of 7|20|21 - updates coming soon)
 ![Screenshot_with_KeysLit2](https://user-images.githubusercontent.com/25870426/126427916-dade0854-8c2c-4eb9-bc91-57acc5ebff2c.png)
 
-
-
-
 ## Technology and Setup
-The recording studio will need the plugin to be compatible with Native Instrument's Maschine 2 running on Windows 10. 
+
+The recording studio will need the plugin to be compatible with Native Instrument's Maschine 2 running on Windows 10.
 C++ and the JUCE audio framework will be used to develop the plugin.
 
 (Loading VST tester in Native Instrument's Mashine 2 Software)
@@ -34,9 +31,9 @@ C++ and the JUCE audio framework will be used to develop the plugin.
 (VST success message)
 ![Screenshot_SuccessMessage_Vibe_Sampler](https://user-images.githubusercontent.com/25870426/124215843-d9f2a300-dac2-11eb-90a8-cd4d554ba7ac.png)
 
-
 ## Layout
-To visualize a rough layout of the plugin, I created a sketch using https://sketch.io/sketchpad/, simply putting some images together to get a feel for the layout. 
+
+To visualize a rough layout of the plugin, I created a sketch using https://sketch.io/sketchpad/, simply putting some images together to get a feel for the layout.
 Knobs are a modified version of a template from KnobMan.
 
 Note: This visualization is not meant to represent the final design of the user interface. Once plugin functionality is established, I will work on making it aesthetically pleasing.
@@ -44,15 +41,16 @@ Note: This visualization is not meant to represent the final design of the user 
 (First sketch of plugin prototype)
 ![Screenshot_vibe_sampler_sketch](https://user-images.githubusercontent.com/25870426/124827433-0899cf00-df44-11eb-906f-ef3fe2c57b89.png)
 
-Update (7/7/21): Users would like to have a sound library located on the left side of the plugin to streamline the process of dragging and dropping samples onto the sample editor located in the center of the plugin. 
+Update (7/7/21): Users would like to have a sound library located on the left side of the plugin to streamline the process of dragging and dropping samples onto the sample editor located in the center of the plugin.
 Maschine 2 has a sidebar for samples if we can't make this work properly, but it would be a nice addition. Also, the Gain knob may look better in the top right corner as a dedicated master volume knob.
 
 (Second sketch of plugin prototype with proposed sample/sound library sidebar)
 ![Screenshot_vibe_sampler_sketch_with_library](https://user-images.githubusercontent.com/25870426/124839763-64ba1e80-df57-11eb-98a8-1e24caae70ae.png)
 
 ## Development
+
 Now it's time to dive into the core functionality of the plugin. Drag and drop capabilities were added so users can simply drop their desired sound onto the plugin.
-I also added a file upload link for .wav, .mp3, and .aiff/.aif files to give the user an additional upload method. 
+I also added a file upload link for .wav, .mp3, and .aiff/.aif files to give the user an additional upload method.
 
 Upon successful upload of an acceptable audio file, a success message is displayed (as seen in the image below).
 
@@ -72,7 +70,7 @@ Added button to change polyphony of sampler, and ADSR knobs are fully functional
 (Plugin displaying polyphonic control)
 ![Screenshot_polyphony](https://user-images.githubusercontent.com/25870426/125218924-e977a600-e291-11eb-910a-62d93dca71fb.png)
 
-Displayed waveform in center of window with width equal to window width. 
+Displayed waveform in center of window with width equal to window width.
 I want to create a sample window to house the waveform, therefore, the next step will be to draw the waveform inside of a centered box.
 
 (Plugin displaying waveform)
@@ -89,14 +87,12 @@ Displayed sample/test Vibe logo, but need to replace it with a high resolution v
 (Plugin displaying dark mode test)
 ![Screenshot_dark_mode_mono](https://user-images.githubusercontent.com/25870426/125873022-9e2775b6-612b-4783-abba-d9edfea70ed8.png)
 
-
-7|17|21 -- Connected Gain knob, saved parameters and audio sample file path in Value Tree to allow settings and sounds to be reloaded when daw is restarted, added a visual component 
+7|17|21 -- Connected Gain knob, saved parameters and audio sample file path in Value Tree to allow settings and sounds to be reloaded when daw is restarted, added a visual component
 to house the waveform, and made note to fix audio clicking/popping when a note is played fast in monophonic mode. When a voice is stolen, there is an audible click. The solution
 may include changing how abrupt the first sample releases, and how fast the new sample attacks when ending the first sample/voice and starting the new/second sample/voice.
 
 (Plugin displaying updated UI)
 ![Screenshot_waveform_box](https://user-images.githubusercontent.com/25870426/126054452-96d9f4db-8fcc-421a-a180-73c0d7f87475.png)
-
 
 7|18|21 -- Adjusted position of ADSR knobs, added playhead and waveform tracing when sample is triggered. The playhead and waveform tracing (shown in purple) display for a duration
 equal to the amount of time the midi note is active. Another implementation could be displaying the playhead and waveform tracing for the duration of the release time parameter.
@@ -117,12 +113,7 @@ ALT Logo Test
 (Plugin displaying alt logo without Vibe text)
 ![Screenshot_vibe_sampler_withKeyboard_withoutvibetext](https://user-images.githubusercontent.com/25870426/126255242-7e5c7a23-e2ba-4d06-b3e8-5f1b72f79fa6.png)
 
-
 7|20|21 -- Connected on-screen keyboard and changed mouse hover color and note-on color to rebeccapurple to match color scheme.
-
 
 (Plugin displaying on screen keyboard connected with highlighted keys)
 ![Screenshot_with_keys_Lit1](https://user-images.githubusercontent.com/25870426/126414559-c44a323b-8e18-4706-8373-c6188761b375.png)
-
-
-
