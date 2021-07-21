@@ -31,7 +31,7 @@ C++ and the JUCE audio framework will be used to develop the plugin.
 (VST success message)
 ![Screenshot_SuccessMessage_Vibe_Sampler](https://user-images.githubusercontent.com/25870426/124215843-d9f2a300-dac2-11eb-90a8-cd4d554ba7ac.png)
 
-## Layout Vision (art sketch)
+## Layout Vision (sketch)
 
 To visualize a rough layout of the plugin, I created a sketch using https://sketch.io/sketchpad/, simply putting some images together to get a feel for the layout.
 Knobs are a modified version of a template from KnobMan.
@@ -47,7 +47,7 @@ Maschine 2 has a sidebar for samples if we can't make this work properly, but it
 (Second sketch of plugin prototype with proposed sample/sound library sidebar)
 ![Screenshot_vibe_sampler_sketch_with_library](https://user-images.githubusercontent.com/25870426/124839763-64ba1e80-df57-11eb-98a8-1e24caae70ae.png)
 
-## Development
+## Development (coding the plugin)
 
 Now it's time to dive into the core functionality of the plugin. Drag and drop capabilities were added so users can simply drop their desired sound onto the plugin.
 I also added a file upload link for .wav, .mp3, and .aiff/.aif files to give the user an additional upload method.
