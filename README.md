@@ -13,11 +13,15 @@ More changes and features coming soon, please see end of ReadMe for latest updat
 
 -Brian Moon
 
-(Plugin UI as of 7|20|21 - updates coming soon)
-![Screenshot_with_KeysLit2](https://user-images.githubusercontent.com/25870426/126427916-dade0854-8c2c-4eb9-bc91-57acc5ebff2c.png)
 
 (Plugin prototype demo as of 7|20|21 - updates coming soon)
 ![Plugin_Demo_Vibe_Audio_Sampler](Documentation/Plugin_Demo_Vibe_Audio_Sampler.gif)
+
+
+(Plugin UI as of 7|20|21 - updates coming soon)
+![Screenshot_with_KeysLit2](https://user-images.githubusercontent.com/25870426/126427916-dade0854-8c2c-4eb9-bc91-57acc5ebff2c.png)
+
+
 
 
 ## Technology and Setup
