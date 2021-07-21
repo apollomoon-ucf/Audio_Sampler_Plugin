@@ -1,6 +1,4 @@
-![fixed_sampler_vibe_logo](https://user-images.githubusercontent.com/25870426/126568647-c88720cb-d11e-48af-91b8-8c257a4cd3a4.png)
-
-# Vibe Audio Sampler Plugin
+# Audio Sampler Plugin
 
 ## Introduction
 
