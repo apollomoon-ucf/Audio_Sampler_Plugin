@@ -184,19 +184,20 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   double middleC = 261.625565;
   double samples;
 
-  // if the note is being played
-  while (midiBufferIterator.getNextEvent(midiMessage, sample)) {
-    if (midiMessage.isNoteOn()) {
-      // start playhead
-      noteFrequency =
-          midiMessage.getMidiNoteInHertz(midiMessage.getNoteNumber());
-      memberIsNoteBeingPlayed = true;
-    } else if (midiMessage.isNoteOff()) {
-      // stop playhead
-      memberSampleCount = 0;
-      memberIsNoteBeingPlayed = false;
-    }
-  }
+
+  // if the note is being played from on-screen keyboard
+  //while (midiBufferIterator.getNextEvent(midiMessage, sample)) {
+  //  if (midiMessage.isNoteOn()) {
+  //    // start playhead
+  //    noteFrequency =
+  //        midiMessage.getMidiNoteInHertz(midiMessage.getNoteNumber());
+  //    memberIsNoteBeingPlayed = true;
+  //  } else if (midiMessage.isNoteOff()) {
+  //    // stop playhead
+  //    memberSampleCount = 0;
+  //    memberIsNoteBeingPlayed = false;
+  //  }
+  //}
 
   // else if (midiMessage.isNoteOff() && !buffer.hasBeenCleared()) {
   //  // start playhead
@@ -222,6 +223,19 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 
   keyboardState.processNextMidiBuffer(midiMessages, 0, buffer.getNumSamples(),
                                       true);
+  // if the note is being played from external midi
+  while (midiBufferIterator.getNextEvent(midiMessage, sample)) {
+    if (midiMessage.isNoteOn()) {
+      // start playhead
+      noteFrequency =
+          midiMessage.getMidiNoteInHertz(midiMessage.getNoteNumber());
+      memberIsNoteBeingPlayed = true;
+    } else if (midiMessage.isNoteOff()) {
+      // stop playhead
+      memberSampleCount = 0;
+      memberIsNoteBeingPlayed = false;
+    }
+  }
   memberSampler.renderNextBlock(buffer, midiMessages, 0,
                                 buffer.getNumSamples());
 
