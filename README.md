@@ -5,6 +5,7 @@
 For one of my summer projects, I will be building an audio sampler plugin prototype for Vibe Music Productions, a professional recording studio and music production facility located in Ponte Vedra Beach, Florida. https://www.vibemusicproductions.com/
 
 ![Screenshot_with_KeysLit2](https://user-images.githubusercontent.com/25870426/126587878-3385eaef-47d8-430a-8004-da44287a1e41.png)
+
 (Plugin UI as of 7|20|21 - updates coming soon)
 
 ## Objective
@@ -16,6 +17,7 @@ The entire development process of the plugin is documented below, please see the
 -Brian Moon
 
 ![Plugin_Demo_Vibe_Audio_Sampler](Documentation/Plugin_Demo_Vibe_Audio_Sampler.gif)
+
 (Plugin prototype demo as of 7|20|21 - updates coming soon)
 
 ## Technology and Setup
@@ -24,9 +26,11 @@ The recording studio will need the plugin to be compatible with Native Instrumen
 C++ and the JUCE audio framework will be used to develop the plugin.
 
 ![Screenshot_Loading_Vibe_Sampler](https://user-images.githubusercontent.com/25870426/124214309-ffca7880-dabf-11eb-9eed-066e948a09a0.png)
+
 (Loading VST tester in Native Instrument's Maschine 2 Software)
 
 ![Screenshot_SuccessMessage_Vibe_Sampler](https://user-images.githubusercontent.com/25870426/124215843-d9f2a300-dac2-11eb-90a8-cd4d554ba7ac.png)
+
 (VST success message)
 
 ## Layout Vision (sketch)
@@ -37,12 +41,14 @@ Knobs are a modified version of a template from KnobMan.
 Note: This visualization is not meant to represent the final design of the user interface. Once plugin functionality is established, I will work on making it aesthetically pleasing.
 
 ![Screenshot_vibe_sampler_sketch](https://user-images.githubusercontent.com/25870426/124827433-0899cf00-df44-11eb-906f-ef3fe2c57b89.png)
+
 (First sketch of plugin prototype)
 
 Update (7/7/21): Users would like to have a sound library located on the left side of the plugin to streamline the process of dragging and dropping samples onto the sample editor located in the center of the plugin.
 Maschine 2 has a sidebar for samples if we can't make this work properly, but it would be a nice addition. Also, the Gain knob may look better in the top right corner as a dedicated master volume knob.
 
 ![Screenshot_vibe_sampler_sketch_with_library](https://user-images.githubusercontent.com/25870426/124839763-64ba1e80-df57-11eb-98a8-1e24caae70ae.png)
+
 (Second sketch of plugin prototype with proposed sample/sound library sidebar)
 
 ## Development (coding the plugin)
@@ -56,33 +62,39 @@ At this point, the plugin loads a file, and the sound can be triggered via midi 
 Note: plugin states are not reloadable at this stage; the plugin is cleared when daw is restarted.
 
 ![Screenshot_plugin_loading_success_drag_drop](https://user-images.githubusercontent.com/25870426/124999586-76192e80-e01c-11eb-9e0c-0585727ece39.png)
+
 (Plugin displaying success message "Sound file loaded!" after loading sound/sample)
 
 Continuing development, I added knobs and labels and displayed them on the plugin. I attempted to match the placement of the knobs to the plugin layout seen in the previous section.
 
 ![Screenshot_knobs_labels_coded](https://user-images.githubusercontent.com/25870426/125114151-90ecb100-e0b7-11eb-8f0d-fbd6cbc28ead.png)
+
 (Plugin displaying knobs, labels (showing ms but needs to be changed to seconds, and sample load options)
 
 Added button to change polyphony of sampler, and ADSR knobs are fully functional. The gain knob still needs to be connected to the output.
 
 ![Screenshot_polyphony](https://user-images.githubusercontent.com/25870426/125218924-e977a600-e291-11eb-910a-62d93dca71fb.png)
+
 (Plugin displaying polyphonic control)
 
 The displayed waveform is in the center of the window with a width equal to window width.
 I want to create a sample window to house the waveform, therefore, the next step will be to draw the waveform inside of a centered box.
 
 ![waveform_image_for_sketch](https://user-images.githubusercontent.com/25870426/125361438-4c714780-e33b-11eb-8cde-75046963175f.png)
+
 (Plugin displaying waveform)
 
 I centered waveform on the plugin, and preparing to outline/frame it to match the layout.
 Displayed sample/test Vibe logo, but need to replace it with a high-resolution version, along with the text "Vibe Audio Sampler" during the design phase.
 
 ![Screenshot_waveform_drawn_v2](https://user-images.githubusercontent.com/25870426/125387967-afc79d80-e36c-11eb-8714-768a8e039a12.png)
+
 (Plugin displaying waveform - need to change labels to seconds, but I might remove labels or only show them on mouse hover for a clean look)
 
 7|13|21 Corrected position of loaded waveform visualization, fixed logo dimensions, added plugin title ("Vibe Audio Sampler"), and tested a dark mode layout.
 
 ![Screenshot_dark_mode_mono](https://user-images.githubusercontent.com/25870426/125873022-9e2775b6-612b-4783-abba-d9edfea70ed8.png)
+
 (Plugin displaying dark mode test)
 
 7|17|21 -- Connected Gain knob, saved parameters and audio sample file path in Value Tree to allow settings and sounds to be reloaded when daw is restarted, added a visual component
@@ -90,6 +102,7 @@ to house the waveform, and made a note to fix audio clicking/popping when a note
 may include changing how abrupt the first sample releases, and how fast the new sample attacks when ending the first sample/voice and starting the new/second sample/voice.
 
 ![Screenshot_waveform_box](https://user-images.githubusercontent.com/25870426/126054452-96d9f4db-8fcc-421a-a180-73c0d7f87475.png)
+
 (Plugin displaying updated UI)
 
 7|18|21 -- I adjusted the position of ADSR knobs, added playhead and waveform tracing when the sample is triggered. The playhead and waveform tracing (shown in purple) display for a duration
@@ -97,6 +110,7 @@ equal to the amount of time the midi note is active. Another implementation coul
 Note: I think I want to add a meter, or meters, to monitor input and output levels; displaying the levels using a purple hue as seen in Vibe's logo.
 
 ![Screenshot_showing_playhead_waveform_tracing](https://user-images.githubusercontent.com/25870426/126084761-c984dc90-adc5-4ed8-a4b3-a2808c363743.png)
+
 (Plugin displaying playhead and waveform tracing)
 
 7|19|21 -- Updated logo and filled buttons with black.
@@ -104,14 +118,17 @@ Added keyboard component and rescaled layout to fit other elements.
 Changed polyphony textbox to label.
 
 ![Screenshot_vibe_sampler_withKeyboard](https://user-images.githubusercontent.com/25870426/126224630-cc9fd8db-7043-4a23-aed8-a8ac47e96a67.png)
+
 (Plugin displaying new keyboard component, poly/mono label, and newly scaled UI)
 
 ALT Logo Test
 
 ![Screenshot_vibe_sampler_withKeyboard_withoutvibetext](https://user-images.githubusercontent.com/25870426/126255242-7e5c7a23-e2ba-4d06-b3e8-5f1b72f79fa6.png)
+
 (Plugin displaying alt logo without Vibe text)
 
 7|20|21 -- Connected on-screen keyboard and changed mouse hover color and note-on color to rebeccapurple to match the color scheme.
 
 ![Screenshot_with_keys_Lit1](https://user-images.githubusercontent.com/25870426/126414559-c44a323b-8e18-4706-8373-c6188761b375.png)
+
 (Plugin displaying on-screen keyboard connected with highlighted keys)
