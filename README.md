@@ -6,16 +6,14 @@ For one of my summer projects, I will be building an audio sampler plugin protot
 
 ## Objective
 
-The goal is to build a plugin that can load audio samples, trigger/play the samples via an external and on-screen midi keyboard, control output level, and manipulate the loaded sound using an adsr envelope.
+The goal is to practice C++ and Object-oriented programming by building a plugin that can load an audio sample, trigger/play the sample via an external or on-screen midi keyboard, control output level, and manipulate the loaded sound using an adsr envelope.
 
-The entire development process of the plugin is documented in this readme.
-
-More changes and features coming soon, please see end of README for the latest updates.
+The entire development process of the plugin is documented below, please see end of README for the latest updates.
 
 -Brian Moon
 
 (Plugin UI as of 7|20|21 - updates coming soon)
-![Screenshot_with_KeysLit2](https://user-images.githubusercontent.com/25870426/126427916-dade0854-8c2c-4eb9-bc91-57acc5ebff2c.png)
+![Screenshot_with_KeysLit2](https://user-images.githubusercontent.com/25870426/126587878-3385eaef-47d8-430a-8004-da44287a1e41.png)
 
 (Plugin prototype demo as of 7|20|21 - updates coming soon)
 ![Plugin_Demo_Vibe_Audio_Sampler](Documentation/Plugin_Demo_Vibe_Audio_Sampler.gif)
