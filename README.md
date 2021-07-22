@@ -6,7 +6,7 @@ For one of my summer projects, I will be building an audio sampler plugin protot
 
 ## Objective
 
-The goal is to practice C++ and Object-oriented programming by building a plugin that can load an audio sample, trigger/play the sample via an external or on-screen midi keyboard, control output level, and manipulate the loaded sound using an adsr envelope.
+The goal is to practice C++, Object-oriented programming, and the JUCE audio framework by building a plugin that can load an audio sample, trigger/play the sample via an external or on-screen midi keyboard, control output level, and manipulate the loaded sound using an adsr envelope.
 
 The entire development process of the plugin is documented below, please see end of README for the latest updates.
 
