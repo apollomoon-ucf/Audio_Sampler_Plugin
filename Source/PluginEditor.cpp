@@ -57,7 +57,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
 
   // make keyboard visible
   addAndMakeVisible(keyboardComponent);
-
+  memberLoadButton.setButtonText("Load Sample");
   memberLoadButtonAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
           audioProcessor.getValueTreeState(), "sample", memberLoadButton);
@@ -135,6 +135,7 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
     memberPolyphonyKnob.setTextValueSuffix(" mono");
   }
 
+
   // original logo and sample title
   // g.drawImageAt(vibeLogo.getImage().rescaled(125, 80), getWidth() / 2 - 62.5,
   // 8); g.drawFittedText("Vibe Audio Sampler", getLocalBounds().reduced(90,
@@ -175,6 +176,14 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
       juce::Colours::rebeccapurple.getHue(), 0.5f, 0.075f, 1.0f));
   g.fillRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 4.5,
                          getWidth() / 1.5, getHeight() / 3.3, 10.0f);
+
+    if (audioProcessor.getWaveform().getNumSamples() == 0) {
+    g.setFont(13.0f);
+    // g.setFont(juce::Font::)
+    g.setColour(juce::Colours::grey);
+    g.drawFittedText("Click the Load Sample button, or drag and drop an audio file here, to get started",
+                     getBounds().reduced(175), juce::Justification::centredTop, 2);
+  }
 }
 
 void VibeSamplerAudioProcessorEditor::resized() {

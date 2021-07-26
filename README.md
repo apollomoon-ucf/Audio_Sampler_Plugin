@@ -115,3 +115,8 @@ ALT Logo Test
 
 (Plugin displaying on-screen keyboard connected with highlighted keys)
 ![Screenshot_with_keys_Lit1](https://user-images.githubusercontent.com/25870426/126414559-c44a323b-8e18-4706-8373-c6188761b375.png)
+
+Added sample loading instructions.
+
+(Plugin displaying sample loading instructions)
+![Screenshot_with_sample_load_instructions](https://user-images.githubusercontent.com/25870426/126928254-c1611978-fbae-493f-b53f-d90a8391bab6.png)

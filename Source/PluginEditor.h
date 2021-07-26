@@ -38,8 +38,7 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
 
  private:
   // Text button for loading sound/sample from computer
-  juce::TextButton memberLoadButton{"Load sample"};
-
+  juce::TextButton memberLoadButton;
   //juce::Image myimage = juce::ImageFileFormat::loadFrom(
   //    juce::File("C:/Users/Brian/OneDrive - Knights - University of Central "
   //               "Florida/c++_dev_folder/VibeSampler/Documentation/"
