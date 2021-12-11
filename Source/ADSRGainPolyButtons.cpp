@@ -9,7 +9,7 @@
 
 #include <JuceHeader.h>
 
-// Attacl, Decay, Sustain, Release, and Polyphony Knobs
+// Attack, Decay, Sustain, Release, and Polyphony Knobs
 ADSRGainPolyButtons::ADSRGainPolyButtons(VibeSamplerAudioProcessor& p)
     : audioProcessor(p) {
   // Attack Knob
