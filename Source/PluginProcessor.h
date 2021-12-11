@@ -57,12 +57,15 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   // method to set number of voices (change polyphony)
   void VibeSamplerAudioProcessor::changePolyphony(int numberOfVoices);
 
+  // get adsr and gail value
   void getADSRGainValue();
 
+  // get adsr params
   juce::ADSR::Parameters& getADSRParameters() {
     return memberADSRGainParameters;
   };
 
+  // init gain and polyphony
   float gain{0.0};
   float polyphony{1.0};
 
@@ -73,7 +76,6 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   };
 
   juce::String getAudioFilename() { return audioFilename; };
-
   std::atomic<bool>& isNoteBeingPlayed() { return isNoteBeingPlayed; }
   std::atomic<int>& getSampleCount() { return sampleCount; }
   juce::MidiKeyboardState& getKeyboardState() { return keyboardState; }

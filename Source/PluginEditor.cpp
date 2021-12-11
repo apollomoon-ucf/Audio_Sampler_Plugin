@@ -5,7 +5,6 @@
 */
 
 #include "PluginEditor.h"
-
 #include "PluginProcessor.h"
 
 // constructor
@@ -17,6 +16,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
       audioProcessor(p),
       keyboardComponent(p.getKeyboardState(),
                         juce::MidiKeyboardComponent::horizontalKeyboard) {
+
   // loading logo from memory
   auto vibeLogoBarsFromMemory = juce::ImageCache::getFromMemory(
       BinaryData::V22020VibeLogoTransparent45012_png,
@@ -24,21 +24,13 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   auto vibeLogoTextFromMemory = juce::ImageCache::getFromMemory(
       BinaryData::fixed_sampler_vibe_logo_png,
       BinaryData::fixed_sampler_vibe_logo_pngSize);
-
+  // setting image
   vibeLogoBars.setImage(vibeLogoBarsFromMemory,
                         juce::RectanglePlacement::stretchToFit);
   vibeLogoText.setImage(vibeLogoTextFromMemory,
                         juce::RectanglePlacement::stretchToFit);
-
-  keyboardComponent.setColour(
-      juce::MidiKeyboardComponent::ColourIds::mouseOverKeyOverlayColourId,
-      juce::Colours::rebeccapurple);
-  keyboardComponent.setColour(
-      juce::MidiKeyboardComponent::ColourIds::keyDownOverlayColourId,
-      juce::Colours::rebeccapurple);
-
   // make logo visible
-  addAndMakeVisible(vibeLogoText);
+  addAndMakeVisible(vibeLogoText);                        
 
   // make waveform visible
   addAndMakeVisible(waveformVisual);
@@ -48,6 +40,16 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
 
   // make keyboard visible
   addAndMakeVisible(keyboardComponent);
+
+  // set color for keyboard on hover and when user plays keyboard
+  keyboardComponent.setColour(
+      juce::MidiKeyboardComponent::ColourIds::mouseOverKeyOverlayColourId,
+      juce::Colours::rebeccapurple);
+  keyboardComponent.setColour(
+      juce::MidiKeyboardComponent::ColourIds::keyDownOverlayColourId,
+      juce::Colours::rebeccapurple);  
+
+  // load button
   loadButton.setButtonText("Load Sample");
   loadButtonAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
@@ -56,7 +58,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
                              juce::Colours::black);
   // make load button a child component of this current component
   addAndMakeVisible(loadButton);
-  // lambda function to run on button click
+  // lambda function to run on button click for loading audio file
   loadButton.onClick = [&]() {
     juce::String filenameFromClickAndLoad = audioProcessor.loadFile();
     waveformVisual.setFilename(filenameFromClickAndLoad);
@@ -70,7 +72,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
                             juce::Colours::white);
   loadLabel.attachToComponent(&loadButton, false);
 
-  // Polyphony Knob
+  // Polyphony Knob - set style, color, text
   polyphonyKnob.setSliderStyle(juce::Slider::SliderStyle::IncDecButtons);
   polyphonyKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
                                 juce::Colours::white);
@@ -81,7 +83,6 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   polyphonyKnob.setColour(juce::ComboBox::ColourIds::textColourId,
                                 juce::Colours::yellow);
   polyphonyKnob.setTextBoxStyle(juce::Slider::NoTextBox, false, 55, 20);
-
   // value tree state solution for listener knob
   polyphonyKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -97,7 +98,6 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
 
   // start timer for playhead
   startTimerHz(30);
-
   setSize(600, 500);
 }
 
@@ -107,15 +107,11 @@ VibeSamplerAudioProcessorEditor::~VibeSamplerAudioProcessorEditor() {
 }
 
 void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
+  // fill background
   g.fillAll(juce::Colours::black);
+  // set text properties
   g.setColour(juce::Colours::white);
   g.setFont(15.0f);
-
-  if (audioProcessor.polyphony > 1) {
-    polyphonyKnob.setTextValueSuffix(" poly");
-  } else {
-    polyphonyKnob.setTextValueSuffix(" mono");
-  }
 
   // paint filename
   g.setColour(juce::Colours::grey);
@@ -123,7 +119,9 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   g.drawText(audioProcessor.getAudioFilename(), 337.5, 75, 200, 40,
              juce::Justification::topRight, true);
 
+  // check if monophonic or polyphonic
   if (audioProcessor.polyphony > 1 && audioProcessor.polyphony < 10) {
+    polyphonyKnob.setTextValueSuffix(" poly");
     juce::String string = "Polyphonic:";
     string.append(std::to_string(audioProcessor.polyphony), 1);
     g.drawText(string, (getWidth() / 6) - 80 / 2, 75, 200, 40,
@@ -134,19 +132,20 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
     g.drawText(string, (getWidth() / 6) - 80 / 2, 75, 200, 40,
                juce::Justification::topLeft, true);
   } else {
+    polyphonyKnob.setTextValueSuffix(" mono");
     juce::String string = "Monophonic:";
     string.append(std::to_string(audioProcessor.polyphony), 1);
     g.drawText(string, (getWidth() / 6) - 80 / 2, 75, 200, 40,
                juce::Justification::topLeft, true);
   }
-
+ 
   g.drawRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 4.5,
                          getWidth() / 1.5, getHeight() / 3.3, 10.0f, 1.0f);
   g.setColour(juce::Colours::rebeccapurple.fromHSV(
       juce::Colours::rebeccapurple.getHue(), 0.5f, 0.075f, 1.0f));
   g.fillRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 4.5,
                          getWidth() / 1.5, getHeight() / 3.3, 10.0f);
-
+    // display load sample if the sampler is empty
     if (audioProcessor.getWaveform().getNumSamples() == 0) {
     g.setFont(13.0f);
     g.setColour(juce::Colours::grey);

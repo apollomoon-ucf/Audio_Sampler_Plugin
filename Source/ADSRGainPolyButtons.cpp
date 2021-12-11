@@ -4,15 +4,15 @@
   File Name:   ADSRGainPolyButtons.cpp
 */
 
-
 #include "ADSRGainPolyButtons.h"
-
 #include <JuceHeader.h>
 
 // Attack, Decay, Sustain, Release, and Polyphony Knobs
 ADSRGainPolyButtons::ADSRGainPolyButtons(VibeSamplerAudioProcessor& p)
     : audioProcessor(p) {
-  // Attack Knob
+
+
+  // Attack Knob - set style, color, text
   attackKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryVerticalDrag);
   attackKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
@@ -36,7 +36,8 @@ ADSRGainPolyButtons::ADSRGainPolyButtons(VibeSamplerAudioProcessor& p)
                               juce::Colours::white);
   attackLabel.attachToComponent(&attackKnob, false);
 
-  // Decay Knob
+
+  // Decay Knob - set style, color, text
   decayKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
   decayKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
                             juce::Colours::white);
@@ -59,7 +60,8 @@ ADSRGainPolyButtons::ADSRGainPolyButtons(VibeSamplerAudioProcessor& p)
                              juce::Colours::white);
   decayLabel.attachToComponent(&decayKnob, false);
 
-  // Sustain Knob
+
+  // Sustain Knob - set style, color, text
   sustainKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryVerticalDrag);
   sustainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
@@ -83,7 +85,8 @@ ADSRGainPolyButtons::ADSRGainPolyButtons(VibeSamplerAudioProcessor& p)
                                juce::Colours::white);
   sustainLabel.attachToComponent(&sustainKnob, false);
 
-  // Release Knob
+
+  // Release Knob - set style, color, text
   releaseKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryVerticalDrag);
   releaseKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
@@ -107,7 +110,7 @@ ADSRGainPolyButtons::ADSRGainPolyButtons(VibeSamplerAudioProcessor& p)
                                juce::Colours::white);
   releaseLabel.attachToComponent(&releaseKnob, false);
 
-  // Gain Knob
+  // Gain Knob - set style, color, text
   gainKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
   gainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
                            juce::Colours::white);
@@ -140,6 +143,7 @@ void ADSRGainPolyButtons::paint(juce::Graphics& g) {
   */
 }
 
+// sizing
 void ADSRGainPolyButtons::resized() {
   const auto proportionalX = 0.08f;
   const auto spacing = 0.15f;

@@ -150,19 +150,19 @@ bool VibeSamplerAudioProcessor::isBusesLayoutSupported(
 
 void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
                                              juce::MidiBuffer& midiMessages) {
-  juce::ScopedNoDenormals noDenormals;
-  auto totalNumInputChannels = getTotalNumInputChannels();
-  auto totalNumOutputChannels = getTotalNumOutputChannels();
-  getADSRGainValue();
-
-  juce::MidiMessage midiMessage;
-  juce::MidiBuffer::Iterator midiBufferIterator{midiMessages};
+  
   int sample;
+  double samples;
   double noteFrequency;
   double middleC = 261.625565;
-  double samples;
+  auto totalNumInputChannels = getTotalNumInputChannels();
+  auto totalNumOutputChannels = getTotalNumOutputChannels();
+  juce::ScopedNoDenormals noDenormals;
+  juce::MidiMessage midiMessage;
+  juce::MidiBuffer::Iterator midiBufferIterator{midiMessages};
+  getADSRGainValue();
 
-
+  // get num samples
   samples = buffer.getNumSamples();
   // how long the note has been played for
   sampleCount =
@@ -234,7 +234,6 @@ void VibeSamplerAudioProcessor::setStateInformation(const void* data,
   // call.
   std::unique_ptr<juce::XmlElement> xmlState(
       getXmlFromBinary(data, sizeInBytes));
-
   if (xmlState.get() != nullptr) {
     if (xmlState->hasTagName(valueTreeState.state.getType())) {
       valueTreeState.replaceState(juce::ValueTree::fromXml(*xmlState));
@@ -258,8 +257,6 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
     audioFilePath = userFile.getFullPathName();
     audioFilename = userFile.getFileNameWithoutExtension();
     getADSRGainValue();
-
-
     formatReader = formatManager.createReaderFor(userFile);
 
     // reading waveform
@@ -291,7 +288,7 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
 // method for loading file and creating sampler sound with dropped file
 void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   sampler.clearSounds();
-
+  // getting filepath
   auto userFile = juce::File(path);
   formatReader = formatManager.createReaderFor(userFile);
   audioFilePath = path;
