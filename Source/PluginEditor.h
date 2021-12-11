@@ -2,8 +2,6 @@
   Author:      Brian Moon
   Project:     Vibe Audio Plugin (Sampler/Sample Player)
   File Name:   PluginEditor.h
-  Description: This file contains the basic framework code for a JUCE plugin
-               editor.
 */
 
 #pragma once
@@ -14,9 +12,6 @@
 #include "PluginProcessor.h"
 #include "WaveformVisual.h"
 
-//==============================================================================
-/**
- */
 class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
                                         public juce::FileDragAndDropTarget,
                                         public juce::Timer {
@@ -24,7 +19,7 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
   VibeSamplerAudioProcessorEditor(VibeSamplerAudioProcessor& p);
   ~VibeSamplerAudioProcessorEditor() override;
 
-  //==============================================================================
+  
   void paint(juce::Graphics&) override;
   void resized() override;
 
@@ -33,38 +28,30 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
 
   void timerCallback() override;
 
-  // no longer using this with Value Tree State solution
-  // void sliderValueChanged(juce::Slider* slider) override;
 
  private:
   // Text button for loading sound/sample from computer
-  juce::TextButton memberLoadButton;
-  //juce::Image myimage = juce::ImageFileFormat::loadFrom(
-  //    juce::File("C:/Users/Brian/OneDrive - Knights - University of Central "
-  //               "Florida/c++_dev_folder/VibeSampler/Documentation/"
-  //               "V2-2020-Vibe-Logo-Transparent-450-1-2.png"));
+  juce::TextButton loadButton;
 
   juce::ImageComponent vibeLogoBars;
   juce::ImageComponent vibeLogoText;
 
-  WaveformVisual memberWaveformVisual;
+  WaveformVisual waveformVisual;
   ADSRGainPolyButtons memberADSRGainPoly;
 
   std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>
-      memberLoadButtonAttachment;
+      loadButtonAttachment;
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
-      memberPolyphonyKnobAttachment;
+      polyphonyKnobAttachment;
 
-  juce::Slider memberPolyphonyKnob;
+  juce::Slider polyphonyKnob;
 
-  juce::Label memberLoadLabel, memberPolyphonyLabel;
+  juce::Label loadLabel, polyphonyLabel;
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   VibeSamplerAudioProcessor& audioProcessor;
 
-  // juce::MidiKeyboardState keyboardState;
   juce::MidiKeyboardComponent keyboardComponent;
-  // SynthAudioSource synthAudioSource;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VibeSamplerAudioProcessorEditor)
 };

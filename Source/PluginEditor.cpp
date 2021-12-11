@@ -2,20 +2,17 @@
   Author:      Brian Moon
   Project:     Vibe Audio Plugin (Sampler/Sample Player)
   File Name:   PluginEditor.cpp
-  Description: This file contains the basic framework code for a JUCE plugin
-               editor.
 */
 
 #include "PluginEditor.h"
 
 #include "PluginProcessor.h"
 
-//==============================================================================
 // constructor
 VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
     VibeSamplerAudioProcessor &p)
     : AudioProcessorEditor(&p),
-      memberWaveformVisual(p),
+      waveformVisual(p),
       memberADSRGainPoly(p),
       audioProcessor(p),
       keyboardComponent(p.getKeyboardState(),
@@ -27,12 +24,7 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
   auto vibeLogoTextFromMemory = juce::ImageCache::getFromMemory(
       BinaryData::fixed_sampler_vibe_logo_png,
       BinaryData::fixed_sampler_vibe_logo_pngSize);
-  // if (!vibeLogoFromMemory.isNull()) {
-  //  vibeLogo.setImage(vibeLogoFromMemory,
-  //                    juce::RectanglePlacement::stretchToFit);
-  //} else {
-  //  jassert(!vibeLogoFromMemory.isNull());
-  //}
+
   vibeLogoBars.setImage(vibeLogoBarsFromMemory,
                         juce::RectanglePlacement::stretchToFit);
   vibeLogoText.setImage(vibeLogoTextFromMemory,
@@ -46,71 +38,62 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
       juce::Colours::rebeccapurple);
 
   // make logo visible
-  // addAndMakeVisible(vibeLogoBars);
   addAndMakeVisible(vibeLogoText);
 
   // make waveform visible
-  addAndMakeVisible(memberWaveformVisual);
+  addAndMakeVisible(waveformVisual);
 
   // make adsr, gain, and polyphonic knobs visible
   addAndMakeVisible(memberADSRGainPoly);
 
   // make keyboard visible
   addAndMakeVisible(keyboardComponent);
-  memberLoadButton.setButtonText("Load Sample");
-  memberLoadButtonAttachment =
+  loadButton.setButtonText("Load Sample");
+  loadButtonAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
-          audioProcessor.getValueTreeState(), "sample", memberLoadButton);
-  memberLoadButton.setColour(juce::TextButton::buttonColourId,
+          audioProcessor.getValueTreeState(), "sample", loadButton);
+  loadButton.setColour(juce::TextButton::buttonColourId,
                              juce::Colours::black);
   // make load button a child component of this current component
-  addAndMakeVisible(memberLoadButton);
+  addAndMakeVisible(loadButton);
   // lambda function to run on button click
-  memberLoadButton.onClick = [&]() {
+  loadButton.onClick = [&]() {
     juce::String filenameFromClickAndLoad = audioProcessor.loadFile();
-    memberWaveformVisual.setFilename(filenameFromClickAndLoad);
-    // memberWaveformVisual.activateWaveForm(true);
+    waveformVisual.setFilename(filenameFromClickAndLoad);
     repaint();
   };
-  memberLoadLabel.setFont(15.0f);
-  memberLoadLabel.setText(memberWaveformVisual.getFilename(),
+  loadLabel.setFont(15.0f);
+  loadLabel.setText(waveformVisual.getFilename(),
                           juce::NotificationType::dontSendNotification);
-  memberLoadLabel.setJustificationType(juce::Justification::centredTop);
-  memberLoadLabel.setColour(juce::Label::ColourIds::textColourId,
+  loadLabel.setJustificationType(juce::Justification::centredTop);
+  loadLabel.setColour(juce::Label::ColourIds::textColourId,
                             juce::Colours::white);
-  memberLoadLabel.attachToComponent(&memberLoadButton, false);
+  loadLabel.attachToComponent(&loadButton, false);
 
   // Polyphony Knob
-  memberPolyphonyKnob.setSliderStyle(juce::Slider::SliderStyle::IncDecButtons);
-  memberPolyphonyKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+  polyphonyKnob.setSliderStyle(juce::Slider::SliderStyle::IncDecButtons);
+  polyphonyKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
                                 juce::Colours::white);
-  memberPolyphonyKnob.setColour(juce::Slider::ColourIds::thumbColourId,
+  polyphonyKnob.setColour(juce::Slider::ColourIds::thumbColourId,
                                 juce::Colours::rebeccapurple);
-  // memberPolyphonyKnob.setColour(juce::Slider::ColourIds::textBoxBackgroundColourId,
-  //                           juce::Colours::black);
-  // memberPolyphonyKnob.setIncDecButtonsMode(
-  //    juce::Slider::IncDecButtonMode::incDecButtonsDraggable_Horizontal);
   getLookAndFeel().setColour(juce::TextButton::ColourIds::buttonColourId,
                              juce::Colours::black);
-  memberPolyphonyKnob.setColour(juce::ComboBox::ColourIds::textColourId,
+  polyphonyKnob.setColour(juce::ComboBox::ColourIds::textColourId,
                                 juce::Colours::yellow);
-  memberPolyphonyKnob.setTextBoxStyle(juce::Slider::NoTextBox, false, 55, 20);
+  polyphonyKnob.setTextBoxStyle(juce::Slider::NoTextBox, false, 55, 20);
 
   // value tree state solution for listener knob
-  memberPolyphonyKnobAttachment =
+  polyphonyKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-          audioProcessor.getValueTreeState(), "polyphony", memberPolyphonyKnob);
-  // no longer using listener or range with Value Tree State solution
-  memberPolyphonyKnob.setRange(1.0, 32.0, 1.0);
-  // memberPolyphonyKnob.addListener(this);
-  addAndMakeVisible(memberPolyphonyKnob);
-  memberPolyphonyLabel.setFont(20.0f);
-  // memberPolyphonyLabel.setText("Polyphony",
-  //                              juce::NotificationType::dontSendNotification);
-  memberPolyphonyLabel.setJustificationType(juce::Justification::centredTop);
-  memberPolyphonyLabel.setColour(juce::Label::ColourIds::textColourId,
+          audioProcessor.getValueTreeState(), "polyphony", polyphonyKnob);
+  polyphonyKnob.setRange(1.0, 32.0, 1.0);
+  // polyphonyKnob.addListener(this);
+  addAndMakeVisible(polyphonyKnob);
+  polyphonyLabel.setFont(20.0f);
+  polyphonyLabel.setJustificationType(juce::Justification::centredTop);
+  polyphonyLabel.setColour(juce::Label::ColourIds::textColourId,
                                  juce::Colours::white);
-  memberPolyphonyLabel.attachToComponent(&memberPolyphonyKnob, false);
+  polyphonyLabel.attachToComponent(&polyphonyKnob, false);
 
   // start timer for playhead
   startTimerHz(30);
@@ -123,24 +106,16 @@ VibeSamplerAudioProcessorEditor::~VibeSamplerAudioProcessorEditor() {
   stopTimer();
 }
 
-//==============================================================================
 void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   g.fillAll(juce::Colours::black);
   g.setColour(juce::Colours::white);
   g.setFont(15.0f);
 
   if (audioProcessor.polyphony > 1) {
-    memberPolyphonyKnob.setTextValueSuffix(" poly");
+    polyphonyKnob.setTextValueSuffix(" poly");
   } else {
-    memberPolyphonyKnob.setTextValueSuffix(" mono");
+    polyphonyKnob.setTextValueSuffix(" mono");
   }
-
-
-  // original logo and sample title
-  // g.drawImageAt(vibeLogo.getImage().rescaled(125, 80), getWidth() / 2 - 62.5,
-  // 8); g.drawFittedText("Vibe Audio Sampler", getLocalBounds().reduced(90,
-  // 90),
-  //                  juce::Justification::centredTop, 1);
 
   // paint filename
   g.setColour(juce::Colours::grey);
@@ -165,13 +140,8 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
                juce::Justification::topLeft, true);
   }
 
-  // g.drawRect(getLocalBounds().reduced(150,125));
-  // juce::Rectangle<int> thumbnailBounds(10, 100, getWidth() - 20,
-  //                                     getHeight() - 120);
   g.drawRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 4.5,
                          getWidth() / 1.5, getHeight() / 3.3, 10.0f, 1.0f);
-  // g.drawRect(getWidth() / 2 - (getWidth() / 3), getHeight() / 3.5, getWidth()
-  // / 1.5, getHeight() / 3);
   g.setColour(juce::Colours::rebeccapurple.fromHSV(
       juce::Colours::rebeccapurple.getHue(), 0.5f, 0.075f, 1.0f));
   g.fillRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 4.5,
@@ -179,7 +149,6 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
 
     if (audioProcessor.getWaveform().getNumSamples() == 0) {
     g.setFont(13.0f);
-    // g.setFont(juce::Font::)
     g.setColour(juce::Colours::grey);
     g.drawFittedText("Click the Load Sample button, or drag and drop an audio file here, to get started",
                      getBounds().reduced(175), juce::Justification::centredTop, 2);
@@ -191,7 +160,7 @@ void VibeSamplerAudioProcessorEditor::resized() {
   // subcomponents in your editor..
 
   // waveform visual
-  memberWaveformVisual.setBoundsRelative(0.18f, 0.24f, 0.63f, 0.40f);
+  waveformVisual.setBoundsRelative(0.18f, 0.24f, 0.63f, 0.40f);
 
   // adsr
   memberADSRGainPoly.setBoundsRelative(0.0f, 0.0f, 1.0f, 0.85f);
@@ -219,9 +188,9 @@ void VibeSamplerAudioProcessorEditor::resized() {
   int y = getHeight() / 2 - 210;
   int width = 80;
   int height = 30;
-  memberLoadButton.setBounds(getWidth() - (getWidth() / 6) - width / 2, y,
+  loadButton.setBounds(getWidth() - (getWidth() / 6) - width / 2, y,
                              width, height);
-  memberPolyphonyKnob.setBounds((getWidth() / 6) - width / 2, y - 2, width,
+  polyphonyKnob.setBounds((getWidth() / 6) - width / 2, y - 2, width,
                                 height + 2);
 }
 
@@ -244,11 +213,10 @@ void VibeSamplerAudioProcessorEditor::filesDropped(
   for (auto file : files) {
     if (isInterestedInFileDrag(file)) {
       auto myFile = std::make_unique<juce::File>(file);
-      memberWaveformVisual.setFilename(myFile->getFileNameWithoutExtension());
+      waveformVisual.setFilename(myFile->getFileNameWithoutExtension());
       // load the file
       audioProcessor.loadDroppedFile(file);
-      // draw waveform?
-      // memberActivateWaveformVisual = true;
+      // draw waveform
       repaint();
     }
   }
@@ -256,23 +224,5 @@ void VibeSamplerAudioProcessorEditor::filesDropped(
   repaint();
 }
 
-// listener for knobs
-// void VibeSamplerAudioProcessorEditor::sliderValueChanged(juce::Slider
-// *slider) { if (slider == &memberAttackKnob) {
-//  audioProcessor.getADSRParameters().attack = memberAttackKnob.getValue();
-//} else if (slider == &memberDecayKnob) {
-//  audioProcessor.getADSRParameters().decay = memberDecayKnob.getValue();
-//} else if (slider == &memberSustainKnob) {
-//  audioProcessor.getADSRParameters().sustain = memberSustainKnob.getValue();
-//} else if (slider == &memberReleaseKnob) {
-//  audioProcessor.getADSRParameters().release = memberReleaseKnob.getValue();
-//} else if (slider == &memberGainKnob) {
-//  audioProcessor.gain = memberGainKnob.getValue();
-//} else if (slider == &memberPolyphonyKnob) {
-//  audioProcessor.changePolyphony(memberPolyphonyKnob.getValue());
-//}
-// update adsr
-//  audioProcessor.getADSRGainValue();
-//}
 
 void VibeSamplerAudioProcessorEditor::timerCallback() { repaint(); }

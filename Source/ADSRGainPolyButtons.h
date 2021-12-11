@@ -1,11 +1,7 @@
 /*
-  ==============================================================================
-
-    ADSRGainPolyButtons.h
-    Created: 15 Jul 2021 10:55:44pm
-    Author:  Brian
-
-  ==============================================================================
+  Author:      Brian Moon
+  Project:     Vibe Audio Plugin (Sampler/Sample Player)
+  File Name:   ADSRGainPolyButtons.h
 */
 
 #pragma once
@@ -14,9 +10,6 @@
 
 #include "PluginProcessor.h"
 
-//==============================================================================
-/*
- */
 class ADSRGainPolyButtons : public juce::Component {
  public:
   ADSRGainPolyButtons(VibeSamplerAudioProcessor &p);
@@ -26,29 +19,25 @@ class ADSRGainPolyButtons : public juce::Component {
   void resized() override;
 
  private:
-  juce::Slider memberAttackKnob, memberDecayKnob, memberSustainKnob,
-      memberReleaseKnob, memberGainKnob;
-  juce::Label memberAttackLabel, memberDecayLabel, memberSustainLabel,
-      memberReleaseLabel, memberGainLabel,
-      memberLoadLabel;
+  juce::Slider attackKnob, decayKnob, sustainKnob,
+      releaseKnob, gainKnob;
+  juce::Label attackLabel, decayLabel, sustainLabel,
+      releaseLabel, gainLabel,
+      loadLabel;
 
   VibeSamplerAudioProcessor &audioProcessor;
 
-
   // unqiue pointers for attaching knobs/sliders
-  // hover SliderAttachment for more info
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
-      memberAttackKnobAttachment;
+      attackKnobAttachment;
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
-      memberDecayKnobAttachment;
+      decayKnobAttachment;
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
-      memberSustainKnobAttachment;
+      sustainKnobAttachment;
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
-      memberReleaseKnobAttachment;
+      releaseKnobAttachment;
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
-      memberGainKnobAttachment;
-  //std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
-  //    memberPolyphonyKnobAttachment;
+      gainKnobAttachment;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ADSRGainPolyButtons)
 };

@@ -1,161 +1,132 @@
 /*
-  ==============================================================================
-
-    ADSRGainPolyButtons.cpp
-    Created: 15 Jul 2021 10:55:44pm
-    Author:  Brian
-
-  ==============================================================================
+  Author:      Brian Moon
+  Project:     Vibe Audio Plugin (Sampler/Sample Player)
+  File Name:   ADSRGainPolyButtons.cpp
 */
+
 
 #include "ADSRGainPolyButtons.h"
 
 #include <JuceHeader.h>
 
-//==============================================================================
+// Attacl, Decay, Sustain, Release, and Polyphony Knobs
 ADSRGainPolyButtons::ADSRGainPolyButtons(VibeSamplerAudioProcessor& p)
     : audioProcessor(p) {
-  // In your constructor, you should add any child components, and
-  // initialise any special settings that your component needs.
-  // setting up ADSR and gain knobs and labels
   // Attack Knob
-  memberAttackKnob.setSliderStyle(
+  attackKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryVerticalDrag);
-  memberAttackKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+  attackKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
                              juce::Colours::white);
-  memberAttackKnob.setColour(juce::Slider::ColourIds::thumbColourId,
+  attackKnob.setColour(juce::Slider::ColourIds::thumbColourId,
                              juce::Colours::whitesmoke);
-  memberAttackKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
+  attackKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                              juce::Colours::rebeccapurple);
-  memberAttackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  memberAttackKnob.setTextValueSuffix(" s");
+  attackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+  attackKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
-  memberAttackKnobAttachment =
+  attackKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-          audioProcessor.getValueTreeState(), "attack", memberAttackKnob);
-  // no longer using listener or range with Value Tree State solution
-  // memberAttackKnob.setRange(0.0f, 5.0f, 0.01f);
-  // memberAttackKnob.addListener(this);
-  addAndMakeVisible(memberAttackKnob);
-  memberAttackLabel.setFont(15.0f);
-  memberAttackLabel.setText("Attack",
+          audioProcessor.getValueTreeState(), "attack", attackKnob);
+  addAndMakeVisible(attackKnob);
+  attackLabel.setFont(15.0f);
+  attackLabel.setText("Attack",
                             juce::NotificationType::dontSendNotification);
-  memberAttackLabel.setJustificationType(juce::Justification::centredTop);
-  memberAttackLabel.setColour(juce::Label::ColourIds::textColourId,
+  attackLabel.setJustificationType(juce::Justification::centredTop);
+  attackLabel.setColour(juce::Label::ColourIds::textColourId,
                               juce::Colours::white);
-  memberAttackLabel.attachToComponent(&memberAttackKnob, false);
+  attackLabel.attachToComponent(&attackKnob, false);
 
   // Decay Knob
-  memberDecayKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-  memberDecayKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+  decayKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+  decayKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
                             juce::Colours::white);
-  memberDecayKnob.setColour(juce::Slider::ColourIds::thumbColourId,
+  decayKnob.setColour(juce::Slider::ColourIds::thumbColourId,
                             juce::Colours::whitesmoke);
-  memberDecayKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
+  decayKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                             juce::Colours::rebeccapurple);
-  memberDecayKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  memberDecayKnob.setTextValueSuffix(" s");
+  decayKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+  decayKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
-  memberDecayKnobAttachment =
+  decayKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-          audioProcessor.getValueTreeState(), "decay", memberDecayKnob);
-  // no longer using listener or range with Value Tree State solution
-  // memberDecayKnob.setRange(0.0f, 5.0f, 0.01f);
-  // memberDecayKnob.addListener(this);
-  addAndMakeVisible(memberDecayKnob);
-  memberDecayLabel.setFont(15.0f);
-  memberDecayLabel.setText("Decay",
+          audioProcessor.getValueTreeState(), "decay", decayKnob);
+  addAndMakeVisible(decayKnob);
+  decayLabel.setFont(15.0f);
+  decayLabel.setText("Decay",
                            juce::NotificationType::dontSendNotification);
-  memberDecayLabel.setJustificationType(juce::Justification::centredTop);
-  memberDecayLabel.setColour(juce::Label::ColourIds::textColourId,
+  decayLabel.setJustificationType(juce::Justification::centredTop);
+  decayLabel.setColour(juce::Label::ColourIds::textColourId,
                              juce::Colours::white);
-  memberDecayLabel.attachToComponent(&memberDecayKnob, false);
-  // addAndMakeVisible(memberDecayLabel);
+  decayLabel.attachToComponent(&decayKnob, false);
 
   // Sustain Knob
-  memberSustainKnob.setSliderStyle(
+  sustainKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryVerticalDrag);
-  memberSustainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+  sustainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
                               juce::Colours::white);
-  memberSustainKnob.setColour(juce::Slider::ColourIds::thumbColourId,
+  sustainKnob.setColour(juce::Slider::ColourIds::thumbColourId,
                               juce::Colours::whitesmoke);
-  memberSustainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
+  sustainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                               juce::Colours::rebeccapurple);
-  memberSustainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  memberSustainKnob.setTextValueSuffix(" s");
+  sustainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+  sustainKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
-  memberSustainKnobAttachment =
+  sustainKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-          audioProcessor.getValueTreeState(), "sustain", memberSustainKnob);
-  // no longer using listener or range with Value Tree State solution
-  // memberSustainKnob.setRange(0.0f, 5.0f, 0.01f);
-  // memberSustainKnob.addListener(this);
-  addAndMakeVisible(memberSustainKnob);
-  memberSustainLabel.setFont(15.0f);
-  memberSustainLabel.setText("Sustain",
+          audioProcessor.getValueTreeState(), "sustain", sustainKnob);
+  addAndMakeVisible(sustainKnob);
+  sustainLabel.setFont(15.0f);
+  sustainLabel.setText("Sustain",
                              juce::NotificationType::dontSendNotification);
-  memberSustainLabel.setJustificationType(juce::Justification::centredTop);
-  memberSustainLabel.setColour(juce::Label::ColourIds::textColourId,
+  sustainLabel.setJustificationType(juce::Justification::centredTop);
+  sustainLabel.setColour(juce::Label::ColourIds::textColourId,
                                juce::Colours::white);
-  memberSustainLabel.attachToComponent(&memberSustainKnob, false);
-  // addAndMakeVisible(memberSustainLabel);
+  sustainLabel.attachToComponent(&sustainKnob, false);
 
   // Release Knob
-  memberReleaseKnob.setSliderStyle(
+  releaseKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryVerticalDrag);
-  memberReleaseKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+  releaseKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
                               juce::Colours::white);
-  memberReleaseKnob.setColour(juce::Slider::ColourIds::thumbColourId,
+  releaseKnob.setColour(juce::Slider::ColourIds::thumbColourId,
                               juce::Colours::whitesmoke);
-  memberReleaseKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
+  releaseKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                               juce::Colours::rebeccapurple);
-  memberReleaseKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  memberReleaseKnob.setTextValueSuffix(" s");
+  releaseKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+  releaseKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
-  memberReleaseKnobAttachment =
+  releaseKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-          audioProcessor.getValueTreeState(), "release", memberReleaseKnob);
-  // no longer using listener or range with Value Tree State solution
-  // memberReleaseKnob.setRange(0.0f, 5.0f, 0.01f);
-  // memberReleaseKnob.addListener(this);
-  addAndMakeVisible(memberReleaseKnob);
-  memberReleaseLabel.setFont(15.0f);
-  memberReleaseLabel.setText("Release",
+          audioProcessor.getValueTreeState(), "release", releaseKnob);
+  addAndMakeVisible(releaseKnob);
+  releaseLabel.setFont(15.0f);
+  releaseLabel.setText("Release",
                              juce::NotificationType::dontSendNotification);
-  memberReleaseLabel.setJustificationType(juce::Justification::centredTop);
-  memberReleaseLabel.setColour(juce::Label::ColourIds::textColourId,
+  releaseLabel.setJustificationType(juce::Justification::centredTop);
+  releaseLabel.setColour(juce::Label::ColourIds::textColourId,
                                juce::Colours::white);
-  memberReleaseLabel.attachToComponent(&memberReleaseKnob, false);
-  // addAndMakeVisible(memberReleaseLabel);
+  releaseLabel.attachToComponent(&releaseKnob, false);
 
   // Gain Knob
-  memberGainKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-  memberGainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
+  gainKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+  gainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
                            juce::Colours::white);
-  memberGainKnob.setColour(juce::Slider::ColourIds::thumbColourId,
+  gainKnob.setColour(juce::Slider::ColourIds::thumbColourId,
                            juce::Colours::whitesmoke);
-  memberGainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
+  gainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
                            juce::Colours::rebeccapurple);
-  memberGainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
-  // memberGainKnob.setTextValueSuffix(" ");
+  gainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
   // value tree state solution for listener knob
-  memberGainKnobAttachment =
+  gainKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-          audioProcessor.getValueTreeState(), "gain", memberGainKnob);
-  // no longer using listener or range with Value Tree State solution
-  // memberGainKnob.setRange(-75.0f, 12.0f, 0.01f);
-  // memberGainKnob.setValue(0.0f);
-  // memberGainKnob.addListener(this);
-  addAndMakeVisible(memberGainKnob);
-  memberGainLabel.setFont(15.0f);
-  memberGainLabel.setText("Gain", juce::NotificationType::dontSendNotification);
-  memberGainLabel.setJustificationType(juce::Justification::centredTop);
-  memberGainLabel.setColour(juce::Label::ColourIds::textColourId,
+          audioProcessor.getValueTreeState(), "gain", gainKnob);
+  addAndMakeVisible(gainKnob);
+  gainLabel.setFont(15.0f);
+  gainLabel.setText("Gain", juce::NotificationType::dontSendNotification);
+  gainLabel.setJustificationType(juce::Justification::centredTop);
+  gainLabel.setColour(juce::Label::ColourIds::textColourId,
                             juce::Colours::white);
-  memberGainLabel.attachToComponent(&memberGainKnob, false);
-  // addAndMakeVisible(memberGainLabel);
-
-
+  gainLabel.attachToComponent(&gainKnob, false);
 }
 
 ADSRGainPolyButtons::~ADSRGainPolyButtons() {}
@@ -167,20 +138,9 @@ void ADSRGainPolyButtons::paint(juce::Graphics& g) {
      You should replace everything in this method with your own
      drawing code..
   */
-  //if (audioProcessor.polyphony > 1) {
-  //  memberPolyphonyKnob.setTextValueSuffix(" poly");
-  //} else {
-  //  memberPolyphonyKnob.setTextValueSuffix(" mono");
-  //}
-
-  // g.fillAll(juce::Colours::black);
 }
 
 void ADSRGainPolyButtons::resized() {
-  // This method is where you should set the bounds of any child
-  // components that your component contains..
-  // coordinates
-  /*const auto proportionalX = 0.07f;*/
   const auto proportionalX = 0.08f;
   const auto spacing = 0.15f;
   const auto proportionalY = 0.7f;
@@ -188,18 +148,16 @@ void ADSRGainPolyButtons::resized() {
   const auto proportionalHeight = 0.25f;
 
   // resize and move adsr knobs
-  memberAttackKnob.setBoundsRelative(proportionalX, proportionalY,
+  attackKnob.setBoundsRelative(proportionalX, proportionalY,
                                      proportionalWidth, proportionalHeight);
-  memberDecayKnob.setBoundsRelative(proportionalX + spacing, proportionalY,
+  decayKnob.setBoundsRelative(proportionalX + spacing, proportionalY,
                                     proportionalWidth, proportionalHeight);
-  memberSustainKnob.setBoundsRelative(proportionalX + (spacing * 2),
+  sustainKnob.setBoundsRelative(proportionalX + (spacing * 2),
                                       proportionalY, proportionalWidth,
                                       proportionalHeight);
-  memberReleaseKnob.setBoundsRelative(proportionalX + (spacing * 3),
+  releaseKnob.setBoundsRelative(proportionalX + (spacing * 3),
                                       proportionalY, proportionalWidth,
                                       proportionalHeight);
-  memberGainKnob.setBoundsRelative(proportionalX + (spacing * 4), proportionalY,
+  gainKnob.setBoundsRelative(proportionalX + (spacing * 4), proportionalY,
                                    proportionalWidth, proportionalHeight);
-  //memberPolyphonyKnob.setBoundsRelative(
-  //    proportionalX, 0.1, proportionalWidth / 2, proportionalHeight / 2);
 }
