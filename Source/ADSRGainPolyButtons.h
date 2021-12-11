@@ -5,9 +5,7 @@
 */
 
 #pragma once
-
 #include <JuceHeader.h>
-
 #include "PluginProcessor.h"
 
 class ADSRGainPolyButtons : public juce::Component {
@@ -19,13 +17,14 @@ class ADSRGainPolyButtons : public juce::Component {
   void resized() override;
 
  private:
+  VibeSamplerAudioProcessor &audioProcessor;
+
   juce::Slider attackKnob, decayKnob, sustainKnob,
       releaseKnob, gainKnob;
+
   juce::Label attackLabel, decayLabel, sustainLabel,
       releaseLabel, gainLabel,
       loadLabel;
-
-  VibeSamplerAudioProcessor &audioProcessor;
 
   // unqiue pointers for attaching knobs/sliders
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>

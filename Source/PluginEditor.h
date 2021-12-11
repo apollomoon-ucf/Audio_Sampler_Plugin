@@ -32,11 +32,14 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
  private:
   // Text button for loading sound/sample from computer
   juce::TextButton loadButton;
-
   juce::ImageComponent vibeLogoBars;
   juce::ImageComponent vibeLogoText;
+  juce::Slider polyphonyKnob;
+  juce::Label loadLabel, polyphonyLabel;
+  juce::MidiKeyboardComponent keyboardComponent;
 
   WaveformVisual waveformVisual;
+
   ADSRGainPolyButtons memberADSRGainPoly;
 
   std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>
@@ -44,14 +47,9 @@ class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
       polyphonyKnobAttachment;
 
-  juce::Slider polyphonyKnob;
-
-  juce::Label loadLabel, polyphonyLabel;
   // This reference is provided as a quick way for your editor to
   // access the processor object that created it.
   VibeSamplerAudioProcessor& audioProcessor;
-
-  juce::MidiKeyboardComponent keyboardComponent;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VibeSamplerAudioProcessorEditor)
 };
