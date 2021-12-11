@@ -4,7 +4,7 @@
 
 For one of my summer projects, I will be building an audio sampler plugin prototype for Vibe Music Productions, a professional recording studio and music production facility located in Ponte Vedra Beach, Florida. https://www.vibemusicproductions.com/
 
-(Plugin UI as of 7|20|21 - updates coming soon)
+(Plugin UI as of 7|20|21 - updates coming Winter 2021)
 ![Screenshot_with_KeysLit2](https://user-images.githubusercontent.com/25870426/126587878-3385eaef-47d8-430a-8004-da44287a1e41.png)
 
 ## Objective
