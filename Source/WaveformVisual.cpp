@@ -1,18 +1,13 @@
 /*
-  ==============================================================================
-
-    WaveformVisual.cpp
-    Created: 12 Jul 2021 12:01:02pm
-    Author:  Brian
-
-  ==============================================================================
+  Author:      Brian Moon
+  Project:     Vibe Audio Plugin (Sampler/Sample Player)
+  File Name:   WaveformVisual.cpp
 */
 
 #include "WaveformVisual.h"
 
 #include "PluginEditor.h"
 
-//==============================================================================
 WaveformVisual::WaveformVisual(VibeSamplerAudioProcessor& p)
     : audioProcessor(p) {
   // In your constructor, you should add any child components, and
@@ -33,7 +28,7 @@ void WaveformVisual::paint(juce::Graphics& g) {
 
   // if waveform should be drawn
   if (waveform.getNumSamples() > 0) {
-    memberAudioSnapshotLocations.clear();
+    audioSnapshotLocations.clear();
     // get waveform from the processor
     // auto waveform = audioProcessor.getWaveform();
     // scaling waveform to size of window
@@ -49,13 +44,13 @@ void WaveformVisual::paint(juce::Graphics& g) {
     // scaling on x-axis
     // selecting snapshot locations of waveform using the scaling factor
     for (int sample = 0; sample < waveform.getNumSamples(); sample += scaling) {
-      memberAudioSnapshotLocations.push_back(buffer[sample]);
+      audioSnapshotLocations.push_back(buffer[sample]);
     }
     // scaling on y-axis
     // selecting snapshot locations of waveform using the scaling factor
-    for (int sample = 0; sample < memberAudioSnapshotLocations.size();
+    for (int sample = 0; sample < audioSnapshotLocations.size();
          sample++) {
-      auto snapshot = juce::jmap<float>(memberAudioSnapshotLocations[sample],
+      auto snapshot = juce::jmap<float>(audioSnapshotLocations[sample],
                                         -1.0f, 1.0f, getHeight() / 1.5, 0);
       p.lineTo(sample, snapshot);
     }
@@ -99,13 +94,10 @@ void WaveformVisual::filesDropped(const juce::StringArray& files, int x,
     if (isInterestedInFileDrag(file)) {
       // create file and get filename to display upon loading of a sample
       auto myFile = std::make_unique<juce::File>(file);
-      memberFilename = myFile->getFileNameWithoutExtension();
+      mfilename = myFile->getFileNameWithoutExtension();
 
       // load the file
       audioProcessor.loadDroppedFile(file);
-      // draw waveform?
-      // memberActivateWaveformVisual = true;
-      // repaint();
     }
   }
   // repaint to display successful file load message
