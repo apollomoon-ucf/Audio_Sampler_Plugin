@@ -55,7 +55,7 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   juce::AudioBuffer<float> getWaveform() { return waveform; };
 
   // method to set number of voices (change polyphony)
-  void VibeSamplerAudioProcessor::changePolyphony(int numberOfVoices);
+  void changePolyphony(int numberOfVoices);
 
   // get adsr and gail value
   void getADSRGainValue();
@@ -76,7 +76,7 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   };
 
   juce::String getAudioFilename() { return audioFilename; };
-  std::atomic<bool>& isNoteBeingPlayed() { return isNoteBeingPlayed; }
+  std::atomic<bool>& isNoteBeingPlayed() { return _isNoteBeingPlayed; }
   std::atomic<int>& getSampleCount() { return sampleCount; }
   juce::MidiKeyboardState& getKeyboardState() { return keyboardState; }
 
@@ -88,7 +88,7 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
 
   // writing from one thread, reading from another -- using atomic
   std::atomic<bool> shouldUpdatePlayhead{false};
-  std::atomic<bool> isNoteBeingPlayed{false};
+  std::atomic<bool> _isNoteBeingPlayed{false};
   std::atomic<int> sampleCount{0};
 
   const int voiceInitNumber{2};
