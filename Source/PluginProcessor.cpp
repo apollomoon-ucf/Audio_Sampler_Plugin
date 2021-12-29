@@ -9,19 +9,11 @@
 #include "PluginEditor.h"
 
 // constructor
-VibeSamplerAudioProcessor::VibeSamplerAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
-    : AudioProcessor(
+VibeSamplerAudioProcessor::VibeSamplerAudioProcessor() : AudioProcessor(
           BusesProperties()
-#if !JucePlugin_IsMidiEffect
-#if !JucePlugin_IsSynth
               .withInput("Input", juce::AudioChannelSet::stereo(), true)
-#endif
               .withOutput("Output", juce::AudioChannelSet::stereo(), true)
-#endif
-              ),
-      valueTreeState(*this, nullptr, "PARAMS", getParameterLayout())
-#endif
+              ), valueTreeState(*this, nullptr, "PARAMS", getParameterLayout())
 {
   // setting up format manager for different audio formats
   formatManager.registerBasicFormats();
@@ -154,7 +146,7 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   int sample;
   double samples;
   double noteFrequency;
-  double middleC = 261.625565;
+//  double middleC = 261.625565;
   auto totalNumInputChannels = getTotalNumInputChannels();
   auto totalNumOutputChannels = getTotalNumOutputChannels();
   juce::ScopedNoDenormals noDenormals;
@@ -166,7 +158,7 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   samples = buffer.getNumSamples();
   // how long the note has been played for
   sampleCount =
-      isNoteBeingPlayed ? sampleCount += samples : 0;
+      _isNoteBeingPlayed ? sampleCount += samples : 0;
 
   // In case we have more outputs than inputs, this code clears any output
   // channels that didn't contain input data, (because these aren't
@@ -185,11 +177,11 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
       // start playhead
       noteFrequency =
           midiMessage.getMidiNoteInHertz(midiMessage.getNoteNumber());
-      isNoteBeingPlayed = true;
+      _isNoteBeingPlayed = true;
     } else if (midiMessage.isNoteOff()) {
       // stop playhead
       sampleCount = 0;
-      isNoteBeingPlayed = false;
+      _isNoteBeingPlayed = false;
     }
   }
   sampler.renderNextBlock(buffer, midiMessages, 0,
@@ -261,8 +253,8 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
 
     // reading waveform
     auto sampleLength = formatReader->lengthInSamples;
-    waveform.setSize(1, sampleLength);
-    formatReader->read(&waveform, 0, sampleLength, 0, true, false);
+    waveform.setSize(1, (int)sampleLength);
+    formatReader->read(&waveform, 0, (int)sampleLength, 0, true, false);
 
     // range of playable midi notes - 128 midi notes
     juce::BigInteger midiRange;
@@ -270,8 +262,8 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
     // C3 = midi note 60
     int midiNoteForNormalPitch = 60;
     // attack and release time
-    int attackTimeSecs = 0.0;
-    int releaseTimeSecs = 0.0;
+    // int attackTimeSecs = 0.0;
+    // int releaseTimeSecs = 0.0;
     // max sample length
     int maxSampleLengthSecs = 10.0;
 
@@ -297,8 +289,8 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
 
   // reading waveform
   auto sampleLength = formatReader->lengthInSamples;
-  waveform.setSize(1, sampleLength);
-  formatReader->read(&waveform, 0, sampleLength, 0, true, false);
+  waveform.setSize(1, (int)sampleLength);
+  formatReader->read(&waveform, 0, (int)sampleLength, 0, true, false);
 
   // range of playable midi notes - 128 midi notes
   juce::BigInteger midiRange;
@@ -306,8 +298,8 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
   // C3 = midi note 60
   int midiNoteForNormalPitch = 60;
   // attack and release time
-  int attackTimeSecs = 0.0;
-  int releaseTimeSecs = 0.0;
+//  int attackTimeSecs = 0.0;
+//  int releaseTimeSecs = 0.0;
   // max sample length
   int maxSampleLengthSecs = 10.0;
 
@@ -354,8 +346,8 @@ VibeSamplerAudioProcessor::getParameterLayout() {
   // declare vectors and vars
   std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameters;
   float minValue = 0.0;
-  float maxValue = 5.0;
-  float defaultValue = 0.0;
+//  float maxValue = 5.0;
+//  float defaultValue = 0.0;
 
   // Parameters for knobs -- default values may need to be tweaked
 

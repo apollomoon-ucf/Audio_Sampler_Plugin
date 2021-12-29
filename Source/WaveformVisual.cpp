@@ -94,7 +94,7 @@ void WaveformVisual::filesDropped(const juce::StringArray& files, int x,
     if (isInterestedInFileDrag(file)) {
       // create file and get filename to display upon loading of a sample
       auto myFile = std::make_unique<juce::File>(file);
-      mfilename = myFile->getFileNameWithoutExtension();
+      filename = myFile->getFileNameWithoutExtension();
 
       // load the file
       audioProcessor.loadDroppedFile(file);
