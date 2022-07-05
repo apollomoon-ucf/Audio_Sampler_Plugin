@@ -8,13 +8,18 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
-class ADSRGainPolyButtons : public juce::Component {
+class ADSRGainPolyButtons : public juce::Component
+{
  public:
   ADSRGainPolyButtons(VibeSamplerAudioProcessor &p);
   ~ADSRGainPolyButtons() override;
 
   void paint(juce::Graphics &) override;
   void resized() override;
+	
+	void makeKnob(juce::Slider &knob, juce::Slider::SliderStyle knobStyle, juce::Colour textValueColor, juce::Colour knobThumbColor, juce::Colour sliderFillColor, juce::Slider::TextEntryBoxPosition textBoxPosition);
+	
+	void makeLabel(juce::Label &label, juce::Slider &knob, float fontSize, juce::StringRef labelText, juce::NotificationType toSendNotification, juce::Justification textJustification, juce::Colour textColor);
 
  private:
   VibeSamplerAudioProcessor &audioProcessor;

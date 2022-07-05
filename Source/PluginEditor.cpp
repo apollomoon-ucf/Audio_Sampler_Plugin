@@ -15,7 +15,8 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
       memberADSRGainPoly(p),
       audioProcessor(p),
       keyboardComponent(p.getKeyboardState(),
-                        juce::MidiKeyboardComponent::horizontalKeyboard) {
+                        juce::MidiKeyboardComponent::horizontalKeyboard)
+{
 
   // loading logo from memory
   auto vibeLogoBarsFromMemory = juce::ImageCache::getFromMemory(
@@ -102,11 +103,13 @@ VibeSamplerAudioProcessorEditor::VibeSamplerAudioProcessorEditor(
 }
 
 // destructor
-VibeSamplerAudioProcessorEditor::~VibeSamplerAudioProcessorEditor() {
+VibeSamplerAudioProcessorEditor::~VibeSamplerAudioProcessorEditor()
+{
   stopTimer();
 }
 
-void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
+void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g)
+{
   // fill background
   g.fillAll(juce::Colours::black);
   // set text properties
@@ -120,18 +123,23 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
              juce::Justification::topRight, true);
 
   // check if monophonic or polyphonic
-  if (audioProcessor.polyphony > 1 && audioProcessor.polyphony < 10) {
+  if (audioProcessor.polyphony > 1 && audioProcessor.polyphony < 10)
+	{
     polyphonyKnob.setTextValueSuffix(" poly");
     juce::String string = "Polyphonic:";
     string.append(std::to_string(audioProcessor.polyphony), 1);
     g.drawText(string, (getWidth() / 6) - 80 / 2, 75, 200, 40,
                juce::Justification::topLeft, true);
-  } else if (audioProcessor.polyphony > 9) {
+  }
+	else if (audioProcessor.polyphony > 9)
+	{
     juce::String string = "Polyphonic:";
     string.append(std::to_string(audioProcessor.polyphony), 2);
     g.drawText(string, (getWidth() / 6) - 80 / 2, 75, 200, 40,
                juce::Justification::topLeft, true);
-  } else {
+  }
+	else
+	{
     polyphonyKnob.setTextValueSuffix(" mono");
     juce::String string = "Monophonic:";
     string.append(std::to_string(audioProcessor.polyphony), 1);
@@ -146,15 +154,16 @@ void VibeSamplerAudioProcessorEditor::paint(juce::Graphics &g) {
   g.fillRoundedRectangle(getWidth() / 2 - (getWidth() / 3), getHeight() / 4.5,
                          getWidth() / 1.5, getHeight() / 3.3, 10.0f);
     // display load sample if the sampler is empty
-    if (audioProcessor.getWaveform().getNumSamples() == 0) {
-    g.setFont(13.0f);
-    g.setColour(juce::Colours::grey);
-    g.drawFittedText("Click the Load Sample button, or drag and drop an audio file here, to get started",
-                     getBounds().reduced(175), juce::Justification::centredTop, 2);
-  }
+    if (audioProcessor.getWaveform().getNumSamples() == 0)
+		{
+			g.setFont(13.0f);
+			g.setColour(juce::Colours::grey);
+			g.drawFittedText("Click the Load Sample button, or drag and drop an audio file here, to get started", getBounds().reduced(175), juce::Justification::centredTop, 2);
+    }
 }
 
-void VibeSamplerAudioProcessorEditor::resized() {
+void VibeSamplerAudioProcessorEditor::resized()
+{
   // This is generally where you'll want to lay out the positions of any
   // subcomponents in your editor..
 
@@ -196,10 +205,13 @@ void VibeSamplerAudioProcessorEditor::resized() {
 // method for seeing if the file type dropped on the sampler is an appropriate
 // for music
 bool VibeSamplerAudioProcessorEditor::isInterestedInFileDrag(
-    const juce::StringArray &files) {
-  for (auto file : files) {
+    const juce::StringArray &files)
+{
+  for (auto file : files)
+	{
     if (file.contains(".wav") || file.contains(".mp3") ||
-        file.contains(".aiff")) {
+        file.contains(".aiff"))
+		{
       return true;
     }
   }
@@ -208,9 +220,12 @@ bool VibeSamplerAudioProcessorEditor::isInterestedInFileDrag(
 
 // method for loading the dropped file
 void VibeSamplerAudioProcessorEditor::filesDropped(
-    const juce::StringArray &files, int x, int y) {
-  for (auto file : files) {
-    if (isInterestedInFileDrag(file)) {
+    const juce::StringArray &files, int x, int y)
+{
+  for (auto file : files)
+	{
+    if (isInterestedInFileDrag(file))
+		{
       auto myFile = std::make_unique<juce::File>(file);
       waveformVisual.setFilename(myFile->getFileNameWithoutExtension());
       // load the file

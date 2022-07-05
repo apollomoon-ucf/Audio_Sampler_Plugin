@@ -37,15 +37,18 @@ VibeSamplerAudioProcessor::VibeSamplerAudioProcessor() : AudioProcessor(
 }
 
 // destructor
-VibeSamplerAudioProcessor::~VibeSamplerAudioProcessor() {
+VibeSamplerAudioProcessor::~VibeSamplerAudioProcessor()
+{
   formatReader = nullptr;
 }
 
-const juce::String VibeSamplerAudioProcessor::getName() const {
+const juce::String VibeSamplerAudioProcessor::getName() const
+{
   return JucePlugin_Name;
 }
 
-bool VibeSamplerAudioProcessor::acceptsMidi() const {
+bool VibeSamplerAudioProcessor::acceptsMidi() const
+{
 #if JucePlugin_WantsMidiInput
   return true;
 #else
@@ -53,7 +56,8 @@ bool VibeSamplerAudioProcessor::acceptsMidi() const {
 #endif
 }
 
-bool VibeSamplerAudioProcessor::producesMidi() const {
+bool VibeSamplerAudioProcessor::producesMidi() const
+{
 #if JucePlugin_ProducesMidiOutput
   return true;
 #else
@@ -61,7 +65,8 @@ bool VibeSamplerAudioProcessor::producesMidi() const {
 #endif
 }
 
-bool VibeSamplerAudioProcessor::isMidiEffect() const {
+bool VibeSamplerAudioProcessor::isMidiEffect() const
+{
 #if JucePlugin_IsMidiEffect
   return true;
 #else
@@ -71,7 +76,8 @@ bool VibeSamplerAudioProcessor::isMidiEffect() const {
 
 double VibeSamplerAudioProcessor::getTailLengthSeconds() const { return 0.0; }
 
-int VibeSamplerAudioProcessor::getNumPrograms() {
+int VibeSamplerAudioProcessor::getNumPrograms()
+{
   return 1;  // NB: some hosts don't cope very well if you tell them there are 0
              // programs, so this should be at least 1, even if you're not
              // really implementing programs.
@@ -81,16 +87,14 @@ int VibeSamplerAudioProcessor::getCurrentProgram() { return 0; }
 
 void VibeSamplerAudioProcessor::setCurrentProgram(int index) {}
 
-const juce::String VibeSamplerAudioProcessor::getProgramName(int index) {
-  return {};
-}
+const juce::String VibeSamplerAudioProcessor::getProgramName(int index) { return {}; }
 
 void VibeSamplerAudioProcessor::changeProgramName(int index,
-                                                  const juce::String& newName) {
-}
+                                                  const juce::String& newName) {}
 
 void VibeSamplerAudioProcessor::prepareToPlay(double sampleRate,
-                                              int samplesPerBlock) {
+                                              int samplesPerBlock)
+{
   // Use this method as the place to do any pre-playback
   // initialisation that you need..
   sampler.setCurrentPlaybackSampleRate(sampleRate);
@@ -109,14 +113,16 @@ void VibeSamplerAudioProcessor::prepareToPlay(double sampleRate,
   getADSRGainValue();
 }
 
-void VibeSamplerAudioProcessor::releaseResources() {
+void VibeSamplerAudioProcessor::releaseResources()
+{
   // When playback stops, you can use this as an opportunity to free up any
   // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool VibeSamplerAudioProcessor::isBusesLayoutSupported(
-    const BusesLayout& layouts) const {
+    const BusesLayout& layouts) const
+{
 #if JucePlugin_IsMidiEffect
   juce::ignoreUnused(layouts);
   return true;
@@ -141,7 +147,8 @@ bool VibeSamplerAudioProcessor::isBusesLayoutSupported(
 #endif
 
 void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
-                                             juce::MidiBuffer& midiMessages) {
+                                             juce::MidiBuffer& midiMessages)
+{
   
   int sample;
   double samples;
@@ -157,31 +164,35 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   // get num samples
   samples = buffer.getNumSamples();
   // how long the note has been played for
-  sampleCount =
-      _isNoteBeingPlayed ? sampleCount += samples : 0;
-
+  sampleCount = isNotePlaying ? sampleCount += samples : 0;
   // In case we have more outputs than inputs, this code clears any output
   // channels that didn't contain input data, (because these aren't
   // guaranteed to be empty - they may contain garbage).
   // This is here to avoid people getting screaming feedback
   // when they first compile a plugin, but obviously you don't need to keep
   // this code if your algorithm always overwrites all the output channels.
-  for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-    buffer.clear(i, 0, buffer.getNumSamples());
+	for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+	{
+		buffer.clear(i, 0, buffer.getNumSamples());
+	}
 
   keyboardState.processNextMidiBuffer(midiMessages, 0, buffer.getNumSamples(),
                                       true);
   // if the note is being played from external midi
-  while (midiBufferIterator.getNextEvent(midiMessage, sample)) {
-    if (midiMessage.isNoteOn()) {
+  while (midiBufferIterator.getNextEvent(midiMessage, sample))
+	{
+    if (midiMessage.isNoteOn())
+		{
       // start playhead
       noteFrequency =
           midiMessage.getMidiNoteInHertz(midiMessage.getNoteNumber());
-      _isNoteBeingPlayed = true;
-    } else if (midiMessage.isNoteOff()) {
+			isNotePlaying = true;
+    }
+		else if (midiMessage.isNoteOff())
+		{
       // stop playhead
       sampleCount = 0;
-      _isNoteBeingPlayed = false;
+			isNotePlaying = false;
     }
   }
   sampler.renderNextBlock(buffer, midiMessages, 0,
@@ -192,25 +203,31 @@ void VibeSamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   // outputAudio.applyGainRamp(startSample, numSamples, 5.0, 0.0); // -- need to
   // fix pops
   // apply gain smoothing
-  if (gain == previousGain) {
+  if (gain == previousGain)
+	{
     buffer.applyGain(gain);
-  } else {
+  }
+	else
+	{
     buffer.applyGainRamp(0, buffer.getNumSamples(), previousGain, gain);
     previousGain = gain;
   }
 
 }
 
-bool VibeSamplerAudioProcessor::hasEditor() const {
+bool VibeSamplerAudioProcessor::hasEditor() const
+{
   return true;  // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor* VibeSamplerAudioProcessor::createEditor() {
+juce::AudioProcessorEditor* VibeSamplerAudioProcessor::createEditor()
+{
   return new VibeSamplerAudioProcessorEditor(*this);
 }
 
 void VibeSamplerAudioProcessor::getStateInformation(
-    juce::MemoryBlock& destData) {
+    juce::MemoryBlock& destData)
+{
   // You should use this method to store your parameters in the memory block.
   // You could do that either as raw data, or use the XML or ValueTree classes
   // as intermediaries to make it easy to save and load complex data.
@@ -220,20 +237,24 @@ void VibeSamplerAudioProcessor::getStateInformation(
 }
 
 void VibeSamplerAudioProcessor::setStateInformation(const void* data,
-                                                    int sizeInBytes) {
+                                                    int sizeInBytes)
+{
   // You should use this method to restore your parameters from this memory
   // block, whose contents will have been created by the getStateInformation()
   // call.
   std::unique_ptr<juce::XmlElement> xmlState(
       getXmlFromBinary(data, sizeInBytes));
-  if (xmlState.get() != nullptr) {
-    if (xmlState->hasTagName(valueTreeState.state.getType())) {
+  if (xmlState.get() != nullptr)
+	{
+    if (xmlState->hasTagName(valueTreeState.state.getType()))
+		{
       valueTreeState.replaceState(juce::ValueTree::fromXml(*xmlState));
     }
   }
 }
 // method for loading file and creating sampler sound with file
-juce::String VibeSamplerAudioProcessor::loadFile() {
+juce::String VibeSamplerAudioProcessor::loadFile()
+{
   sampler.clearSounds();
   // setting up the JUCE file chooser to select
   // and load an audio file from the user's computer
@@ -243,7 +264,8 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
       "*.wav; *.mp3; *.aiff");
 
   // getting result from user's selection
-  if (chooseFile.browseForFileToOpen()) {
+  if (chooseFile.browseForFileToOpen())
+	{
     // setting up file reader
     auto userFile = chooseFile.getResult();
     audioFilePath = userFile.getFullPathName();
@@ -261,9 +283,6 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
     midiRange.setRange(0, 128, true);
     // C3 = midi note 60
     int midiNoteForNormalPitch = 60;
-    // attack and release time
-    // int attackTimeSecs = 0.0;
-    // int releaseTimeSecs = 0.0;
     // max sample length
     int maxSampleLengthSecs = 10.0;
 
@@ -278,7 +297,8 @@ juce::String VibeSamplerAudioProcessor::loadFile() {
 }
 
 // method for loading file and creating sampler sound with dropped file
-void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
+void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path)
+{
   sampler.clearSounds();
   // getting filepath
   auto userFile = juce::File(path);
@@ -311,7 +331,8 @@ void VibeSamplerAudioProcessor::loadDroppedFile(const juce::String& path) {
 }
 
 // listening for adsr and gain
-void VibeSamplerAudioProcessor::getADSRGainValue() {
+void VibeSamplerAudioProcessor::getADSRGainValue()
+{
   // adding params for Value State Tree solution
   memberADSRGainParameters.attack =
       *valueTreeState.getRawParameterValue("attack");
@@ -323,16 +344,18 @@ void VibeSamplerAudioProcessor::getADSRGainValue() {
       *valueTreeState.getRawParameterValue("release");
   gain = *valueTreeState.getRawParameterValue("gain");
   polyphony = *valueTreeState.getRawParameterValue("polyphony");
-  // valueTreePropertyChanged(getValueTreeState().state, "samplo");
+
   valueTreeState.state.setProperty(
       "sample", juce::var(audioFilePath), nullptr);
   valueTreeState.state.setProperty(
       "sample_name", juce::var(audioFilename), nullptr);
 
   // getting and updating sounds
-  for (int i = 0; i < sampler.getNumSounds(); i++) {
+  for (int i = 0; i < sampler.getNumSounds(); ++i)
+	{
     if (auto sound = dynamic_cast<juce::SamplerSound*>(
-            sampler.getSound(i).get())) {
+            sampler.getSound(i).get()))
+		{
       sound->setEnvelopeParameters(memberADSRGainParameters);
     }
   }
@@ -342,15 +365,12 @@ void VibeSamplerAudioProcessor::getADSRGainValue() {
 
 // parameter layout method
 juce::AudioProcessorValueTreeState::ParameterLayout
-VibeSamplerAudioProcessor::getParameterLayout() {
+VibeSamplerAudioProcessor::getParameterLayout()
+{
   // declare vectors and vars
   std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameters;
   float minValue = 0.0;
-//  float maxValue = 5.0;
-//  float defaultValue = 0.0;
-
   // Parameters for knobs -- default values may need to be tweaked
-
   // Method 1 (using vector to return ParameterLayout):
   parameters.push_back(std::make_unique<juce::AudioParameterFloat>(
       "attack", "Attack", 0.0f, 6.0f, 0.0f));
@@ -370,25 +390,33 @@ VibeSamplerAudioProcessor::getParameterLayout() {
 
 void VibeSamplerAudioProcessor::valueTreePropertyChanged(
     juce::ValueTree& treeWhosePropertyHasChanged,
-    const juce::Identifier& property) {
+    const juce::Identifier& property)
+{
   shouldUpdateParameters = true;
 }
 
 // method to change polyphony
-void VibeSamplerAudioProcessor::changePolyphony(int numberOfVoices) {
-  if (numberOfVoices > sampler.getNumVoices()) {
-    while (sampler.getNumVoices() != numberOfVoices) {
+void VibeSamplerAudioProcessor::changePolyphony(int numberOfVoices)
+{
+  if (numberOfVoices > sampler.getNumVoices())
+	{
+    while (sampler.getNumVoices() != numberOfVoices)
+		{
       sampler.addVoice(new juce::SamplerVoice());
     }
-  } else {
+  }
+	else
+	{
     while (sampler.getNumVoices() != numberOfVoices &&
-           sampler.getNumVoices() != 1) {
+           sampler.getNumVoices() != 1)
+		{
       sampler.removeVoice(0);
     }
   }
 }
 
 // This creates new instances of the plugin..
-juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() {
+juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
+{
   return new VibeSamplerAudioProcessor();
 }

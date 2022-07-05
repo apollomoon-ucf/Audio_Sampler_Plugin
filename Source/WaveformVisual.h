@@ -12,7 +12,8 @@
 #include "PluginProcessor.h"
 
 class WaveformVisual : public juce::Component,
-                       public juce::FileDragAndDropTarget {
+                       public juce::FileDragAndDropTarget
+{
  public:
   WaveformVisual(VibeSamplerAudioProcessor& p);
   ~WaveformVisual() override;

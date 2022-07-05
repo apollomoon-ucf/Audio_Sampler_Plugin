@@ -9,142 +9,87 @@
 
 // Attack, Decay, Sustain, Release, and Polyphony Knobs
 ADSRGainPolyButtons::ADSRGainPolyButtons(VibeSamplerAudioProcessor& p)
-    : audioProcessor(p) {
-
-
+    : audioProcessor(p)
+{
   // Attack Knob - set style, color, text
-  attackKnob.setSliderStyle(
-      juce::Slider::SliderStyle::RotaryVerticalDrag);
-  attackKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                             juce::Colours::white);
-  attackKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                             juce::Colours::whitesmoke);
-  attackKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
-                             juce::Colours::rebeccapurple);
-  attackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+	makeKnob(attackKnob, juce::Slider::SliderStyle::RotaryVerticalDrag, juce::Colours::white, juce::Colours::whitesmoke, juce::Colours::rebeccapurple, juce::Slider::TextBoxBelow);
   attackKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   attackKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
           audioProcessor.getValueTreeState(), "attack", attackKnob);
   addAndMakeVisible(attackKnob);
-  attackLabel.setFont(15.0f);
-  attackLabel.setText("Attack",
-                            juce::NotificationType::dontSendNotification);
-  attackLabel.setJustificationType(juce::Justification::centredTop);
-  attackLabel.setColour(juce::Label::ColourIds::textColourId,
-                              juce::Colours::white);
-  attackLabel.attachToComponent(&attackKnob, false);
-
+	makeLabel(attackLabel, attackKnob, 15.0f, "Attack", juce::NotificationType::dontSendNotification, juce::Justification::centredTop, juce::Colours::white); 
 
   // Decay Knob - set style, color, text
-  decayKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-  decayKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                            juce::Colours::white);
-  decayKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                            juce::Colours::whitesmoke);
-  decayKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
-                            juce::Colours::rebeccapurple);
-  decayKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+	makeKnob(decayKnob, juce::Slider::SliderStyle::RotaryVerticalDrag, juce::Colours::white, juce::Colours::whitesmoke, juce::Colours::rebeccapurple, juce::Slider::TextBoxBelow);
   decayKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   decayKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
           audioProcessor.getValueTreeState(), "decay", decayKnob);
   addAndMakeVisible(decayKnob);
-  decayLabel.setFont(15.0f);
-  decayLabel.setText("Decay",
-                           juce::NotificationType::dontSendNotification);
-  decayLabel.setJustificationType(juce::Justification::centredTop);
-  decayLabel.setColour(juce::Label::ColourIds::textColourId,
-                             juce::Colours::white);
-  decayLabel.attachToComponent(&decayKnob, false);
+	makeLabel(decayLabel, decayKnob, 15.0f, "Decay", juce::NotificationType::dontSendNotification, juce::Justification::centredTop, juce::Colours::white);
 
 
   // Sustain Knob - set style, color, text
-  sustainKnob.setSliderStyle(
-      juce::Slider::SliderStyle::RotaryVerticalDrag);
-  sustainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                              juce::Colours::white);
-  sustainKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                              juce::Colours::whitesmoke);
-  sustainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
-                              juce::Colours::rebeccapurple);
-  sustainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+	makeKnob(sustainKnob, juce::Slider::SliderStyle::RotaryVerticalDrag, juce::Colours::white, juce::Colours::whitesmoke, juce::Colours::rebeccapurple, juce::Slider::TextBoxBelow);
   sustainKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   sustainKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
           audioProcessor.getValueTreeState(), "sustain", sustainKnob);
   addAndMakeVisible(sustainKnob);
-  sustainLabel.setFont(15.0f);
-  sustainLabel.setText("Sustain",
-                             juce::NotificationType::dontSendNotification);
-  sustainLabel.setJustificationType(juce::Justification::centredTop);
-  sustainLabel.setColour(juce::Label::ColourIds::textColourId,
-                               juce::Colours::white);
-  sustainLabel.attachToComponent(&sustainKnob, false);
+	makeLabel(sustainLabel, sustainKnob, 15.0f, "Sustain", juce::NotificationType::dontSendNotification, juce::Justification::centredTop, juce::Colours::white);
 
 
   // Release Knob - set style, color, text
-  releaseKnob.setSliderStyle(
-      juce::Slider::SliderStyle::RotaryVerticalDrag);
-  releaseKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                              juce::Colours::white);
-  releaseKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                              juce::Colours::whitesmoke);
-  releaseKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
-                              juce::Colours::rebeccapurple);
-  releaseKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+	makeKnob(releaseKnob, juce::Slider::SliderStyle::RotaryVerticalDrag, juce::Colours::white, juce::Colours::whitesmoke, juce::Colours::rebeccapurple, juce::Slider::TextBoxBelow);
   releaseKnob.setTextValueSuffix(" s");
   // value tree state solution for listener knob
   releaseKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
           audioProcessor.getValueTreeState(), "release", releaseKnob);
   addAndMakeVisible(releaseKnob);
-  releaseLabel.setFont(15.0f);
-  releaseLabel.setText("Release",
-                             juce::NotificationType::dontSendNotification);
-  releaseLabel.setJustificationType(juce::Justification::centredTop);
-  releaseLabel.setColour(juce::Label::ColourIds::textColourId,
-                               juce::Colours::white);
-  releaseLabel.attachToComponent(&releaseKnob, false);
+	makeLabel(releaseLabel, releaseKnob, 15.0f, "Release", juce::NotificationType::dontSendNotification, juce::Justification::centredTop, juce::Colours::white);
 
   // Gain Knob - set style, color, text
-  gainKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-  gainKnob.setColour(juce::Slider::ColourIds::textBoxTextColourId,
-                           juce::Colours::white);
-  gainKnob.setColour(juce::Slider::ColourIds::thumbColourId,
-                           juce::Colours::whitesmoke);
-  gainKnob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
-                           juce::Colours::rebeccapurple);
-  gainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
+	makeKnob(gainKnob, juce::Slider::SliderStyle::RotaryVerticalDrag, juce::Colours::white, juce::Colours::whitesmoke, juce::Colours::rebeccapurple, juce::Slider::TextBoxBelow);
   // value tree state solution for listener knob
   gainKnobAttachment =
       std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
           audioProcessor.getValueTreeState(), "gain", gainKnob);
   addAndMakeVisible(gainKnob);
-  gainLabel.setFont(15.0f);
-  gainLabel.setText("Gain", juce::NotificationType::dontSendNotification);
-  gainLabel.setJustificationType(juce::Justification::centredTop);
-  gainLabel.setColour(juce::Label::ColourIds::textColourId,
-                            juce::Colours::white);
-  gainLabel.attachToComponent(&gainKnob, false);
+	makeLabel(gainLabel, gainKnob, 15.0f, "Gain", juce::NotificationType::dontSendNotification, juce::Justification::centredTop, juce::Colours::white);
 }
 
 ADSRGainPolyButtons::~ADSRGainPolyButtons() {}
 
-void ADSRGainPolyButtons::paint(juce::Graphics& g) {
-  /* This demo code just fills the component's background and
-     draws some placeholder text to get you started.
-
-     You should replace everything in this method with your own
-     drawing code..
-  */
+// function to make slider knob with text box for value
+void ADSRGainPolyButtons::makeKnob(juce::Slider &knob, juce::Slider::SliderStyle knobStyle, juce::Colour textValueColor, juce::Colour knobThumbColor, juce::Colour sliderFillColor, juce::Slider::TextEntryBoxPosition textBoxPosition)
+{
+	knob.setSliderStyle(knobStyle);
+	knob.setColour(juce::Slider::ColourIds::textBoxTextColourId, textValueColor);
+	knob.setColour(juce::Slider::ColourIds::thumbColourId, knobThumbColor);
+	knob.setColour(juce::Slider::ColourIds::rotarySliderFillColourId, sliderFillColor);
+	knob.setTextBoxStyle(textBoxPosition, false, 55, 20);
 }
 
+// function to make label and attach it to knob
+void ADSRGainPolyButtons::makeLabel(juce::Label &label, juce::Slider &knob, float fontSize, juce::StringRef labelText, juce::NotificationType toSendNotification, juce::Justification textJustification, juce::Colour textColor)
+{
+	label.setFont(fontSize);
+	label.setText(labelText, toSendNotification);
+	label.setJustificationType(textJustification);
+	label.setColour(juce::Label::ColourIds::textColourId, textColor);
+	label.attachToComponent(&knob, false);
+}
+
+void ADSRGainPolyButtons::paint(juce::Graphics& g) {}
+
 // sizing
-void ADSRGainPolyButtons::resized() {
+void ADSRGainPolyButtons::resized()
+{
   const auto proportionalX = 0.08f;
   const auto spacing = 0.15f;
   const auto proportionalY = 0.7f;
