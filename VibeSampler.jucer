@@ -6,7 +6,7 @@
               pluginVST3Category="Instrument" pluginVSTCategory="kPlugCategSynth"
               companyName="VibeByBMoon" pluginFormats="buildAU,buildAUv3,buildVST,buildVST3"
               pluginChannelConfigs="{1,1} , {2,2}" pluginAUIsSandboxSafe="1"
-              defines="JUCE_MODAL_LOOPS_PERMITTED=1">
+              defines="JUCE_MODAL_LOOPS_PERMITTED=1" version="1.1.0">
   <MAINGROUP id="q2KsRI" name="VibeSampler">
     <GROUP id="{2312A0B3-90E5-E76B-7272-5000A0D5D4EB}" name="Source">
       <FILE id="JKJGOM" name="ADSRGainPolyButtons.cpp" compile="1" resource="0"
@@ -73,7 +73,7 @@
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="VibeSampler"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="VibeSampler_v2"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="VibeSampler"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
