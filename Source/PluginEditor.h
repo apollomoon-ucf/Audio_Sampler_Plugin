@@ -14,7 +14,8 @@
 
 class VibeSamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
                                         public juce::FileDragAndDropTarget,
-                                        public juce::Timer {
+                                        public juce::Timer
+{
  public:
   VibeSamplerAudioProcessorEditor(VibeSamplerAudioProcessor& p);
   ~VibeSamplerAudioProcessorEditor() override;

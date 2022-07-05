@@ -9,25 +9,22 @@
 #include "PluginEditor.h"
 
 WaveformVisual::WaveformVisual(VibeSamplerAudioProcessor& p)
-    : audioProcessor(p) {
+    : audioProcessor(p)
+{
   // In your constructor, you should add any child components, and
   // initialise any special settings that your component needs.
 }
 
 WaveformVisual::~WaveformVisual() {}
 
-void WaveformVisual::paint(juce::Graphics& g) {
-  /* This demo code just fills the component's background and
-     draws some placeholder text to get you started.
-
-     You should replace everything in this method with your own
-     drawing code..
-  */
+void WaveformVisual::paint(juce::Graphics& g)
+{
   // get waveform from the processor
   auto waveform = audioProcessor.getWaveform();
 
   // if waveform should be drawn
-  if (waveform.getNumSamples() > 0) {
+  if (waveform.getNumSamples() > 0)
+	{
     audioSnapshotLocations.clear();
     // get waveform from the processor
     // auto waveform = audioProcessor.getWaveform();
@@ -43,15 +40,15 @@ void WaveformVisual::paint(juce::Graphics& g) {
 
     // scaling on x-axis
     // selecting snapshot locations of waveform using the scaling factor
-    for (int sample = 0; sample < waveform.getNumSamples(); sample += scaling) {
+    for (int sample = 0; sample < waveform.getNumSamples(); sample += scaling)
+		{
       audioSnapshotLocations.push_back(buffer[sample]);
     }
     // scaling on y-axis
     // selecting snapshot locations of waveform using the scaling factor
-    for (int sample = 0; sample < audioSnapshotLocations.size();
-         sample++) {
-      auto snapshot = juce::jmap<float>(audioSnapshotLocations[sample],
-                                        -1.0f, 1.0f, getHeight() / 1.5, 0);
+    for (int sample = 0; sample < audioSnapshotLocations.size(); sample++)
+		{
+      auto snapshot = juce::jmap<float>(audioSnapshotLocations[sample], -1.0f, 1.0f, getHeight() / 1.5, 0);
       p.lineTo(sample, snapshot);
     }
 
@@ -70,17 +67,17 @@ void WaveformVisual::paint(juce::Graphics& g) {
   }
 }
 
-void WaveformVisual::resized() {
-  // This method is where you should set the bounds of any child
-  // components that your component contains..
-}
+void WaveformVisual::resized() {}
 
 // method for seeing if the file type dropped on the sampler is an appropriate
 // for audio
-bool WaveformVisual::isInterestedInFileDrag(const juce::StringArray& files) {
-  for (auto file : files) {
+bool WaveformVisual::isInterestedInFileDrag(const juce::StringArray& files)
+{
+  for (auto file : files)
+	{
     if (file.contains(".wav") || file.contains(".mp3") ||
-        file.contains(".aiff") || file.contains(".aif")) {
+        file.contains(".aiff") || file.contains(".aif"))
+		{
       return true;
     }
   }
@@ -89,9 +86,12 @@ bool WaveformVisual::isInterestedInFileDrag(const juce::StringArray& files) {
 
 // method for loading the dropped file
 void WaveformVisual::filesDropped(const juce::StringArray& files, int x,
-                                  int y) {
-  for (auto file : files) {
-    if (isInterestedInFileDrag(file)) {
+                                  int y)
+{
+  for (auto file : files)
+	{
+    if (isInterestedInFileDrag(file))
+		{
       // create file and get filename to display upon loading of a sample
       auto myFile = std::make_unique<juce::File>(file);
       filename = myFile->getFileNameWithoutExtension();

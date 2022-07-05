@@ -10,7 +10,8 @@
 
 
 class VibeSamplerAudioProcessor : public juce::AudioProcessor,
-                                  public juce::ValueTree::Listener {
+                                  public juce::ValueTree::Listener
+{
  public:
   VibeSamplerAudioProcessor();
   ~VibeSamplerAudioProcessor() override;
@@ -61,7 +62,8 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
   void getADSRGainValue();
 
   // get adsr params
-  juce::ADSR::Parameters& getADSRParameters() {
+  juce::ADSR::Parameters& getADSRParameters()
+	{
     return memberADSRGainParameters;
   };
 
@@ -71,12 +73,13 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
 
   // giving access to AudioProcessorValueTreeState by creating a reference to
   // the object
-  juce::AudioProcessorValueTreeState& getValueTreeState() {
+  juce::AudioProcessorValueTreeState& getValueTreeState()
+	{
     return valueTreeState;
   };
 
   juce::String getAudioFilename() { return audioFilename; };
-  std::atomic<bool>& isNoteBeingPlayed() { return _isNoteBeingPlayed; }
+  std::atomic<bool>& isNoteBeingPlayed() { return isNotePlaying; }
   std::atomic<int>& getSampleCount() { return sampleCount; }
   juce::MidiKeyboardState& getKeyboardState() { return keyboardState; }
 
@@ -88,7 +91,7 @@ class VibeSamplerAudioProcessor : public juce::AudioProcessor,
 
   // writing from one thread, reading from another -- using atomic
   std::atomic<bool> shouldUpdatePlayhead{false};
-  std::atomic<bool> _isNoteBeingPlayed{false};
+  std::atomic<bool> isNotePlaying{false};
   std::atomic<int> sampleCount{0};
 
   const int voiceInitNumber{2};
